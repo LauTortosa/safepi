@@ -1,16 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react';
+import AppRouter from './routes';
+
 import './App.css'
 import './index.css'
 
-function App() {
-
+const App: React.FC = () => {
   return (
-    <>
-        <h1 class="text-3xl font-bold text-blue-500">Safepi</h1>
-    </>
-  )
-}
+    <div className="App">
+      <AppRouter />
+    </div>
+  );
+};
 
 export default App
