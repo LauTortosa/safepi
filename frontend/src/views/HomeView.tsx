@@ -9,8 +9,8 @@ const HomeView: React.FC = () => {
     last_name: string;
     username: string;
     email: string;
-    birthday: Date,
-    start_date: Date;
+    birthday: string,
+    start_date: string;
     position: string;
     age: number; 
   } | null>(null);
@@ -26,6 +26,7 @@ const HomeView: React.FC = () => {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
+            withCredentials: true,
         })
         .then((response) => {
           setUser(response.data);
@@ -50,6 +51,10 @@ const HomeView: React.FC = () => {
               Bienvenido, {user.name} {user.last_name}!
             </p>
             <p className="text-gray-600">Email: {user.email}</p>
+            <p className="text-gray-600">Fecha de nacimiento: {user.birthday}</p>
+            <p className="text-gray-600">Fecha de inicio: {user.start_date}</p>
+            <p className="text-gray-600">Edad: {user.age}</p>
+            <p className="text-gray-600">Posición laboral: {user.position}</p>
           </div>
         ) : (
           <p className="text-gray-500 text-center">Cargando información...</p>
