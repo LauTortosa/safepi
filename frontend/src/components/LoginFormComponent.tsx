@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import api from "../api/axiosConfig";
 
 interface LoginFormProps {
@@ -10,6 +12,8 @@ const LoginFormComponent: React.FC<LoginFormProps> = ({ onSubmit }) => {
     username: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,8 +30,10 @@ const LoginFormComponent: React.FC<LoginFormProps> = ({ onSubmit }) => {
     api
         .post("/users/auth/login", formData)
         .then((response) => {
-            console.log("Login con éxito", response.data);
-            onSubmit(formData.username, formData.password)
+          const token = response.data.token;
+            console.log("Login con éxito", token);
+            localStorage.setItem('authToken', token);
+            navigate('/home');
         })
         .catch((error) => {
             console.error("Error en el login", error);

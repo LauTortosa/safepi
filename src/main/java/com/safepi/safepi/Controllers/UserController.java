@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -49,15 +50,15 @@ public class UserController {
     }
 
     @PostMapping("/auth/login")
-    public ResponseEntity<String> login(@RequestBody User userLogin) {
+    public ResponseEntity<?> login(@RequestBody User userLogin) {
         User user = userService.getUserByUsername(userLogin.getUsername());
 
-        if (!user.getPassword().equals(userLogin.getPassword())) {
+        if (user == null || !user.getPassword().equals(userLogin.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
         }
 
         String token = jwtService.generateToken(user.getUsername(), user.getRole().name());
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(Map.of("token", token));
     }
 
     @PostMapping("/auth/refresh")
