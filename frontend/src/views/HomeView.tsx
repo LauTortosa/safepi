@@ -26,7 +26,6 @@ const HomeView: React.FC = () => {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
-           // withCredentials: true,
         })
         .then((response) => {
           setUser(response.data);
