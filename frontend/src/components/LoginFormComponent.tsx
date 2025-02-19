@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import api from "../api/axiosConfig";
 
 interface LoginFormProps {
   onSubmit: (username: string, password: string) => void;
@@ -21,6 +22,16 @@ const LoginFormComponent: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData.username, formData.password);
+
+    api
+        .post("/users/auth/login", formData)
+        .then((response) => {
+            console.log("Login con éxito", response.data);
+            onSubmit(formData.username, formData.password)
+        })
+        .catch((error) => {
+            console.error("Error en el login", error);
+        });
 
     console.log("Username", formData.username);
     console.log("Password", formData.password);
