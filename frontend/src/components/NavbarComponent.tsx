@@ -1,9 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   return (
     <div className="navbar bg-gray-900 text-gray-100 shadow-lg px-4">
-
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -27,14 +27,20 @@ const Navbar: React.FC = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-blue-900 rounded-lg w-52"
           >
             <li>
-              <a className="hover:bg-blue-500 p-2 rounded">Gestión de riesgos</a>
+              <a className="hover:bg-blue-500 p-2 rounded">
+                Gestión de riesgos
+              </a>
             </li>
           </ul>
         </div>
       </div>
 
       <div className="navbar-center">
-        <a className="text-xl font-bold tracking-wide text-cyan-500">Safepy</a>
+        <Link to="/home">
+          <a className="text-xl font-bold tracking-wide text-cyan-500">
+            Safepi
+          </a>
+        </Link>
       </div>
 
       <div className="navbar-end">
@@ -48,14 +54,19 @@ const Navbar: React.FC = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-blue-900 rounded-lg w-52"
           >
-            <li>
-              <a className="hover:bg-blue-500 p-2 rounded">Perfil</a>
-            </li>
+            <Link to="/profile">
+              <li>
+                <a className="hover:bg-blue-500 p-2 rounded">Perfil</a>
+              </li>
+            </Link>
+
             <li>
               <a className="hover:bg-blue-500 p-2 rounded">Configuración</a>
             </li>
             <li>
-              <a className="hover:bg-cyan-500 p-2 rounded text-gray-900">Cerrar sesión</a>
+              <a className="hover:bg-cyan-500 p-2 rounded text-gray-900">
+                Cerrar sesión
+              </a>
             </li>
           </ul>
         </div>
