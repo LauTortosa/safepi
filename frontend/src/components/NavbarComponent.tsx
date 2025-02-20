@@ -1,7 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar: React.FC = () => {
+  const navigate = useNavigate();
+
+  const logout: () => void = () => {
+    localStorage.removeItem("authToken");
+    navigate("/");
+  }
+
   return (
     <div className="navbar bg-gray-900 text-gray-100 shadow-lg px-4">
       <div className="navbar-start">
@@ -37,9 +43,9 @@ const Navbar: React.FC = () => {
 
       <div className="navbar-center">
         <Link to="/home">
-          <a className="text-xl font-bold tracking-wide text-cyan-500">
+          <span className="text-xl font-bold tracking-wide text-cyan-500">
             Safepi
-          </a>
+          </span>
         </Link>
       </div>
 
@@ -47,7 +53,7 @@ const Navbar: React.FC = () => {
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 h-10 rounded-full border-2 border-cyan-500">
-              <img src="" alt="Avatar" />
+              <img alt="Avatar" />
             </div>
           </label>
           <ul
@@ -56,15 +62,14 @@ const Navbar: React.FC = () => {
           >
             <Link to="/profile">
               <li>
-                <a className="hover:bg-blue-500 p-2 rounded">Perfil</a>
+                <span className="hover:bg-blue-500 p-2 rounded">Perfil</span>
               </li>
             </Link>
-
             <li>
               <a className="hover:bg-blue-500 p-2 rounded">Configuración</a>
             </li>
-            <li>
-              <a className="hover:bg-cyan-500 p-2 rounded text-gray-900">
+            <li >
+              <a className="hover:bg-cyan-500 p-2 rounded text-gray-900" onClick={logout}>
                 Cerrar sesión
               </a>
             </li>

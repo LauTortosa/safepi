@@ -44,6 +44,8 @@ const LoginFormComponent: React.FC<LoginFormProps> = ({ onSubmit }) => {
   };
 
   return (
+    // TODO que no detecte el espacio en blanco al escrubur el usename
+    // TODO validaciones
     <form onSubmit={handleSubmit} className="flex flex-col items-center">
   <div className="form-control w-full max-w-xs">
     <label className="label">
