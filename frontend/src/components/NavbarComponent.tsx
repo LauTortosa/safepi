@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
         <Link to="/risks" className="hover:text-cyan-400">
           Gestión de riesgos
         </Link>
-        <Link to="/users" className="hover:text-cyan-400">
+        <Link to="/usersList" className="hover:text-cyan-400">
           Gestión de usuarios
         </Link>
         <Link to="/reports" className="hover:text-cyan-400">
