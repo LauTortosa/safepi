@@ -5,82 +5,97 @@ import api from "../api/axiosConfig";
 import { useState, useEffect } from "react";
 
 const CreateUserView: React.FC = () => {
-    const [formData, setFormData] = useState({
-        name: "",
-        last_name: "",
-        birthday: "",
-        start_date: "",
-        position: "",
-        username: "",
-        email: "",
-        password: "",
-        role: "",
+  const [formData, setFormData] = useState({
+    name: "",
+    last_name: "",
+    birthday: "",
+    start_date: "",
+    position: "",
+    username: "",
+    email: "",
+    password: "",
+    role: "",
+  });
+
+  const [positions, setPositions] = useState<string[]>([]);
+  const [roles, setRoles] = useState<string[]>([]);
+  const [isUserCreated, setIsUserCreated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+
+    api
+      .get("/users/positions", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setPositions(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al cargar opciones del select position", error);
+      });
+
+    api
+      .get("/users/roles", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setRoles(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al cargar opciones del select role", error);
+      });
+  }, []);
+
+  const onInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
     });
+  };
 
-    const [positions, setPositions] = useState<string[]>([]);
-    const [roles, setRoles] = useState<string[]>([]);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
-    useEffect(() => {
-      const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem("authToken");
 
-      api
-        .get("/users/positions", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setPositions(response.data); 
-        })
-        .catch((error) => {
-          console.error("Error al cargar opciones del select position", error);
-        });
+    api
+      .post("/users", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        const token = response.data.token;
+        if (token) {
+          localStorage.setItem("authToken", token);
+        }
 
-        api
-        .get("/users/roles", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setRoles(response.data); 
-        })
-        .catch((error) => {
-          console.error("Error al cargar opciones del select role", error);
-        });
+        setIsUserCreated(true);
 
-    }, []);
-
-    
-    const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
         setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const token = localStorage.getItem("authToken");
-        
-        api
-            .post("/users", formData, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            })
-            .then((response) => {
-                const token = response.data.token;
-                if (token) {
-                  localStorage.setItem('authToken', token);
-                }
-            })
-            .catch((error) => {
-                console.error("Error al crear el usuario", error);
-            });
-    };
+          name: "",
+          last_name: "",
+          birthday: "",
+          start_date: "",
+          position: "",
+          username: "",
+          email: "",
+          password: "",
+          role: ""
+        })
+      })
+      .catch((error) => {
+        console.error("Error al crear el usuario", error);
+      });
+  };
 
   return (
     <div>
@@ -92,7 +107,10 @@ const CreateUserView: React.FC = () => {
 
         <div className="flex ">
           <SidebarComponent />
-          <form onSubmit={handleSubmit} className="flex-1 flex justify-center px-6">
+          <form
+            onSubmit={handleSubmit}
+            className="flex-1 flex justify-center px-6"
+          >
             <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8">
               <div>
                 <div className="form-control w-full max-w-xs">
@@ -155,7 +173,7 @@ const CreateUserView: React.FC = () => {
                   <label className="label">
                     <span className="label-text">Posición laboral</span>
                   </label>
-                  <select 
+                  <select
                     name="position"
                     value={formData.position}
                     onChange={onInputChange}
@@ -217,7 +235,7 @@ const CreateUserView: React.FC = () => {
                   <label className="label">
                     <span className="label-text">Rol de usuario</span>
                   </label>
-                  <select 
+                  <select
                     name="role"
                     value={formData.role}
                     onChange={onInputChange}
@@ -236,13 +254,41 @@ const CreateUserView: React.FC = () => {
               </div>
 
               <div>
-              <button
-                type="submit"
-                className="mt-8 btn bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all"
-              >
-                Crear usuario
-              </button>
-            </div>
+                <button
+                  type="submit"
+                  className="mt-8 btn bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all"
+                >
+                  Crear usuario
+                </button>
+              </div>
+
+              {isUserCreated && (
+                <dialog id="my_modal_1" className="modal" open>
+                  <div className="modal-overlay bg-gray-900 opacity-50" />
+                  <div className="modal-box bg-gray-100 text-gray-800 rounded-lg p-6 shadow-lg">
+                    <h3 className="font-bold text-lg text-blue-900">
+                      Usuario creado!
+                    </h3>
+                    <p className="py-4 text-gray-500">
+                      El usuario ha sido creado correctamente.
+                    </p>
+                    <div className="modal-action">
+                      <button
+                        className="btn bg-blue-500 hover:bg-blue-700 text-white"
+                        onClick={() =>
+                          (
+                            document.getElementById(
+                              "my_modal_1"
+                            ) as HTMLDialogElement
+                          )?.close()
+                        }
+                      >
+                        Cerrar
+                      </button>
+                    </div>
+                  </div>
+                </dialog>
+              )}
             </div>
           </form>
         </div>
