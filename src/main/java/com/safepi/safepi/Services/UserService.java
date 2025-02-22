@@ -1,10 +1,12 @@
 package com.safepi.safepi.Services;
 
+import com.safepi.safepi.Entities.Enums.Position;
 import com.safepi.safepi.Entities.User;
 import com.safepi.safepi.Repositories.UserRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -57,5 +59,8 @@ public class UserService {
         }
 
         userRepository.deleteById(id);
+    }
+    public List<Position> getAllPositions() {
+        return Arrays.asList(Position.values());
     }
 }
