@@ -18,6 +18,7 @@ const CreateUserView: React.FC = () => {
     });
 
     const [positions, setPositions] = useState<string[]>([]);
+    const [roles, setRoles] = useState<string[]>([]);
 
     useEffect(() => {
       const token = localStorage.getItem("authToken");
@@ -29,13 +30,27 @@ const CreateUserView: React.FC = () => {
           },
         })
         .then((response) => {
-          console.log("Opciones de posición:", response.data);
           setPositions(response.data); 
         })
         .catch((error) => {
           console.error("Error al cargar opciones del select position", error);
         });
+
+        api
+        .get("/users/roles", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setRoles(response.data); 
+        })
+        .catch((error) => {
+          console.error("Error al cargar opciones del select role", error);
+        });
+
     }, []);
+
     
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -47,14 +62,20 @@ const CreateUserView: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        
-        
 
+        const token = localStorage.getItem("authToken");
+        
         api
-            .post("/users", formData)
+            .post("/users", formData, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            })
             .then((response) => {
                 const token = response.data.token;
-                localStorage.setItem('authToken', token);
+                if (token) {
+                  localStorage.setItem('authToken', token);
+                }
             })
             .catch((error) => {
                 console.error("Error al crear el usuario", error);
@@ -200,12 +221,16 @@ const CreateUserView: React.FC = () => {
                     name="role"
                     value={formData.role}
                     onChange={onInputChange}
-                    className="select select-bordered">
+                    className="select select-bordered"
+                  >
                     <option value="" disabled>
                       Selecciona una opción
                     </option>
-                    <option>Star Wars</option>
-                    <option>Harry Potter</option>
+                    {roles.map((role, index) => (
+                      <option key={index} value={role}>
+                        {role}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
