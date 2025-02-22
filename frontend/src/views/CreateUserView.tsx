@@ -14,6 +14,18 @@ const CreateUserView: React.FC = () => {
   const {positions, roles } = useUserOptions();
   const [isUserCreated, setIsUserCreated] = useState(false);
 
+  const formFields = [
+    { label: "Nombre", type: "text", name: "name", placeholder: "Nombre" },
+    { label: "Apellidos", type: "text", name: "last_name", placeholder: "Apellidos" },
+    { label: "Fecha de nacimiento", type: "date", name: "birthday", placeholder: "" },
+    { label: "Fecha de antigüedad laboral", type: "date", name: "start_date", placeholder: "" },
+    { label: "Posición laboral", type: "select", name: "position", options: positions },
+    { label: "Nombre de usuario", type: "text", name: "username", placeholder: "Nombre de usuario" },
+    { label: "Email", type: "email", name: "email", placeholder: "Email" },
+    { label: "Contraseña", type: "password", name: "password", placeholder: "Password" },
+    { label: "Rol de usuario", type: "select", name: "role", options: roles },
+  ];
+
   const onInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -60,99 +72,42 @@ const CreateUserView: React.FC = () => {
             onSubmit={handleSubmit}
             className="flex-1 flex justify-center px-6"
           >
-            <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8">
+            <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 mb-10">
               <div>
-                <InputComponent
-                  label="Nombre"
-                  type="text"
-                  value={formData.name}
-                  id="name"
-                  name="name"
-                  onChange={onInputChange}
-                  placeholder="Nombre"
-                />
-                <InputComponent
-                  label="Apellidos"
-                  type="text"
-                  value={formData.last_name}
-                  id="last_name"
-                  name="last_name"
-                  onChange={onInputChange}
-                  placeholder="Apellidos"
-                />
-                <InputComponent
-                  label="Fecha de nacimiento"
-                  type="date"
-                  value={formData.birthday}
-                  id="birthday"
-                  name="birthday"
-                  onChange={onInputChange}
-                  placeholder=""
-                />
-                <InputComponent
-                  label="Fecha de antigüedad laboral"
-                  type="date"
-                  value={formData.start_date}
-                  id="start_date"
-                  name="start_date"
-                  onChange={onInputChange}
-                  placeholder=""
-                />
-                <SelectComponent
-                  span="Posición laboral"
-                  name="position"
-                  value={formData.position}
-                  onChange={onInputChange}
-                  options={positions}
-                />
-                <InputComponent
-                  label="Nombre de usuario"
-                  type="text"
-                  value={formData.username}
-                  id="username"
-                  name="username"
-                  onChange={onInputChange}
-                  placeholder="Nombre de usuario"
-                />
-                <InputComponent
-                  label="Email"
-                  type="email"
-                  value={formData.email}
-                  id="email"
-                  name="email"
-                  onChange={onInputChange}
-                  placeholder="Email"
-                />
-                <InputComponent
-                  label="Contraseña"
-                  type="password"
-                  value={formData.password}
-                  id="password"
-                  name="password"
-                  onChange={onInputChange}
-                  placeholder="Contraseña"
-                />
-                <SelectComponent
-                  span="Rol de usuario"
-                  name="role"
-                  value={formData.role}
-                  onChange={onInputChange}
-                  options={roles}
-                />
+                {formFields.map((field) => 
+                  field.type === "select" ? (
+                    <SelectComponent
+                      key={field.name}
+                      span={field.label}
+                      name={field.name}
+                      value={formData[field.name as keyof typeof formData]}
+                      onChange={onInputChange}
+                      options={field.options || []}
+                    />
+                  ) : (
+                    <InputComponent
+                      key={field.name}
+                      label={field.label}
+                      type={field.type}
+                      value={formData[field.name as keyof typeof formData]}
+                      id={field.name}
+                      name={field.name}
+                      onChange={onInputChange}
+                      placeholder={field.placeholder || ""}
+                    />
+                  )    
+                )}
               </div>
-              <div>
-                <button
+              <button
                   type="submit"
                   className="mt-8 btn bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all"
                 >
                   Crear usuario
                 </button>
-              </div>
-
               <ModalComponent 
                 isOpen={isUserCreated}
                 title="Usuario creado!"
-                content="El usuasio ha sido creado correctamente"
+                content="El usuario ha sido creado correctamente"
                 onClose={() => setIsUserCreated(false)}
               />
             </div>
