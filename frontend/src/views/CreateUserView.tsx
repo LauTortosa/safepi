@@ -140,7 +140,6 @@ const CreateUserView: React.FC = () => {
                   options={roles}
                 />
               </div>
-
               <div>
                 <button
                   type="submit"
@@ -151,9 +150,10 @@ const CreateUserView: React.FC = () => {
               </div>
 
               <ModalComponent 
-                isUserCreated={isUserCreated}
+                isOpen={isUserCreated}
                 title="Usuario creado!"
                 content="El usuasio ha sido creado correctamente"
+                onClose={() => setIsUserCreated(false)}
               />
             </div>
           </form>
