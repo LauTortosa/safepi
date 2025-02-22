@@ -4,7 +4,8 @@ import InputComponent from "../components/InputComponent";
 import SelectComponent from "../components/SelectComponent";
 
 import api from "../api/axiosConfig";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useUserOptions } from "../hooks/useUserOptions";
 
 const CreateUserView: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -19,39 +20,8 @@ const CreateUserView: React.FC = () => {
     role: "",
   });
 
-  const [positions, setPositions] = useState<string[]>([]);
-  const [roles, setRoles] = useState<string[]>([]);
+  const {positions, roles } = useUserOptions();
   const [isUserCreated, setIsUserCreated] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-
-    api
-      .get("/users/positions", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setPositions(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al cargar opciones del select position", error);
-      });
-
-    api
-      .get("/users/roles", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setRoles(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al cargar opciones del select role", error);
-      });
-  }, []);
 
   const onInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
