@@ -1,7 +1,66 @@
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
 
+import api from "../api/axiosConfig";
+import { useState, useEffect } from "react";
+
 const CreateUserView: React.FC = () => {
+    const [formData, setFormData] = useState({
+        name: "",
+        last_name: "",
+        birthday: "",
+        start_date: "",
+        position: "",
+        username: "",
+        email: "",
+        password: "",
+        role: "",
+    });
+
+    const [positions, setPositions] = useState<string[]>([]);
+
+    useEffect(() => {
+      const token = localStorage.getItem("authToken");
+
+      api
+        .get("/users/positions", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log("Opciones de posición:", response.data);
+          setPositions(response.data); 
+        })
+        .catch((error) => {
+          console.error("Error al cargar opciones del select position", error);
+        });
+    }, []);
+    
+    const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        
+
+        api
+            .post("/users", formData)
+            .then((response) => {
+                const token = response.data.token;
+                localStorage.setItem('authToken', token);
+            })
+            .catch((error) => {
+                console.error("Error al crear el usuario", error);
+            });
+    };
+
   return (
     <div>
       <NavbarComponent />
@@ -12,10 +71,155 @@ const CreateUserView: React.FC = () => {
 
         <div className="flex ">
           <SidebarComponent />
-          <main className="flex-1 flex justify-center px-6">
-          <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8"></div>
+          <form onSubmit={handleSubmit} className="flex-1 flex justify-center px-6">
+            <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8">
+              <div>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text">Nombre</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={onInputChange}
+                    placeholder="Nombre"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text">Apellidos</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="last_name"
+                    name="last_name"
+                    value={formData.last_name}
+                    onChange={onInputChange}
+                    placeholder="Apellidos"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text">Fecha de nacimiento</span>
+                  </label>
+                  <input
+                    type="date"
+                    id="birthday"
+                    name="birthday"
+                    value={formData.birthday}
+                    onChange={onInputChange}
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text">
+                      Fecha de antiguedad laboral
+                    </span>
+                  </label>
+                  <input
+                    type="date"
+                    id="start_date"
+                    name="start_date"
+                    value={formData.start_date}
+                    onChange={onInputChange}
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text">Posición laboral</span>
+                  </label>
+                  <select 
+                    name="position"
+                    value={formData.position}
+                    onChange={onInputChange}
+                    className="select select-bordered"
+                  >
+                    <option value="" disabled>
+                      Selecciona una opción
+                    </option>
+                    {positions.map((position, index) => (
+                      <option key={index} value={position}>
+                        {position}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text">Nombre de usuario</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value={formData.username}
+                    onChange={onInputChange}
+                    placeholder="Usuario"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text">Email</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={onInputChange}
+                    placeholder="Email"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text">Contraseña</span>
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={onInputChange}
+                    placeholder="Contraseña"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text">Rol de usuario</span>
+                  </label>
+                  <select 
+                    name="role"
+                    value={formData.role}
+                    onChange={onInputChange}
+                    className="select select-bordered">
+                    <option value="" disabled>
+                      Selecciona una opción
+                    </option>
+                    <option>Star Wars</option>
+                    <option>Harry Potter</option>
+                  </select>
+                </div>
+              </div>
 
-          </main>
+              <div>
+              <button
+                type="submit"
+                className="mt-8 btn bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all"
+              >
+                Crear usuario
+              </button>
+            </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
