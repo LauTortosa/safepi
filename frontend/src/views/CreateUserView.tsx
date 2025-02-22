@@ -1,6 +1,7 @@
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import InputComponent from "../components/InputComponent";
+import SelectComponent from "../components/SelectComponent";
 
 import api from "../api/axiosConfig";
 import { useState, useEffect } from "react";
@@ -90,8 +91,8 @@ const CreateUserView: React.FC = () => {
           username: "",
           email: "",
           password: "",
-          role: ""
-        })
+          role: "",
+        });
       })
       .catch((error) => {
         console.error("Error al crear el usuario", error);
@@ -150,26 +151,13 @@ const CreateUserView: React.FC = () => {
                   onChange={onInputChange}
                   placeholder=""
                 />
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">Posición laboral</span>
-                  </label>
-                  <select
-                    name="position"
-                    value={formData.position}
-                    onChange={onInputChange}
-                    className="select select-bordered"
-                  >
-                    <option value="" disabled>
-                      Selecciona una opción
-                    </option>
-                    {positions.map((position, index) => (
-                      <option key={index} value={position}>
-                        {position}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <SelectComponent
+                  span="Posición laboral"
+                  name="position"
+                  value={formData.position}
+                  onChange={onInputChange}
+                  options={positions}
+                />
                 <InputComponent
                   label="Nombre de usuario"
                   type="text"
@@ -197,26 +185,13 @@ const CreateUserView: React.FC = () => {
                   onChange={onInputChange}
                   placeholder="Contraseña"
                 />
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">Rol de usuario</span>
-                  </label>
-                  <select
-                    name="role"
-                    value={formData.role}
-                    onChange={onInputChange}
-                    className="select select-bordered"
-                  >
-                    <option value="" disabled>
-                      Selecciona una opción
-                    </option>
-                    {roles.map((role, index) => (
-                      <option key={index} value={role}>
-                        {role}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <SelectComponent
+                  span="Rol de usuario"
+                  name="role"
+                  value={formData.role}
+                  onChange={onInputChange}
+                  options={roles}
+                />
               </div>
 
               <div>
