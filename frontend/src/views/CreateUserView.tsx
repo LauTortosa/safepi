@@ -2,24 +2,15 @@ import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import InputComponent from "../components/InputComponent";
 import SelectComponent from "../components/SelectComponent";
+import ModalComponent from "../components/ModalComponent";
 
 import api from "../api/axiosConfig";
 import { useState } from "react";
 import { useUserOptions } from "../hooks/useUserOptions";
+import { useUserFormReducer } from "../hooks/useUserFormReducer";
 
 const CreateUserView: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    last_name: "",
-    birthday: "",
-    start_date: "",
-    position: "",
-    username: "",
-    email: "",
-    password: "",
-    role: "",
-  });
-
+  const [formData, dispatch] = useUserFormReducer();
   const {positions, roles } = useUserOptions();
   const [isUserCreated, setIsUserCreated] = useState(false);
 
@@ -27,10 +18,7 @@ const CreateUserView: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    dispatch({ type: "SET_FIELD", field: name, value});
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -51,18 +39,7 @@ const CreateUserView: React.FC = () => {
         }
 
         setIsUserCreated(true);
-
-        setFormData({
-          name: "",
-          last_name: "",
-          birthday: "",
-          start_date: "",
-          position: "",
-          username: "",
-          email: "",
-          password: "",
-          role: "",
-        });
+        dispatch({ type: "RESET_FORM"});
       })
       .catch((error) => {
         console.error("Error al crear el usuario", error);
@@ -173,33 +150,11 @@ const CreateUserView: React.FC = () => {
                 </button>
               </div>
 
-              {isUserCreated && (
-                <dialog id="my_modal_1" className="modal" open>
-                  <div className="modal-overlay bg-gray-900 opacity-50" />
-                  <div className="modal-box bg-gray-100 text-gray-800 rounded-lg p-6 shadow-lg">
-                    <h3 className="font-bold text-lg text-blue-900">
-                      Usuario creado!
-                    </h3>
-                    <p className="py-4 text-gray-500">
-                      El usuario ha sido creado correctamente.
-                    </p>
-                    <div className="modal-action">
-                      <button
-                        className="btn bg-blue-500 hover:bg-blue-700 text-white"
-                        onClick={() =>
-                          (
-                            document.getElementById(
-                              "my_modal_1"
-                            ) as HTMLDialogElement
-                          )?.close()
-                        }
-                      >
-                        Cerrar
-                      </button>
-                    </div>
-                  </div>
-                </dialog>
-              )}
+              <ModalComponent 
+                isUserCreated={isUserCreated}
+                title="Usuario creado!"
+                content="El usuasio ha sido creado correctamente"
+              />
             </div>
           </form>
         </div>
