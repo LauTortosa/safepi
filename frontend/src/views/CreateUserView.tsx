@@ -1,5 +1,6 @@
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
+import InputComponent from "../components/InputComponent";
 
 import api from "../api/axiosConfig";
 import { useState, useEffect } from "react";
@@ -113,62 +114,42 @@ const CreateUserView: React.FC = () => {
           >
             <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8">
               <div>
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">Nombre</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={onInputChange}
-                    placeholder="Nombre"
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </div>
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">Apellidos</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="last_name"
-                    name="last_name"
-                    value={formData.last_name}
-                    onChange={onInputChange}
-                    placeholder="Apellidos"
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </div>
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">Fecha de nacimiento</span>
-                  </label>
-                  <input
-                    type="date"
-                    id="birthday"
-                    name="birthday"
-                    value={formData.birthday}
-                    onChange={onInputChange}
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </div>
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">
-                      Fecha de antiguedad laboral
-                    </span>
-                  </label>
-                  <input
-                    type="date"
-                    id="start_date"
-                    name="start_date"
-                    value={formData.start_date}
-                    onChange={onInputChange}
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </div>
+                <InputComponent
+                  label="Nombre"
+                  type="text"
+                  value={formData.name}
+                  id="name"
+                  name="name"
+                  onChange={onInputChange}
+                  placeholder="Nombre"
+                />
+                <InputComponent
+                  label="Apellidos"
+                  type="text"
+                  value={formData.last_name}
+                  id="last_name"
+                  name="last_name"
+                  onChange={onInputChange}
+                  placeholder="Apellidos"
+                />
+                <InputComponent
+                  label="Fecha de nacimiento"
+                  type="date"
+                  value={formData.birthday}
+                  id="birthday"
+                  name="birthday"
+                  onChange={onInputChange}
+                  placeholder=""
+                />
+                <InputComponent
+                  label="Fecha de antigüedad laboral"
+                  type="date"
+                  value={formData.start_date}
+                  id="start_date"
+                  name="start_date"
+                  onChange={onInputChange}
+                  placeholder=""
+                />
                 <div className="form-control w-full max-w-xs">
                   <label className="label">
                     <span className="label-text">Posición laboral</span>
@@ -189,48 +170,33 @@ const CreateUserView: React.FC = () => {
                     ))}
                   </select>
                 </div>
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">Nombre de usuario</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    value={formData.username}
-                    onChange={onInputChange}
-                    placeholder="Usuario"
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </div>
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">Email</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={onInputChange}
-                    placeholder="Email"
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </div>
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">Contraseña</span>
-                  </label>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={onInputChange}
-                    placeholder="Contraseña"
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </div>
+                <InputComponent
+                  label="Nombre de usuario"
+                  type="text"
+                  value={formData.username}
+                  id="username"
+                  name="username"
+                  onChange={onInputChange}
+                  placeholder="Nombre de usuario"
+                />
+                <InputComponent
+                  label="Email"
+                  type="email"
+                  value={formData.email}
+                  id="email"
+                  name="email"
+                  onChange={onInputChange}
+                  placeholder="Email"
+                />
+                <InputComponent
+                  label="Contraseña"
+                  type="password"
+                  value={formData.password}
+                  id="password"
+                  name="password"
+                  onChange={onInputChange}
+                  placeholder="Contraseña"
+                />
                 <div className="form-control w-full max-w-xs">
                   <label className="label">
                     <span className="label-text">Rol de usuario</span>
