@@ -1,6 +1,7 @@
 package com.safepi.safepi.Controllers;
 
 import com.safepi.safepi.Entities.Enums.Position;
+import com.safepi.safepi.Entities.Enums.Role;
 import com.safepi.safepi.Entities.User;
 import com.safepi.safepi.Services.JwtService;
 import com.safepi.safepi.Services.UserService;
@@ -96,5 +97,10 @@ public class UserController {
     @GetMapping("/positions")
     public List<Position> getPositions() {
         return userService.getAllPositions();
+    }
+
+    @GetMapping("/roles")
+    public List<Role> getRoles() {
+        return userService.getAllRoles();
     }
 }

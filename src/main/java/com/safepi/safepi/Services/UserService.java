@@ -1,6 +1,7 @@
 package com.safepi.safepi.Services;
 
 import com.safepi.safepi.Entities.Enums.Position;
+import com.safepi.safepi.Entities.Enums.Role;
 import com.safepi.safepi.Entities.User;
 import com.safepi.safepi.Repositories.UserRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -62,5 +63,9 @@ public class UserService {
     }
     public List<Position> getAllPositions() {
         return Arrays.asList(Position.values());
+    }
+
+    public List<Role> getAllRoles() {
+        return Arrays.asList(Role.values());
     }
 }
