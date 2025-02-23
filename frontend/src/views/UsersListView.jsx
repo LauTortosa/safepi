@@ -3,20 +3,8 @@ import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import api from "../api/axiosConfig";
 
-interface User {
-    id: number;
-    name: string;
-    last_name: string;
-    start_date: string;
-    birthday: string;
-    position: string;
-    email: string;
-    username: string;
-    role: string;
-  }
-
-const UsersListView: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
+const UsersListView = () => {
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");

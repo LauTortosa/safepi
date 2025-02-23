@@ -9,11 +9,11 @@ import { useState } from "react";
 import { useUserOptions } from "../hooks/useUserOptions";
 import { useUserFormReducer } from "../hooks/useUserFormReducer";
 
-const CreateUserView: React.FC = () => {
+const CreateUserView = () => {
   const [formData, dispatch] = useUserFormReducer();
   const {positions, roles } = useUserOptions();
   const [isUserCreated, setIsUserCreated] = useState(false);
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [errors, setErrors] = useState({});
 
   const formFields = [
     { label: "Nombre", type: "text", name: "name", placeholder: "Nombre", minLength: 3, maxLength: 25 },
@@ -27,20 +27,18 @@ const CreateUserView: React.FC = () => {
     { label: "Rol de usuario", type: "select", name: "role", options: roles },
   ];
 
-  const onInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const onInputChange = (e) => {
     const { name, value } = e.target;
     dispatch({ type: "SET_FIELD", field: name, value});
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
   
-    const newErrors: { [key: string]: string } = {};
+    const newErrors = {};
 
     for (const field of formFields) {
-      const value = formData[field.name as keyof typeof formData];
+      const value = formData[field.name];
   
       if (!value) {
         newErrors[field.name] = `El campo ${field.label} es requerido.`;
@@ -116,7 +114,7 @@ const CreateUserView: React.FC = () => {
                       key={field.name}
                       span={field.label}
                       name={field.name}
-                      value={formData[field.name as keyof typeof formData]}
+                      value={formData[field.name]}
                       onChange={onInputChange}
                       options={field.options || []}
                     />
@@ -125,7 +123,7 @@ const CreateUserView: React.FC = () => {
                       key={field.name}
                       label={field.label}
                       type={field.type}
-                      value={formData[field.name as keyof typeof formData]}
+                      value={formData[field.name]}
                       id={field.name}
                       name={field.name}
                       onChange={onInputChange}

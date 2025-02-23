@@ -4,7 +4,7 @@ import AppRouter from './routes';
 import './App.css'
 import './index.css'
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <div className="App">
       <AppRouter />

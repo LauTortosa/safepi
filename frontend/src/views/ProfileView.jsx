@@ -1,8 +1,8 @@
-import { useAuthUser } from "../hooks/useAuthUser.tsx";
+import { useAuthUser } from "../hooks/useAuthUser.jsx";
 
-import NavbarComponent from "../components/NavbarComponent";
+import NavbarComponent from "../components/NavbarComponent.jsx";
 
-const ProfileView: React.FC = () => {
+const ProfileView = () => {
   const user = useAuthUser();
 
   return (

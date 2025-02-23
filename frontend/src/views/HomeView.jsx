@@ -1,7 +1,7 @@
-import { useAuthUser } from "../hooks/useAuthUser.tsx";
-import NavbarComponent from "../components/NavbarComponent";
+import { useAuthUser } from "../hooks/useAuthUser.jsx";
+import NavbarComponent from "../components/NavbarComponent.jsx";
 
-const HomeView: React.FC = () => {
+const HomeView = () => {
     const user = useAuthUser(); 
   
   return (

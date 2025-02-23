@@ -3,11 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import api from "../api/axiosConfig";
 
-interface LoginFormProps {
-  onSubmit: (username: string, password: string) => void;
-}
-
-const LoginFormComponent: React.FC<LoginFormProps> = ({ onSubmit }) => {
+const LoginFormComponent = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -15,7 +11,7 @@ const LoginFormComponent: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -23,7 +19,7 @@ const LoginFormComponent: React.FC<LoginFormProps> = ({ onSubmit }) => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData.username, formData.password);
 

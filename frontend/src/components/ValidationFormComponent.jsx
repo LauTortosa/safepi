@@ -1,6 +1,4 @@
-interface ValidationFormProps { errorMessage?: string }
-
-const ValidationFormComponent: React.FC<ValidationFormProps> = ({errorMessage}) => {
+const ValidationFormComponent = ({errorMessage}) => {
   return (
     <div>
       <div className="alert alert-warning mt-2">

@@ -1,17 +1,6 @@
 import ValidationFormComponent from "./ValidationFormComponent";
 
-interface InputComponentProps {
-  label: string;
-  type: string;
-  id: string;
-  name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-  errorMessage?: string;
-}
-
-const InputComponent: React.FC<InputComponentProps> = ({
+const InputComponent = ({
   label,
   type,
   id,

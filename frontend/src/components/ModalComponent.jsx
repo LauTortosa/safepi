@@ -1,11 +1,4 @@
-interface ModalComponentProps {
-  isOpen: boolean;
-  title: string;
-  content: string;
-  onClose: () => void;
-}
-
-const ModalComponent: React.FC<ModalComponentProps> = ({
+const ModalComponent = ({
   isOpen,
   title,
   content,

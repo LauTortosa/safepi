@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const SidebarComponent: React.FC = () => {
+const SidebarComponent = () => {
   return (
     <aside className="w-64 h-screen bg-blue-900 text-white shadow-lg p-6 fixed top-16 left-0 overflow-y-auto">
       <ul className="space-y-4">

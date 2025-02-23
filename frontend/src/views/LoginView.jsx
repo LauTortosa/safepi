@@ -1,8 +1,8 @@
 import React from "react";
 import LoginFormComponent from "../components/LoginFormComponent";
 
-const LoginView: React.FC = () => {
-  const handleLoginSubmit = (username: string, password: string) => {
+const LoginView = () => {
+  const handleLoginSubmit = (username, password) => {
     console.log("Usuario", username);
     console.log("Password", password);
   };

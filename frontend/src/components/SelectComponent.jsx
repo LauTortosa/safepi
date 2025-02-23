@@ -1,12 +1,4 @@
-interface SelectComponentProps {
-  span: string;
-  name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: string[];
-}
-
-const SelectComponent: React.FC<SelectComponentProps> = ({
+const SelectComponent = ({
   span,
   name,
   value,

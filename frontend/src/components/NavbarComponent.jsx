@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const navigate = useNavigate();
 
-  const logout: () => void = () => {
+  const logout = () => {
     localStorage.removeItem("authToken");
     navigate("/");
   };

@@ -1,22 +1,6 @@
 import { useReducer } from "react";
 
-type FormData = {
-    name: string;
-    last_name: string;
-    birthday: string;
-    start_date: string;
-    position: string;
-    username: string;
-    email: string;
-    password: string;
-    role: string;
-};
-
-type Action = 
-    | { type: "SET_FIELD"; field: string; value: string }
-    | { type: "RESET_FORM" };
-
-const formReducer = (state: FormData, action: Action): FormData => {
+const formReducer = (state, action) => {
     switch (action.type) {
         case "SET_FIELD":
             return { ...state, [action.field]: action.value };
