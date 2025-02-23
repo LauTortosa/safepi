@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import InputComponent from "../components/InputComponent";
@@ -5,15 +7,15 @@ import SelectComponent from "../components/SelectComponent";
 import ModalComponent from "../components/ModalComponent";
 
 import api from "../api/axiosConfig";
-import { useState } from "react";
+
 import { useUserOptions } from "../hooks/useUserOptions";
 import { useUserFormReducer } from "../hooks/useUserFormReducer";
+import { useUserFormValidate } from "../hooks/useUserFormValidate";
 
 const CreateUserView = () => {
   const [formData, dispatch] = useUserFormReducer();
   const {positions, roles } = useUserOptions();
   const [isUserCreated, setIsUserCreated] = useState(false);
-  const [errors, setErrors] = useState({});
 
   const formFields = [
     { label: "Nombre", type: "text", name: "name", placeholder: "Nombre", minLength: 3, maxLength: 25 },
@@ -27,6 +29,8 @@ const CreateUserView = () => {
     { label: "Rol de usuario", type: "select", name: "role", options: roles },
   ];
 
+  const { errors, setErrors, validateForm } = useUserFormValidate(formFields);
+
   const onInputChange = (e) => {
     const { name, value } = e.target;
     dispatch({ type: "SET_FIELD", field: name, value});
@@ -34,38 +38,9 @@ const CreateUserView = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    const newErrors = {};
 
-    for (const field of formFields) {
-      const value = formData[field.name];
+    if (!validateForm(formData)) return;
   
-      if (!value) {
-        newErrors[field.name] = `El campo ${field.label} es requerido.`;
-        break; 
-      }
-  
-      if (field.minLength && value.length < field.minLength) {
-        newErrors[field.name] = `${field.label} debe tener al menos ${field.minLength} caracteres.`;
-        break;
-      }
-  
-      if (field.maxLength && value.length > field.maxLength) {
-        newErrors[field.name] = `${field.label} no puede tener más de ${field.maxLength} caracteres.`;
-        break;
-      }
-  
-      if (field.type === "email" && !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) {
-        newErrors[field.name] = "Por favor, introduce un correo electrónico válido.";
-        break;
-      }
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
     const token = localStorage.getItem("authToken");
   
     api
@@ -83,12 +58,7 @@ const CreateUserView = () => {
         dispatch({ type: "RESET_FORM" });
       })
       .catch((error) => {
-        if (error.response && error.response.data) {
-          setErrors({ general: error.response.data.message || "Hubo un error al crear el usuario."});
-        } else {
-          console.error("Error al crear el usuario", error);
-          setErrors({ general: "Hubo un error inesperado."});
-        }
+          setErrors({ general: error.response?.data?.message || "Hubo un error al crear el usuario."});
       });
   };
 
