@@ -13,16 +13,17 @@ const CreateUserView: React.FC = () => {
   const [formData, dispatch] = useUserFormReducer();
   const {positions, roles } = useUserOptions();
   const [isUserCreated, setIsUserCreated] = useState(false);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const formFields = [
-    { label: "Nombre", type: "text", name: "name", placeholder: "Nombre" },
-    { label: "Apellidos", type: "text", name: "last_name", placeholder: "Apellidos" },
-    { label: "Fecha de nacimiento", type: "date", name: "birthday", placeholder: "" },
-    { label: "Fecha de antigüedad laboral", type: "date", name: "start_date", placeholder: "" },
+    { label: "Nombre", type: "text", name: "name", placeholder: "Nombre", minLength: 3, maxLength: 25 },
+    { label: "Apellidos", type: "text", name: "last_name", placeholder: "Apellidos", minLength: 3 },
+    { label: "Fecha de nacimiento", type: "date", name: "birthday" },
+    { label: "Fecha de antigüedad laboral", type: "date", name: "start_date" },
     { label: "Posición laboral", type: "select", name: "position", options: positions },
-    { label: "Nombre de usuario", type: "text", name: "username", placeholder: "Nombre de usuario" },
+    { label: "Nombre de usuario", type: "text", name: "username", placeholder: "Nombre de usuario", minLength: 5, maxLength: 20 },
     { label: "Email", type: "email", name: "email", placeholder: "Email" },
-    { label: "Contraseña", type: "password", name: "password", placeholder: "Password" },
+    { label: "Contraseña", type: "password", name: "password", placeholder: "Password", minLength: 8, maxLength: 30 },
     { label: "Rol de usuario", type: "select", name: "role", options: roles },
   ];
 
@@ -35,9 +36,40 @@ const CreateUserView: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+  
+    const newErrors: { [key: string]: string } = {};
+
+    for (const field of formFields) {
+      const value = formData[field.name as keyof typeof formData];
+  
+      if (!value) {
+        newErrors[field.name] = `El campo ${field.label} es requerido.`;
+        break; 
+      }
+  
+      if (field.minLength && value.length < field.minLength) {
+        newErrors[field.name] = `${field.label} debe tener al menos ${field.minLength} caracteres.`;
+        break;
+      }
+  
+      if (field.maxLength && value.length > field.maxLength) {
+        newErrors[field.name] = `${field.label} no puede tener más de ${field.maxLength} caracteres.`;
+        break;
+      }
+  
+      if (field.type === "email" && !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) {
+        newErrors[field.name] = "Por favor, introduce un correo electrónico válido.";
+        break;
+      }
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
     const token = localStorage.getItem("authToken");
-
+  
     api
       .post("/users", formData, {
         headers: {
@@ -49,12 +81,16 @@ const CreateUserView: React.FC = () => {
         if (token) {
           localStorage.setItem("authToken", token);
         }
-
         setIsUserCreated(true);
-        dispatch({ type: "RESET_FORM"});
+        dispatch({ type: "RESET_FORM" });
       })
       .catch((error) => {
-        console.error("Error al crear el usuario", error);
+        if (error.response && error.response.data) {
+          setErrors({ general: error.response.data.message || "Hubo un error al crear el usuario."});
+        } else {
+          console.error("Error al crear el usuario", error);
+          setErrors({ general: "Hubo un error inesperado."});
+        }
       });
   };
 
@@ -94,6 +130,7 @@ const CreateUserView: React.FC = () => {
                       name={field.name}
                       onChange={onInputChange}
                       placeholder={field.placeholder || ""}
+                      errorMessage={errors[field.name]}
                     />
                   )    
                 )}
