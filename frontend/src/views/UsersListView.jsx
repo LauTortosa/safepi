@@ -9,7 +9,7 @@ const UsersListView = () => {
   const navigate = useNavigate();
 
   // TODO filtrado users
-  // TODO busqueda users
+  // TODO busqueda
   useEffect(() => {
     const token = localStorage.getItem("authToken");
 
@@ -60,13 +60,18 @@ const UsersListView = () => {
   return (
     <div>
       <NavbarComponent />
-      <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16">
+      <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-60">
         <h1 className="text-3xl font-semibold text-center mb-6 pt-16 text-blue-900 w-full">
           LISTA DE USUARIOS
         </h1>
 
         <div className="flex ">
-          <SidebarComponent />
+          <SidebarComponent 
+            options={[
+              { path: "/usersList", label: "📋 Lista de usuarios"},
+              { path: "/create-user", label: "➕ Crear nuevo usuario"},
+            ]}
+          />
           <main className="flex-1 flex justify-center px-6">
             <div className="bg-white shadow-lg rounded-lg p-8 mb-10">
               <div className="overflow-x-auto">

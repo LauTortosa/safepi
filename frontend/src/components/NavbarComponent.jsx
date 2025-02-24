@@ -20,7 +20,7 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-center space-x-6">
-        <Link to="/risks" className="hover:text-cyan-400">
+        <Link to="/risksList" className="hover:text-cyan-400">
           Gestión de riesgos
         </Link>
         
