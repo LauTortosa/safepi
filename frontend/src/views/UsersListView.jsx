@@ -26,7 +26,27 @@ const UsersListView = () => {
         console.error("Token no encontrado");
     }
     }, []);
-    
+
+    const onDelete = (userId) => {
+      const token = localStorage.getItem("authToken");
+
+      if (token) {
+        api
+        .delete(`/users/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+        })
+        .catch((error) => {
+          console.error("Error al eliminar el usuario", error);
+        });
+      } else {
+        console.error("Token no encontrado");
+      }
+    };
 
   return (
     <div>
@@ -39,7 +59,7 @@ const UsersListView = () => {
         <div className="flex ">
           <SidebarComponent />
           <main className="flex-1 flex justify-center px-6">
-            <div className="bg-white shadow-lg rounded-lg p-8">
+            <div className="bg-white shadow-lg rounded-lg p-8 mb-10">
               <div className="overflow-x-auto">
                 <table className="table-auto w-full border-collapse border border-gray-300">
                   <thead>
@@ -53,6 +73,7 @@ const UsersListView = () => {
                       <th className="p-2 border">Usuario</th>
                       <th className="p-2 border">Email</th>
                       <th className="p-2 border">Rol</th>
+                      <th className="p-2 border">Opciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -68,6 +89,14 @@ const UsersListView = () => {
                           <td className="p-2 border">{user.username}</td>
                           <td className="p-2 border">{user.email}</td>
                           <td className="p-2 border">{user.role}</td>
+                          <td className="p-2 border">
+                            <span onClick={() => onDelete(user.id)}
+                            className="cursor-pointer"
+                          >
+                            🗑️
+                          </span>
+                            <span>✏️</span>  
+                          </td>
                         </tr>
                       ))
                     ) : (
