@@ -45,10 +45,10 @@ public class UserController {
         return userService.updateUser(id, user);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+        userService.deleteUserById(id);
     }
 
     @PostMapping("/auth/login")
