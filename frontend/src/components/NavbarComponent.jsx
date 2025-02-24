@@ -20,12 +20,12 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-center space-x-6">
-        <Link to="/risksList" className="hover:text-cyan-400">
+        <Link to="/list-risks" className="hover:text-cyan-400">
           Gestión de riesgos
         </Link>
         
         { userRole === "ADMIN" && (
-          <Link to="/usersList" className="hover:text-cyan-400">
+          <Link to="/list-users" className="hover:text-cyan-400">
           Gestión de usuarios
         </Link>
         )}

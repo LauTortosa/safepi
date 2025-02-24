@@ -132,7 +132,7 @@ const UpdateUserView = () => {
                 content="El usuario ha sido editado correctamente"
                 onClose={() => {
                     setIsUserUpdated(false);
-                    navigate("/usersList");
+                    navigate("/list-users");
                 }}
               />
             </div>

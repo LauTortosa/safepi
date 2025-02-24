@@ -14,8 +14,8 @@ const AppRouter = () => {
               <Route path="/" element={<LoginView/>}/>
               <Route path="/home" element={<HomeView/>}/>
               <Route path="/profile" element={<ProfileView/>}/>
-              <Route path="/usersList" element={<UsersListView/>}/>
-              <Route path="/risksList" element={<RisksListView/>}/>
+              <Route path="/list-users" element={<UsersListView/>}/>
+              <Route path="/list-risks" element={<RisksListView/>}/>
               <Route path="/create-user" element={<CreateUserView/>}/>
               <Route path="/update-user/:userId" element={<UpdateUserView/>}/>
             </Routes>

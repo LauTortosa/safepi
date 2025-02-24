@@ -68,7 +68,7 @@ const UsersListView = () => {
         <div className="flex ">
           <SidebarComponent 
             options={[
-              { path: "/usersList", label: "📋 Lista de usuarios"},
+              { path: "/list-users", label: "📋 Lista de usuarios"},
               { path: "/create-user", label: "➕ Crear nuevo usuario"},
             ]}
           />
