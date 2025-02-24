@@ -5,6 +5,7 @@ import api from "../api/axiosConfig";
 
 const RiskListView = () => {
     const [risks, setRisks] = useState([]);
+    const userRole = localStorage.getItem("userRole");
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
@@ -57,9 +58,11 @@ const RiskListView = () => {
                                             <th className="p-2 border">Probabilidad de riesgo</th>
                                             <th className="p-2 border">Impacto del riesgo</th>
                                             <th className="p-2 border">Estado</th>
-                                            <th className="p-2 border">Email</th>
                                             <th className="p-2 border">Nivel de riesgo</th>
                                             <th className="p-2 border">Gravedad</th>
+                                            { userRole === "ADMIN" && (
+                                                <th className="p-2 border">Opciones</th>
+                                            )}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -75,10 +78,12 @@ const RiskListView = () => {
                                                 <td className="p-2 border">{risk.state}</td>
                                                 <td className="p-2 border">{risk.risk}</td>
                                                 <td className="p-2 border">{risk.gravity}</td>
-                                                <td className="p-2 border">
+                                                { userRole === "ADMIN" && (
+                                                    <td className="p-2 border">
                                                     <span className="cursor-pointer">🗑️</span>
                                                     <span className="cursor-pointer">✏️</span>  
-                                                </td>
+                                                    </td>
+                                                )}
                                             </tr>
                                         ))
                                         ) : (
