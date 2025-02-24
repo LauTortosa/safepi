@@ -23,24 +23,19 @@ const LoginFormComponent = ({ onSubmit }) => {
     e.preventDefault();
     onSubmit(formData.username, formData.password);
 
-    api
-        .post("/users/auth/login", formData)
-        .then((response) => {
-          const token = response.data.token;
-            console.log("Login con éxito", token);
-            localStorage.setItem('authToken', token);
-            navigate('/home');
-        })
-        .catch((error) => {
-            console.error("Error en el login", error);
-        });
-
-    console.log("Username", formData.username);
-    console.log("Password", formData.password);
-  };
+    api.post("/users/auth/login", formData)
+      .then((response) => {
+        const token = response.data.token;
+        localStorage.setItem('authToken', token);
+        navigate('/home');
+      })
+      .catch((error) => {
+        console.error("Error en el login", error);
+      });
+};
 
   return (
-    // TODO que no detecte el espacio en blanco al escrubur el usename
+    // TODO que no detecte el espacio en blanco al escribir el username
     // TODO validaciones
     <form onSubmit={handleSubmit} className="flex flex-col items-center">
   <div className="form-control w-full max-w-xs">

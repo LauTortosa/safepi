@@ -17,7 +17,7 @@ const UpdateUserView = () => {
     const { userId } = useParams();
     const navigate = useNavigate();
     const [isUserUpdated, setIsUserUpdated] = useState(false);
-    const [formData, dispatch] = useUserFormReducer(initialState);
+    const [formData, dispatch] = useUserFormReducer();
     const { positions, roles } = useUserOptions();
 
     const formFields = [
@@ -43,9 +43,7 @@ const UpdateUserView = () => {
                     headers: { Authorization: `Bearer ${token}` },
                 })
                 .then((response) => {
-                    console.log("datos del user", response.data);
                     dispatch({ type: "SET_FORM", payload: response.data });
-                    console.log("formData después de dispatch:", formData);
                 })
                 .catch((error) => {
                     console.error("Error al obtener datos del usuario", error);

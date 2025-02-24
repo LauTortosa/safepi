@@ -21,6 +21,7 @@ export const useAuthUser = () => {
       })
       .then((response) => {
         setUser(response.data);
+        localStorage.setItem("userRole", response.data.role);
       })
       .catch((error) => {
         console.error("Error al obtener el usuario", error);

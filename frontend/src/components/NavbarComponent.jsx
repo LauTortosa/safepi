@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const userRole = localStorage.getItem("userRole");
 
   const logout = () => {
     localStorage.removeItem("authToken");
@@ -22,9 +23,13 @@ const Navbar = () => {
         <Link to="/risks" className="hover:text-cyan-400">
           Gestión de riesgos
         </Link>
-        <Link to="/usersList" className="hover:text-cyan-400">
+        
+        { userRole === "ADMIN" && (
+          <Link to="/usersList" className="hover:text-cyan-400">
           Gestión de usuarios
         </Link>
+        )}
+        
         <Link to="/reports" className="hover:text-cyan-400">
           Incidentes/Accidentes
         </Link>

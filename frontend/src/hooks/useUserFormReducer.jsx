@@ -1,4 +1,4 @@
-import { act, useReducer } from "react";
+import { useReducer } from "react";
 
 const formReducer = (state, action) => {
     switch (action.type) {
