@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import api from "../api/axiosConfig";
+import { useNavigate } from "react-router-dom";
 
 const UsersListView = () => {
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
+  // TODO filtrado users
+  // TODO busqueda users
   useEffect(() => {
     const token = localStorage.getItem("authToken");
 
@@ -27,6 +31,7 @@ const UsersListView = () => {
     }
     }, []);
 
+    // TODO modal to confirm delete user
     const onDelete = (userId) => {
       const token = localStorage.getItem("authToken");
 
@@ -48,6 +53,10 @@ const UsersListView = () => {
       }
     };
 
+    const onUpdate = (userId) => {
+      navigate(`/update-user/${userId}`);
+    };
+
   return (
     <div>
       <NavbarComponent />
@@ -61,6 +70,7 @@ const UsersListView = () => {
           <main className="flex-1 flex justify-center px-6">
             <div className="bg-white shadow-lg rounded-lg p-8 mb-10">
               <div className="overflow-x-auto">
+                 {/* TODO orden ascendente/descendente */}
                 <table className="table-auto w-full border-collapse border border-gray-300">
                   <thead>
                     <tr className="bg-blue-900 text-white">
@@ -92,10 +102,14 @@ const UsersListView = () => {
                           <td className="p-2 border">
                             <span onClick={() => onDelete(user.id)}
                             className="cursor-pointer"
-                          >
-                            🗑️
-                          </span>
-                            <span>✏️</span>  
+                            >
+                              🗑️
+                            </span>
+                            <span onClick={() => onUpdate(user.id)}
+                              className="cursor-pointer"
+                            >
+                              ✏️
+                            </span>  
                           </td>
                         </tr>
                       ))
