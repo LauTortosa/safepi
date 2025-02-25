@@ -23,9 +23,9 @@ const CreateUserView = () => {
     { label: "Fecha de nacimiento", type: "date", name: "birthday" },
     { label: "Fecha de antigüedad laboral", type: "date", name: "start_date" },
     { label: "Posición laboral", type: "select", name: "position", options: positions },
-    { label: "Nombre de usuario", type: "text", name: "username", placeholder: "Nombre de usuario", minLength: 5, maxLength: 20 },
+    { label: "Nombre de usuario", type: "text", name: "username", placeholder: "Nombre de usuario", minLength: 3, maxLength: 20 },
     { label: "Email", type: "email", name: "email", placeholder: "Email" },
-    { label: "Contraseña", type: "password", name: "password", placeholder: "Password", minLength: 8, maxLength: 30 },
+    { label: "Contraseña", type: "password", name: "password", placeholder: "Password", minLength: 3, maxLength: 30 },
     { label: "Rol de usuario", type: "select", name: "role", options: roles },
   ];
 
@@ -67,13 +67,18 @@ const CreateUserView = () => {
     <div >
       { /* TODO Input para repetir contraseña*/ }
       <NavbarComponent />
-      <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16">
+      <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-60">
         <h1 className="text-3xl font-semibold text-center mb-6 pt-16 text-blue-900 w-full">
           CREAR USUARIO
         </h1>
 
         <div className="flex ">
-          <SidebarComponent />
+          <SidebarComponent 
+            options={[
+              { path: "/list-users", label: "📋 Lista de usuarios"},
+              { path: "/create-user", label: "➕ Crear nuevo usuario"},
+            ]}
+          />
           <form
             onSubmit={handleSubmit}
             className="flex-1 flex justify-center px-6"
