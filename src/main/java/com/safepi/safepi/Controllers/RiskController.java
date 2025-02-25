@@ -1,10 +1,10 @@
 package com.safepi.safepi.Controllers;
 
+import com.safepi.safepi.Entities.Enums.Probability;
 import com.safepi.safepi.Entities.Risk;
 import com.safepi.safepi.Services.RiskService;
 import com.safepi.safepi.dto.RiskDTO;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +23,6 @@ public class RiskController {
         List<Risk> risks = riskService.getAllRisk();
         return risks.stream().map(RiskDTO::new).toList();
     }
-
-
 
     @GetMapping("/{id}")
     public Risk getRiskById(@PathVariable Long id) {
@@ -46,5 +44,10 @@ public class RiskController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRisk(@PathVariable Long id) {
         riskService.deleteRisk(id);
+    }
+
+    @GetMapping("/probability")
+    public List<Probability> getProbability() {
+        return riskService.getAllProbability();
     }
 }

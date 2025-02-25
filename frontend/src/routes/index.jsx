@@ -6,6 +6,7 @@ import UsersListView from "../views/UsersListView";
 import CreateUserView from "../views/CreateUserView";
 import UpdateUserView from "../views/UpdateUserView";
 import RisksListView from "../views/RisksListView";
+import RiskCreateView from "../views/RiskCreateView";
 
 const AppRouter = () => {
     return (
@@ -15,8 +16,9 @@ const AppRouter = () => {
               <Route path="/home" element={<HomeView/>}/>
               <Route path="/profile" element={<ProfileView/>}/>
               <Route path="/list-users" element={<UsersListView/>}/>
-              <Route path="/list-risks" element={<RisksListView/>}/>
               <Route path="/create-user" element={<CreateUserView/>}/>
+              <Route path="/list-risks" element={<RisksListView/>}/>
+              <Route path="/create-risks" element={<RiskCreateView/>}/>
               <Route path="/update-user/:userId" element={<UpdateUserView/>}/>
             </Routes>
         </Router>

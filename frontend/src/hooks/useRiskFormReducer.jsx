@@ -1,15 +1,11 @@
 import { useReducer } from "react";
 
 const initialState = {
-    name: "",
-    last_name: "",
-    birthday: "",
-    start_date: "",
-    position: "",
-    username: "", 
-    email: "", 
-    password: "", 
-    role: "",
+    date: "",
+    location: "",
+    description: "",
+    probability: "",
+    impact: "",
 };
 
 const formReducer = (state, action) => {
@@ -25,6 +21,6 @@ const formReducer = (state, action) => {
     }
 };
 
-export const useUserFormReducer = () => {
+export const useRiskFormReducer = () => {
     return useReducer(formReducer, initialState);
 };

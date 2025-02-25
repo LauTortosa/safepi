@@ -41,7 +41,8 @@ const RiskListView = () => {
                 <div className="flex ">
                     <SidebarComponent 
                         options={[
-                            { path: "/list-risks", label: "📋 Lista de riesgos"}
+                            { path: "/list-risks", label: "📋 Lista de riesgos"},
+                            { path: "/create-risks", label: "➕ Añadir riesgos"}
                         ]}
                     />
                     <main className="flex-1 flex justify-center px-6">

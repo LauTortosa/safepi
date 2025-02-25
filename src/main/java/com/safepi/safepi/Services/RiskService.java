@@ -1,10 +1,12 @@
 package com.safepi.safepi.Services;
 
+import com.safepi.safepi.Entities.Enums.Probability;
 import com.safepi.safepi.Entities.Risk;
 import com.safepi.safepi.Repositories.RiskRepository;
 import org.aspectj.bridge.IMessage;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -25,11 +27,6 @@ public class RiskService {
                 .orElseThrow(() -> new RuntimeException("Información del riesgo no encontrado"));
 
     }
-
-    public List<Risk> findRisksByUserId(Long userId) {
-        return riskRepository.findByUserId(userId);
-    }
-
     public Risk createRisk(Risk risk) {
         return riskRepository.save(risk);
     }
@@ -53,5 +50,7 @@ public class RiskService {
             throw new RuntimeException("Id del riesgo no encontrado");
         }
         riskRepository.deleteById(id);
+    }
+    public List<Probability> getAllProbability() { return Arrays.asList(Probability.values());
     }
 }
