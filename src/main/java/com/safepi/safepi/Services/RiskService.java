@@ -26,6 +26,10 @@ public class RiskService {
 
     }
 
+    public List<Risk> findRisksByUserId(Long userId) {
+        return riskRepository.findByUserId(userId);
+    }
+
     public Risk createRisk(Risk risk) {
         return riskRepository.save(risk);
     }

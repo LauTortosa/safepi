@@ -1,5 +1,6 @@
 package com.safepi.safepi.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.safepi.safepi.Entities.Enums.Impact;
 import com.safepi.safepi.Entities.Enums.Location;
 import com.safepi.safepi.Entities.Enums.Probability;
@@ -21,6 +22,11 @@ public class Risk {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
+    private User user;
 
     @NotNull(message = "La fecha no puede estar vacía")
     private Date date;

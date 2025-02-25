@@ -1,6 +1,7 @@
 package com.safepi.safepi.Entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.safepi.safepi.Entities.Enums.Position;
 import com.safepi.safepi.Entities.Enums.Role;
 import jakarta.persistence.*;
@@ -8,7 +9,9 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -53,6 +56,10 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Position position;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Risk> risks = new ArrayList<>();
 
     @Transient
     private Integer age;
