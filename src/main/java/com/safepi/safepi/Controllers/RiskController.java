@@ -1,6 +1,8 @@
 package com.safepi.safepi.Controllers;
 
+import com.safepi.safepi.Entities.Enums.Impact;
 import com.safepi.safepi.Entities.Enums.Probability;
+import com.safepi.safepi.Entities.Enums.State;
 import com.safepi.safepi.Entities.Risk;
 import com.safepi.safepi.Services.RiskService;
 import com.safepi.safepi.dto.RiskDTO;
@@ -49,5 +51,15 @@ public class RiskController {
     @GetMapping("/probability")
     public List<Probability> getProbability() {
         return riskService.getAllProbability();
+    }
+
+    @GetMapping("/impacts")
+    public List<Impact> getImpacts() {
+        return riskService.getAllImpacts();
+    }
+
+    @GetMapping("/states")
+    public List<State> getStates() {
+        return riskService.getAllStates();
     }
 }
