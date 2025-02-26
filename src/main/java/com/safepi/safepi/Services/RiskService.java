@@ -60,4 +60,8 @@ public class RiskService {
     public List<State> getAllStates() { return Arrays.asList(State.values()); }
 
     public List<Location> getAllLocations() { return Arrays.asList(Location.values()); }
+
+    public List<Risk> findRisksByUserId(Long userId) {
+        return riskRepository.findByUserId(userId);
+    }
 }

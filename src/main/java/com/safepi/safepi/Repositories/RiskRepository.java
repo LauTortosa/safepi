@@ -8,4 +8,5 @@ import java.util.List;
 
 @Repository
 public interface RiskRepository extends JpaRepository<Risk, Long> {
+    List<Risk> findByUserId(Long userId);
 }

@@ -10,6 +10,7 @@ import com.safepi.safepi.Services.RiskService;
 import com.safepi.safepi.Services.UserService;
 import com.safepi.safepi.dto.RiskDTO;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,12 @@ public class RiskController {
     public List<RiskDTO> getAllRisks() {
         List<Risk> risks = riskService.getAllRisk();
         return risks.stream().map(RiskDTO::new).toList();
+    }
+
+    @GetMapping("/{userId}/risks")
+    public ResponseEntity<List<Risk>> getRisksByUser(@PathVariable Long userId) {
+        List<Risk> risks = riskService.findRisksByUserId(userId);
+        return ResponseEntity.ok(risks);
     }
 
     @GetMapping("/probability")
