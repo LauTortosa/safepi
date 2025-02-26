@@ -1,22 +1,26 @@
+import { useState } from "react";
+
 import { useRiskFormReducer } from "../hooks/useRiskFormReducer";
+import { useRiskOptions } from "../hooks/useRiskOptions";
+import api from "../api/axiosConfig";
 
 import NavbarComponet from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import SelectComponent from "../components/SelectComponent";
 import InputComponent from "../components/InputComponent";
 import ModalComponent from "../components/ModalComponent";
-import { useState } from "react";
 
 const RiskCreateView = () => {
     const [formData, dispatch] = useRiskFormReducer();
+    const {probability, impacts, locations} = useRiskOptions();
     const [isRiskCreated, setIsRiskCreated] = useState(false);
 
     const formFields = [
         { label: "Fecha", type: "date", name: "date" },
-        { label: "Ubicación", type: "select", name: "location" },
+        { label: "Ubicación", type: "select", name: "location", options: locations },
         { label: "Descripción del riesgo", type: "text", name: "description" },
-        { label: "Probabilidad del riesgo", type: "select", name: "probability" },
-        { label: "Impacto del riesgo", type: "select", name: "impact" },
+        { label: "Probabilidad del riesgo", type: "select", name: "probability", options: probability },
+        { label: "Impacto del riesgo", type: "select", name: "impact", options: impacts },
     ];
 
     const onInputChange = (e) => {
