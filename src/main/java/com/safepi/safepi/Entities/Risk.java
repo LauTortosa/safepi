@@ -47,6 +47,7 @@ public class Risk {
     private Impact impact;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private State state = State.PENDIENTE;
 
     @Transient

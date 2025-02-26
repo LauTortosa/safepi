@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/risks")
@@ -67,7 +68,7 @@ public class RiskController {
         risk.setImpact(riskDTO.getImpact());
         risk.setProbability(riskDTO.getProbability());
         risk.setGravity(riskDTO.getGravity());
-        risk.setState(riskDTO.getState());
+        risk.setState(Optional.ofNullable(riskDTO.getState()).orElse(State.PENDIENTE));
         risk.setRisk(riskDTO.getRisk());
 
         risk.setUser(user);
