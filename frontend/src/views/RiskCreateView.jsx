@@ -86,6 +86,7 @@ const RiskCreateView = () => {
                                             key={field.name}
                                             label={field.label}
                                             type={field.type}
+                                            name={field.name}
                                             value={formData[field.name]}
                                             onChange={onInputChange}
                                             placeholder={field.placeholder || ""}
