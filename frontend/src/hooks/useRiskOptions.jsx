@@ -11,38 +11,23 @@ export const useRiskOptions = () => {
     useEffect(() => {
         const token = localStorage.getItem("authToken");
 
-        api.get("/risks/probability", { headers: { Authorization: `Bearer ${token}` } })
-        .then((response) => {
-            setProbability(response.data);
+        Promise.all([
+            api.get("/risks/probability", { headers: { Authorization: `Bearer ${token}` } }),
+            api.get("/risks/impacts", { headers: { Authorization: `Bearer ${token}` } }),
+            api.get("/risks/states", { headers: { Authorization: `Bearer ${token}` } }),
+            api.get("/risks/locations", { headers: { Authorization: `Bearer ${token}` } })
+
+        ])
+        .then(([probRes, impactRes, stateRes, locationRes]) => {
+            setProbability(probRes.data);
+            setImpacts(impactRes.data);
+            setStates(stateRes.data);
+            setLocations(locationRes.data);
         })
         .catch((error) => {
-            console.error("Error al cargar las opciones del select probability", error);
+            console.error("Error al cargar las opciones del select", error);
         });
-
-        api.get("/risks/impacts", { headers: { Authorization: `Bearer ${token}` } })
-        .then((response) => {
-            setImpacts(response.data);
-        })
-        .catch((error) => {
-            console.error("Error al cargar las opciones del select impact", error);
-        })
-
-        api.get("/risks/states", { headers: { Authorization: `Bearer ${token}` } })
-        .then((response) => {
-            setStates(response.data);
-        })
-        .catch((error) => {
-            console.error("Error al cargar las opciones del select state", error)
-        })
-
-        api.get("/risks/locations", { headers: { Authorization: `Bearer ${token}` } })
-        .then((response) => {
-            setLocations(response.data);
-        })
-        .catch((error) => {
-            console.error("Error al cargar las opciones del select location", error)
-        })
-    });
+    }, []);
 
     return {probability, impacts, states, locations}
 };
