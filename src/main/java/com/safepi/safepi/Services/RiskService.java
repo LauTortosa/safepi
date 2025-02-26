@@ -1,6 +1,7 @@
 package com.safepi.safepi.Services;
 
 import com.safepi.safepi.Entities.Enums.Impact;
+import com.safepi.safepi.Entities.Enums.Location;
 import com.safepi.safepi.Entities.Enums.Probability;
 import com.safepi.safepi.Entities.Enums.State;
 import com.safepi.safepi.Entities.Risk;
@@ -53,11 +54,10 @@ public class RiskService {
         }
         riskRepository.deleteById(id);
     }
-    public List<Probability> getAllProbability() { return Arrays.asList(Probability.values());
-    }
-    public List<Impact> getAllImpacts() { return Arrays.asList(Impact.values());
-    }
+    public List<Probability> getAllProbability() { return Arrays.asList(Probability.values()); }
+    public List<Impact> getAllImpacts() { return Arrays.asList(Impact.values()); }
 
-    public List<State> getAllStates() { return Arrays.asList(State.values());
-    }
+    public List<State> getAllStates() { return Arrays.asList(State.values()); }
+
+    public List<Location> getAllLocations() { return Arrays.asList(Location.values()); }
 }

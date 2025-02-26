@@ -32,11 +32,18 @@ const RiskCreateView = () => {
         e.preventDefault();
 
         const token = localStorage.getItem("authToken");
+        const userId = localStorage.getItem("userId");
 
-        if (token) {
-            api.post("/risks", formData, { headers: { Authorization: `Bearer ${token}` }, 
+        if (token && userId) {
+            const riskDTO = { 
+                ...formData, 
+                userId: Number(userId),
+            };
+            
+            api.post("/risks", riskDTO, { headers: { Authorization: `Bearer ${token}` }, 
             })
             .then((response) => {
+                console.log("risk", response.data);
                 const token = response.data.token;
                 if (token) {
                     localStorage.setItem("authToken", token);
@@ -98,6 +105,7 @@ const RiskCreateView = () => {
                             <button
                                 type="submit"
                                 className="mt-8 btn bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all"
+                                onSubmit={onSubmit}
                             >
                                 Añadir riesgo
                             </button>

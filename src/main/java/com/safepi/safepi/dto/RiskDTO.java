@@ -10,7 +10,6 @@ import java.util.Date;
 
 public class RiskDTO {
     private Long id;
-
     private Date date;
     private Location location;
     private String description;
@@ -27,21 +26,21 @@ public class RiskDTO {
 
     private String risk;
 
-    public RiskDTO(Risk risk) {
-        this.id = risk.getId();
-        this.date = risk.getDate();
-        this.location = risk.getLocation();
-        this.description = risk.getDescription();
-        this.impact = risk.getImpact();
-        this.probability = risk.getProbability();
-        this.gravity = risk.getGravity();
-        this.state = risk.getState();
-        this.userId = risk.getUser().getId();
-        this.risk = risk.getRisk();
-        this.name = risk.getUser().getName();
-        this.last_name = risk.getUser().getLast_name();
+    public RiskDTO() {}
+    public RiskDTO(Risk riskEntity) {
+        this.id = riskEntity.getId();
+        this.date = riskEntity.getDate();
+        this.location = riskEntity.getLocation();
+        this.description = riskEntity.getDescription();
+        this.impact = riskEntity.getImpact();
+        this.probability = riskEntity.getProbability();
+        this.gravity = riskEntity.getGravity();
+        this.state = riskEntity.getState();
+        this.risk = riskEntity.getRisk();
+        this.userId = riskEntity.getUser().getId();
+        this.name = riskEntity.getUser().getName();
+        this.last_name = riskEntity.getUser().getLast_name();
     }
-
     public String getName() {
         return name;
     }
