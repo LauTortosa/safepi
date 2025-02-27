@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { userRoleLabel, userPositionLabel } from "../utils/selectLabels";
 
 import api from "../api/axiosConfig";
 
@@ -61,6 +62,18 @@ const UsersListView = () => {
       navigate(`/update-user/${userId}`);
     };
 
+    const rows = users.map((user, index) => [
+      index + 1,
+      user.name,
+      user.last_name,
+      user.birthday,
+      userPositionLabel[user.position] || user.position,
+      user.start_date,
+      user.username,
+      user.email,
+      userRoleLabel[user.role] || user.role,
+    ]);
+
   return (
     <div>
       <NavbarComponent />
@@ -78,17 +91,7 @@ const UsersListView = () => {
           />
           <TableComponent
             headers={["#", "Nombre", "Apellidos", "Fecha de nacimiento", "Puesto laboral", "Fecha de antigüedad", "Usuario", "Email", "Rol de usuario"]}
-            rows={users.map((user,index) => [
-              index + 1,
-              user.name,
-              user.last_name,
-              user.birthday,
-              user.position,
-              user.start_date,
-              user.username,
-              user.email,
-              user.role,
-            ])}
+            rows={rows}
             userRole={userRole}
           />
         </div>
