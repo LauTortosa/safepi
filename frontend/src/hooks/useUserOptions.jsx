@@ -1,9 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import api from "../api/axiosConfig";
 
 export const useUserOptions = () => {
-  const [positions, setPositions] = useState([]);
-  const [roles, setRoles] = useState([]);
+  const positions = [
+    { value: "LABORER", label: "Peón" },
+    { value: "OPERATOR", label: "Operario/a" },
+    { value: "SUPERVISOR", label: "Oficial" },
+    { value: "QUALITY_TECHNICIAN", label: "Técnico/a de Calidad" },
+    { value: "MAINTENANCE_TECHNICIAN", label: "Técnico/a de Mantenimiento" },
+    { value: "CLEANER", label: "Limpiador/a" },
+  ];
+
+  const roles = [
+    { value: "USER", label: "Usuario" },
+    { value: "ADMIN", label: "Admin" },
+  ];
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
