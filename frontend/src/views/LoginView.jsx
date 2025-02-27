@@ -3,8 +3,6 @@ import LoginFormComponent from "../components/LoginFormComponent";
 
 const LoginView = () => {
   const handleLoginSubmit = (username, password) => {
-    console.log("Usuario", username);
-    console.log("Password", password);
   };
 
   return (

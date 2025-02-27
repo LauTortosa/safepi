@@ -21,7 +21,6 @@ export const useAuthUser = () => {
       })
       .then((response) => {
         setUser(response.data);
-        console.log("data me", response.data);
         localStorage.setItem("userRole", response.data.role);
         localStorage.setItem("userId", response.data.id);
       })
