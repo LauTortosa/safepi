@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
+
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import TableComponent from "../components/TableComponent";
+
 import api from "../api/axiosConfig";
 
-const RiskListView = () => {
+const RiskListUserView = () => {
     const [risks, setRisks] = useState([]);
     const userRole = localStorage.getItem("userRole");
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
+        const userId = localStorage.getItem("userId");
 
         if (token) {
             api
-                .get("/risks", {
+                .get(`/risks/users/${userId}/risks`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -32,7 +35,7 @@ const RiskListView = () => {
     }, []);
 
     return (
-        <div >
+        <div>
             <NavbarComponent />
             <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-60">
                 <h1 className="text-3xl font-semibold text-center mb-6 pt-16 text-blue-900 w-full">
@@ -68,4 +71,4 @@ const RiskListView = () => {
     );
 };
 
-export default RiskListView;
+export default RiskListUserView;

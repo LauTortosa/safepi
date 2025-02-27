@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import api from "../api/axiosConfig";
+
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
-import api from "../api/axiosConfig";
-import { useNavigate } from "react-router-dom";
+import TableComponent from "../components/TableComponent";
 
 const UsersListView = () => {
   const [users, setUsers] = useState([]);
+  const [userRole] = useState();
   const navigate = useNavigate();
 
   // TODO filtrado users
@@ -72,64 +76,21 @@ const UsersListView = () => {
               { path: "/create-user", label: "➕ Crear nuevo usuario"},
             ]}
           />
-          <main className="flex-1 flex justify-center px-6">
-            <div className="bg-white shadow-lg rounded-lg p-8 mb-10">
-              <div className="overflow-x-auto">
-                 {/* TODO orden ascendente/descendente */}
-                <table className="table-auto w-full border-collapse border border-gray-300">
-                  <thead>
-                    <tr className="bg-blue-900 text-white">
-                      <th className="p-2 border">#</th>
-                      <th className="p-2 border">Nombre</th>
-                      <th className="p-2 border">Apellidos</th>
-                      <th className="p-2 border">Fecha de nacimiento</th>
-                      <th className="p-2 border">Puesto</th>
-                      <th className="p-2 border">Fecha de antigüedad</th>
-                      <th className="p-2 border">Usuario</th>
-                      <th className="p-2 border">Email</th>
-                      <th className="p-2 border">Rol</th>
-                      <th className="p-2 border">Opciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {users.length > 0 ? (
-                      users.map((user, index) => (
-                        <tr key={user.id} className="hover:bg-gray-200">
-                          <td className="p-2 border">{index + 1}</td>
-                          <td className="p-2 border">{user.name}</td>
-                          <td className="p-2 border">{user.last_name}</td>
-                          <td className="p-2 border">{user.birthday}</td>
-                          <td className="p-2 border">{user.position}</td>
-                          <td className="p-2 border">{user.start_date}</td>
-                          <td className="p-2 border">{user.username}</td>
-                          <td className="p-2 border">{user.email}</td>
-                          <td className="p-2 border">{user.role}</td>
-                          <td className="p-2 border">
-                            <span onClick={() => onDelete(user.id)}
-                            className="cursor-pointer"
-                            >
-                              🗑️
-                            </span>
-                            <span onClick={() => onUpdate(user.id)}
-                              className="cursor-pointer"
-                            >
-                              ✏️
-                            </span>  
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan={8} className="text-center p-4">
-                          No hay usuarios disponibles.
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </main>
+          <TableComponent
+            headers={["#", "Nombre", "Apellidos", "Fecha de nacimiento", "Puesto laboral", "Fecha de antigüedad", "Usuario", "Email", "Rol de usuario"]}
+            rows={users.map((user,index) => [
+              index + 1,
+              user.name,
+              user.last_name,
+              user.birthday,
+              user.position,
+              user.start_date,
+              user.username,
+              user.email,
+              user.role,
+            ])}
+            userRole={userRole}
+          />
         </div>
       </div>
     </div>
