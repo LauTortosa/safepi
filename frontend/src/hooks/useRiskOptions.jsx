@@ -1,12 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import api from "../api/axiosConfig";
 
-
 export const useRiskOptions = () => {
-    const [probability, setProbability] = useState([]);
-    const [impacts, setImpacts] = useState([]);
-    const [states, setStates] = useState([]);
-    const [locations, setLocations] = useState([]);
+    const probability = [
+        { value: "BAJA", label: "Baja" },
+        { value: "MEDIA", label: "Media" },
+        { value: "ALTA", label: "Alta" },
+    ];
+    
+    const impacts = [
+        { value: "BAJO", label: "Bajo" },
+        { value: "MEDIO", label: "Medio" },
+        { value: "ALTO", label: "Alto" },
+    ]; 
+
+    const states = [
+        { value: "PENDIENTE", label: "Pendiente" },
+        { value: "REVISANDO", label: "Revisando" },
+        { value: "SOLUCIONADO", label: "Solucionado" },
+        { value: "CERRADO", label: "Cerrado" },
+    ]; 
+
+    const locations = [
+        { value: "ZONA_1", label: "Zona 1" },
+        { value: "ZONA_2", label: "Zona 2" },
+        { value: "ZONA_3", label: "Zona 3" },
+        { value: "ZONA_4", label: "Zona 4" },
+    ];
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
@@ -29,5 +49,5 @@ export const useRiskOptions = () => {
         });
     }, []);
 
-    return {probability, impacts, states, locations}
+    return { probability, impacts, states, locations };
 };

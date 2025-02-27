@@ -1,10 +1,4 @@
-const SelectComponent = ({
-  span,
-  name,
-  value,
-  onChange,
-  options,
-}) => {
+const SelectComponent = ({ span, name, value, onChange, options }) => {
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
@@ -19,9 +13,9 @@ const SelectComponent = ({
         <option value="" disabled>
           Selecciona una opción
         </option>
-        {options.map((option, index) => (
-          <option key={index} value={option}>
-            {option}
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
           </option>
         ))}
       </select>
