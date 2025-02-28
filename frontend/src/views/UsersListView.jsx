@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userRoleLabel, userPositionLabel } from "../utils/selectLabels";
+import { userRoleLabel, userPositionLabel } from "../utils/displayLabels";
 
 import api from "../api/axiosConfig";
 

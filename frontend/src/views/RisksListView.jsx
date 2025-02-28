@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { riskImpactLabel, riskLocationLabel, riskProbabilityLabel, riskStateLabel } from "../utils/displayLabels";
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import TableComponent from "../components/TableComponent";
@@ -52,11 +53,11 @@ const RiskListView = () => {
                             rows={risks.map((risk, index) => [
                                 index + 1,
                                 risk.date,
-                                risk.location,
+                                riskLocationLabel[risk.location] || risk.location,
                                 risk.description,
-                                risk.probability,
-                                risk.impact,
-                                risk.state,
+                                riskProbabilityLabel[risk.probability] || risk.probability,
+                                riskImpactLabel[risk.impact] || risk.impact,
+                                riskStateLabel[risk.state] || risk.state,
                                 risk.gravity
                             ])}
                             userRole={userRole}
