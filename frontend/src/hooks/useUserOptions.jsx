@@ -1,20 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { userPositionLabel, userRoleLabel } from "../utils/displayLabels";
 import api from "../api/axiosConfig";
 
 export const useUserOptions = () => {
-  const positions = [
-    { value: "LABORER", label: "Peón" },
-    { value: "OPERATOR", label: "Operario/a" },
-    { value: "SUPERVISOR", label: "Oficial" },
-    { value: "QUALITY_TECHNICIAN", label: "Técnico/a de Calidad" },
-    { value: "MAINTENANCE_TECHNICIAN", label: "Técnico/a de Mantenimiento" },
-    { value: "CLEANER", label: "Limpiador/a" },
-  ];
-
-  const roles = [
-    { value: "USER", label: "Usuario" },
-    { value: "ADMIN", label: "Admin" },
-  ];
+  const [positions, setPositions] = useState([]);
+  const [roles, setRoles] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -24,8 +14,8 @@ export const useUserOptions = () => {
       api.get("/users/roles", { headers: { Authorization: `Bearer ${token}` } })
     ])
     .then(([positionsResp, rolesResp]) => {
-      setPositions(positionsResp.data);
-      setRoles(rolesResp.data);
+      setPositions(positionsResp.data.map((pos) => ({ value: pos, label: userPositionLabel[pos] })));
+      setRoles(rolesResp.data.map((role) => ({ value: role, label: userRoleLabel[role] })));
     })
     .catch((error) => {
       console.error("Error al cargar opciones del select", error);

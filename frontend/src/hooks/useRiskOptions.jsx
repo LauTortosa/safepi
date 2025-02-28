@@ -1,32 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { riskImpactLabel, riskLocationLabel, riskProbabilityLabel, riskStateLabel } from "../utils/displayLabels";
 import api from "../api/axiosConfig";
 
 export const useRiskOptions = () => {
-    const probability = [
-        { value: "BAJA", label: "Baja" },
-        { value: "MEDIA", label: "Media" },
-        { value: "ALTA", label: "Alta" },
-    ];
-    
-    const impacts = [
-        { value: "BAJO", label: "Bajo" },
-        { value: "MEDIO", label: "Medio" },
-        { value: "ALTO", label: "Alto" },
-    ]; 
-
-    const states = [
-        { value: "PENDIENTE", label: "Pendiente" },
-        { value: "REVISANDO", label: "Revisando" },
-        { value: "SOLUCIONADO", label: "Solucionado" },
-        { value: "CERRADO", label: "Cerrado" },
-    ]; 
-
-    const locations = [
-        { value: "ZONA_1", label: "Zona 1" },
-        { value: "ZONA_2", label: "Zona 2" },
-        { value: "ZONA_3", label: "Zona 3" },
-        { value: "ZONA_4", label: "Zona 4" },
-    ];
+    const [probability, setProbability] = useState([]);
+    const [impacts, setImpacts] = useState([]);
+    const [states, setStates] = useState([]);
+    const [locations, setLocations] = useState([]);
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
@@ -39,10 +19,10 @@ export const useRiskOptions = () => {
 
         ])
         .then(([probRes, impactRes, stateRes, locationRes]) => {
-            setProbability(probRes.data);
-            setImpacts(impactRes.data);
-            setStates(stateRes.data);
-            setLocations(locationRes.data);
+            setProbability(probRes.data.map((prob) => ({ value: prob, label: riskProbabilityLabel[prob] })));
+            setImpacts(impactRes.data.map((impact) => ({ value: impact, label: riskImpactLabel[impact] })));
+            setStates(stateRes.data.map((state) => ({ value: state, label: riskStateLabel[state] })));
+            setLocations(locationRes.data.map((location) => ({ value: location, label: riskLocationLabel[location] })));
         })
         .catch((error) => {
             console.error("Error al cargar las opciones del select", error);
