@@ -77,7 +77,7 @@ const UsersListView = () => {
   return (
     <div>
       <NavbarComponent />
-      <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-60">
+      <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16">
         <h1 className="text-3xl font-semibold text-center mb-6 pt-16 text-blue-900 w-full">
           LISTA DE USUARIOS
         </h1>

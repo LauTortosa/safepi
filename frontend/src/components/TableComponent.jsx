@@ -2,7 +2,7 @@ const TableComponent = ({ headers, rows, userRole }) => {
     return (
         <div>
             <main className="flex-1 flex justify-center px-6">
-                <div className="bg-white shadow-lg rounded-lg p-8 mb-10">
+                <div className="bg-white shadow-lg rounded-lg p-8 mb-10 ml-80">
                     <div className="overflow-x-auto">
                         {/* TODO orden ascendente/descendente */}
                         <table className="table-auto w-full border-collapse border border-gray-300">
