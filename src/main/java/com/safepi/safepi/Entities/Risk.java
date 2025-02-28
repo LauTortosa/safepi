@@ -1,6 +1,7 @@
 package com.safepi.safepi.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.safepi.safepi.Entities.Enums.Impact;
 import com.safepi.safepi.Entities.Enums.Location;
 import com.safepi.safepi.Entities.Enums.Probability;
@@ -29,6 +30,7 @@ public class Risk {
     private User user;
 
     @NotNull(message = "La fecha no puede estar vacía")
+    @JsonFormat(pattern = "dd-MM-yyy")
     private Date date;
 
     @Enumerated(EnumType.STRING)

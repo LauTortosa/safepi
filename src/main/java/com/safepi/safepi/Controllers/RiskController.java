@@ -34,7 +34,7 @@ public class RiskController {
         return risks.stream().map(RiskDTO::new).toList();
     }
 
-    @GetMapping("/{userId}/risks")
+    @GetMapping("/users/{userId}/risks")
     public ResponseEntity<List<Risk>> getRisksByUser(@PathVariable Long userId) {
         List<Risk> risks = riskService.findRisksByUserId(userId);
         return ResponseEntity.ok(risks);
