@@ -10,7 +10,7 @@ import TableComponent from "../components/TableComponent";
 
 const UsersListView = () => {
   const [users, setUsers] = useState([]);
-  const [userRole] = useState();
+  const userRole = localStorage.getItem("userRole");
   const navigate = useNavigate();
 
   // TODO filtrado users
