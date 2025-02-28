@@ -59,11 +59,12 @@ const UsersListView = () => {
     };
 
     const onUpdate = (userId) => {
+      console.log("userid:", userId); 
       navigate(`/update-user/${userId}`);
     };
 
-    const rows = users.map((user, index) => [
-      index + 1,
+    const rows = users.map((user) => [
+      user.id,
       user.name,
       user.last_name,
       user.birthday,
@@ -93,6 +94,8 @@ const UsersListView = () => {
             headers={["#", "Nombre", "Apellidos", "Fecha de nacimiento", "Puesto laboral", "Fecha de antigüedad", "Usuario", "Email", "Rol de usuario"]}
             rows={rows}
             userRole={userRole}
+            onDelete={onDelete}
+            onUpdate={onUpdate}
           />
         </div>
       </div>
