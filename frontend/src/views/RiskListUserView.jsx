@@ -11,6 +11,17 @@ const RiskListUserView = () => {
     const [risks, setRisks] = useState([]);
     const userRole = localStorage.getItem("userRole");
 
+    const rows = risks.map((risk, index) => [
+        index + 1,
+        risk.date,
+        riskLocationLabel[risk.location] || risk.location,
+        risk.description,
+        riskProbabilityLabel[risk.probability] || risk.probability,
+        riskImpactLabel[risk.impact] || risk.impact,
+        riskStateLabel[risk.state] || risk.state,
+        risk.gravity
+    ]);
+
     useEffect(() => {
         const token = localStorage.getItem("authToken");
         const userId = localStorage.getItem("userId");
@@ -53,16 +64,7 @@ const RiskListUserView = () => {
                     <div>
                         <TableComponent
                             headers={["#", "Fecha", "Lugar", "Riesgo", "Probabilidad", "Impacto", "Estado", "Gravedad"]}
-                            rows={risks.map((risk, index) => [
-                                index + 1,
-                                risk.date,
-                                riskLocationLabel[risk.location] || risk.location,
-                                risk.description,
-                                riskProbabilityLabel[risk.probability] || risk.probability,
-                                riskImpactLabel[risk.impact] || risk.impact,
-                                riskStateLabel[risk.state] || risk.state,
-                                risk.gravity
-                            ])}
+                            rows={rows}
                             userRole={userRole}
                         />
                     </div>
