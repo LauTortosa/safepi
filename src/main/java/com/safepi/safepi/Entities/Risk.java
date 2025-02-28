@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -31,7 +32,7 @@ public class Risk {
 
     @NotNull(message = "La fecha no puede estar vacía")
     @JsonFormat(pattern = "dd-MM-yyy")
-    private Date date;
+    private LocalDate date;
 
     @Enumerated(EnumType.STRING)
     @NotNull

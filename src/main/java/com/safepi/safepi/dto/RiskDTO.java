@@ -1,16 +1,20 @@
 package com.safepi.safepi.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.safepi.safepi.Entities.Enums.Impact;
 import com.safepi.safepi.Entities.Enums.Location;
 import com.safepi.safepi.Entities.Enums.Probability;
 import com.safepi.safepi.Entities.Enums.State;
 import com.safepi.safepi.Entities.Risk;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class RiskDTO {
     private Long id;
-    private Date date;
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate date;
     private Location location;
     private String description;
     private Impact impact;
@@ -59,9 +63,9 @@ public class RiskDTO {
 
     public Long getId() { return id; }
 
-    public Date getDate() { return date; }
+    public LocalDate getDate() { return date; }
 
-    public void setDate(Date date) { this.date = date; }
+    public void setDate(LocalDate date) { this.date = date; }
 
     public Location getLocation() { return location; }
 
