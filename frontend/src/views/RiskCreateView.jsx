@@ -12,8 +12,10 @@ import ModalComponent from "../components/ModalComponent";
 
 const RiskCreateView = () => {
     const [formData, dispatch] = useRiskFormReducer();
-    const {probability, impacts, locations} = useRiskOptions();
+    const { probability, impacts, locations } = useRiskOptions();
     const [isRiskCreated, setIsRiskCreated] = useState(false);
+    const userRole = localStorage.getItem("userRole");
+    const userId = localStorage.getItem("userId");
 
     const formFields = [
         { label: "Fecha", type: "date", name: "date" },
@@ -35,28 +37,29 @@ const RiskCreateView = () => {
         const userId = localStorage.getItem("userId");
 
         if (token && userId) {
-            const riskDTO = { 
-                ...formData, 
+            const riskDTO = {
+                ...formData,
                 userId: Number(userId),
             };
-            
-            api.post("/risks", riskDTO, { headers: { Authorization: `Bearer ${token}` }, 
+
+            api.post("/risks", riskDTO, {
+                headers: { Authorization: `Bearer ${token}` },
             })
-            .then((response) => {
-                const token = response.data.token;
-                if (token) {
-                    localStorage.setItem("authToken", token);
-                }
-                setIsRiskCreated(true);
-                dispatch({ type: "RESET_FORM"});
-            })
-            .catch((error) => {
-                console.error("Error al añadir el riesgo", error);
-            });
+                .then((response) => {
+                    const token = response.data.token;
+                    if (token) {
+                        localStorage.setItem("authToken", token);
+                    }
+                    setIsRiskCreated(true);
+                    dispatch({ type: "RESET_FORM" });
+                })
+                .catch((error) => {
+                    console.error("Error al añadir el riesgo", error);
+                });
         };
     }
 
-    return(
+    return (
         <div>
             <NavbarComponet />
             <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-60">
@@ -65,19 +68,21 @@ const RiskCreateView = () => {
                 </h1>
 
                 <div className="flex">
-                    <SidebarComponent 
+                    <SidebarComponent
                         options={[
-                            { path: "/list-risks", label: "📋 Lista de riesgos"},
-                            { path: "/create-risks", label: "➕ Añadir riesgos"},
+                            ...(userRole === "ADMIN" ? [{ path: "/list-risks", label: "📋 Lista de riesgos" }] : []),
+                            ...(userRole === "USER" ? [{ path: `/list-risks/${userId}`, label: "📋 Lista de riesgos" }] : []),
+                            { path: "/create-risks", label: "➕ Añadir riesgos" }
                         ]}
                     />
-                    <form 
+
+                    <form
                         onSubmit={onSubmit}
                         className="flex-1 flex justify-center px-6"
                     >
                         <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 mb-10">
                             <div>
-                                {formFields.map((field) => 
+                                {formFields.map((field) =>
                                     field.type === "select" ? (
                                         <SelectComponent
                                             key={field.name}
@@ -88,7 +93,7 @@ const RiskCreateView = () => {
                                             options={field.options || []}
                                         />
                                     ) : (
-                                        <InputComponent 
+                                        <InputComponent
                                             key={field.name}
                                             label={field.label}
                                             type={field.type}
@@ -96,7 +101,7 @@ const RiskCreateView = () => {
                                             value={formData[field.name]}
                                             onChange={onInputChange}
                                             placeholder={field.placeholder || ""}
-                                            //errorMessage={errors[field.name]}
+                                        //errorMessage={errors[field.name]}
                                         />
                                     )
                                 )}
@@ -108,17 +113,17 @@ const RiskCreateView = () => {
                             >
                                 Añadir riesgo
                             </button>
-                            <ModalComponent 
+                            <ModalComponent
                                 isOpen={isRiskCreated}
                                 title={"Riesgo añadido!"}
                                 content={"El riesgo se ha añadido correctamente"}
                                 onClose={() => setIsRiskCreated(false)}
                             />
                         </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
     );
 };
 

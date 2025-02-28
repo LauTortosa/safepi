@@ -1,4 +1,5 @@
 import { useAuthUser } from "../hooks/useAuthUser.jsx";
+import { userPositionLabel } from "../utils/displayLabels.js";
 
 import NavbarComponent from "../components/NavbarComponent.jsx";
 
@@ -14,8 +15,6 @@ const ProfileView = () => {
             Información de perfil
           </h1>
           {user ? (
-            // TODO cambiar OPERATOR por Operador 
-            // TODO cambiar formato de las fechas a dd-MM-YYY
             <div className="mt-4 text-center">
               <div className="inline-block text-justify max-w-md">
                 <p className="text-gray-600 font-semibold mb-4">
@@ -34,7 +33,7 @@ const ProfileView = () => {
                   Edad: {user.age}
                 </p>
                 <p className="text-gray-600 font-semibold">
-                  Posición laboral: {user.position}
+                  Posición laboral: {userPositionLabel[user.position]}
                 </p>
               </div>
             </div>

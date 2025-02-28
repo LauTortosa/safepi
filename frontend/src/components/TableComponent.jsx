@@ -28,7 +28,7 @@ const TableComponent = ({ headers, rows, userRole }) => {
 
                                             {userRole === "ADMIN" && (
                                                 <td className="p-2 border">
-                                                    <span className="cursor-pointer">🗑️</span>
+                                                    <span className="cursor-pointer mr-4">🗑️</span>
                                                     <span className="cursor-pointer">✏️</span>
                                                 </td>
                                             )}

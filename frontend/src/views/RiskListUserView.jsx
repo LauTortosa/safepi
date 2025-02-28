@@ -10,6 +10,7 @@ import api from "../api/axiosConfig";
 const RiskListUserView = () => {
     const [risks, setRisks] = useState([]);
     const userRole = localStorage.getItem("userRole");
+    const userId = localStorage.getItem("userId");
 
     const rows = risks.map((risk, index) => [
         index + 1,
@@ -24,7 +25,6 @@ const RiskListUserView = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
-        const userId = localStorage.getItem("userId");
 
         if (token) {
             api
@@ -57,7 +57,7 @@ const RiskListUserView = () => {
                 <div className="flex ">
                     <SidebarComponent
                         options={[
-                            { path: "/list-risks", label: "📋 Lista de riesgos" },
+                            { path: `/list-risks/${userId}`, label: "📋 Lista de riesgos" },
                             { path: "/create-risks", label: "➕ Añadir riesgos" }
                         ]}
                     />
