@@ -12,12 +12,14 @@ const RiskListView = () => {
     const rows = risks.map((risk, index) => [
         index + 1,
         risk.date,
-        riskLocationLabel[risk.location] || risk.location,
+        risk.id,
         risk.description,
+        riskLocationLabel[risk.location] || risk.location,
         riskProbabilityLabel[risk.probability] || risk.probability,
         riskImpactLabel[risk.impact] || risk.impact,
+        risk.risk,
         riskStateLabel[risk.state] || risk.state,
-        risk.gravity
+        risk.name + " " + risk.last_name
     ]);
 
     useEffect(() => {
@@ -46,7 +48,7 @@ const RiskListView = () => {
     return (
         <div >
             <NavbarComponent />
-            <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-60">
+            <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-20">
                 <h1 className="text-3xl font-semibold text-center mb-6 pt-16 text-blue-900 w-full">
                     LISTA DE RIESGOS
                 </h1>
@@ -60,7 +62,7 @@ const RiskListView = () => {
                     />
                     <div>
                         <TableComponent
-                            headers={["#", "Fecha", "Lugar", "Riesgo", "Probabilidad", "Impacto", "Estado", "Gravedad"]}
+                            headers={["#", "Fecha", "Id", "Riesgo", "Lugar", "Probabilidad", "Impacto", "Tipo", "Estado", "Nombre"]}
                             rows={rows}
                             userRole={userRole}
                         />

@@ -31,7 +31,7 @@ const TableComponent = ({ headers, rows, userRole, onDelete, onUpdate }) => {
                                     {headers.map((header, index) => (
                                         <th 
                                             key={index} 
-                                            className="p-2 border"
+                                            className="cursor-pointer p-2 border"
                                             onClick={() => onSort(index)}
                                             >
                                             {header} {sortConfig.key === index ? (sortConfig.direction === 'asc' ? '🔼' : '🔽') : ''}
