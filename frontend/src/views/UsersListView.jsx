@@ -7,9 +7,11 @@ import api from "../api/axiosConfig";
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import TableComponent from "../components/TableComponent";
+import ModalComponent from "../components/ModalComponent";
 
 const UsersListView = () => {
   const [users, setUsers] = useState([]);
+  const [isUserDeleted, setIsUserDeleted] = useState(false);
   const userRole = localStorage.getItem("userRole");
   const navigate = useNavigate();
 
@@ -36,7 +38,6 @@ const UsersListView = () => {
     }
     }, []);
 
-    // TODO modal to confirm delete user
     const onDelete = (userId) => {
       const token = localStorage.getItem("authToken");
 
@@ -49,6 +50,7 @@ const UsersListView = () => {
         })
         .then(() => {
           setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+          setIsUserDeleted(true);
         })
         .catch((error) => {
           console.error("Error al eliminar el usuario", error);
@@ -99,6 +101,12 @@ const UsersListView = () => {
             onUpdate={onUpdate}
           />
         </div>
+        <ModalComponent
+          isOpen={isUserDeleted}
+          title="Usuario eliminado!"
+          content={"El usuario ha sido eliminado correctamente."}
+          onClose={() => setIsUserDeleted(false)}
+        />
       </div>
     </div>
   );
