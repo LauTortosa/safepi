@@ -20,8 +20,8 @@ const TableComponent = ({ headers, rows, userRole, onDelete, onUpdate }) => {
                             </thead>
                             <tbody>
                                 {rows.length > 0 ? (
-                                    rows.map((row) => (
-                                        <tr key={row[0]} className="hover:bg-gray-200">
+                                    rows.map((row, index) => (
+                                        <tr key={index} className="hover:bg-gray-200">
                                             {row.map((cell, i) => (
                                                 <td key={i} className="p-2 border">{cell}</td>
                                             ))}
@@ -30,13 +30,13 @@ const TableComponent = ({ headers, rows, userRole, onDelete, onUpdate }) => {
                                                 <td className="p-2 border">
                                                     <span 
                                                         className="cursor-pointer mr-4"
-                                                        onClick={() => onDelete(row[0])}    
+                                                        onClick={() => onDelete(row[1])}    
                                                     >
                                                         🗑️
                                                     </span>
                                                     <span 
                                                         className="cursor-pointer"
-                                                        onClick={() => onUpdate(row[0])}
+                                                        onClick={() => onUpdate(row[1])}
                                                     >✏️</span>
                                                 </td>
                                             )}

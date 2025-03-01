@@ -63,7 +63,8 @@ const UsersListView = () => {
       navigate(`/update-user/${userId}`);
     };
 
-    const rows = users.map((user) => [
+    const rows = users.map((user, index) => [
+      index + 1,
       user.id,
       user.name,
       user.last_name,
@@ -91,7 +92,7 @@ const UsersListView = () => {
             ]}
           />
           <TableComponent
-            headers={["#", "Nombre", "Apellidos", "Fecha de nacimiento", "Puesto laboral", "Fecha de antigüedad", "Usuario", "Email", "Rol de usuario"]}
+            headers={["#", "Id", "Nombre", "Apellidos", "Fecha de nacimiento", "Puesto laboral", "Fecha de antigüedad", "Usuario", "Email", "Rol de usuario"]}
             rows={rows}
             userRole={userRole}
             onDelete={onDelete}
