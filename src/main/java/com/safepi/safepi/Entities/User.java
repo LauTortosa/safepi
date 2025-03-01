@@ -44,12 +44,12 @@ public class User {
     private String email;
 
     @Past(message = "La fecha de nacimiento deber ser en el pasado")
-    @JsonFormat(pattern = "dd-MM-yyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     @Past(message = "La fecha de nacimiento deber ser en el pasado")
-    @JsonFormat(pattern = "dd-MM-yyy")
-    private Date start_date;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate start_date;
 
     @Enumerated(EnumType.STRING)
     private Role role;

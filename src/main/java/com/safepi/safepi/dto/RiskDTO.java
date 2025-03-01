@@ -13,7 +13,6 @@ import java.util.Date;
 public class RiskDTO {
     private Long id;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
     private Location location;
     private String description;

@@ -13,7 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Data
@@ -31,7 +30,7 @@ public class Risk {
     private User user;
 
     @NotNull(message = "La fecha no puede estar vacía")
-    @JsonFormat(pattern = "dd-MM-yyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
 
     @Enumerated(EnumType.STRING)
