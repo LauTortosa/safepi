@@ -8,6 +8,7 @@ import api from "../api/axiosConfig";
 const RiskListView = () => {
     const [risks, setRisks] = useState([]);
     const userRole = localStorage.getItem("userRole");
+    const userId = localStorage.getItem("userId");
 
     const rows = risks.map((risk, index) => [
         index + 1,
@@ -56,7 +57,8 @@ const RiskListView = () => {
                 <div className="flex ">
                     <SidebarComponent
                         options={[
-                            { path: "/list-risks", label: "📋 Lista de riesgos" },
+                            ...(userRole === "ADMIN" ? [{ path: "/list-risks", label: "📋 Todos los riesgos" }] : []),
+                            { path: `/list-risks/${userId}`, label: "📋 Mis riesgos" },
                             { path: "/create-risks", label: "➕ Añadir riesgos" }
                         ]}
                     />

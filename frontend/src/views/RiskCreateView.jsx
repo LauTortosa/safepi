@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useRiskFormReducer } from "../hooks/useRiskFormReducer";
 import { useRiskOptions } from "../hooks/useRiskOptions";
@@ -16,6 +17,7 @@ const RiskCreateView = () => {
     const [isRiskCreated, setIsRiskCreated] = useState(false);
     const userRole = localStorage.getItem("userRole");
     const userId = localStorage.getItem("userId");
+    const navigate = useNavigate();
 
     const formFields = [
         { label: "Fecha", type: "date", name: "date" },
@@ -70,8 +72,8 @@ const RiskCreateView = () => {
                 <div className="flex">
                     <SidebarComponent
                         options={[
-                            ...(userRole === "ADMIN" ? [{ path: "/list-risks", label: "📋 Lista de riesgos" }] : []),
-                            ...(userRole === "USER" ? [{ path: `/list-risks/${userId}`, label: "📋 Lista de riesgos" }] : []),
+                            ...(userRole === "ADMIN" ? [{ path: "/list-risks", label: "📋 Todos los riesgos" }] : []),
+                            { path: `/list-risks/${userId}`, label: "📋 Mis riesgos" },
                             { path: "/create-risks", label: "➕ Añadir riesgos" }
                         ]}
                     />
@@ -117,7 +119,10 @@ const RiskCreateView = () => {
                                 isOpen={isRiskCreated}
                                 title={"Riesgo añadido!"}
                                 content={"El riesgo se ha añadido correctamente"}
-                                onClose={() => setIsRiskCreated(false)}
+                                onClose={() => {
+                                    setIsRiskCreated(false);
+                                    navigate(`/list-risks/${userId}`);
+                                }}
                             />
                         </div>
                     </form>

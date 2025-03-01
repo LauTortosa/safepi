@@ -15,12 +15,12 @@ const RiskListUserView = () => {
     const rows = risks.map((risk, index) => [
         index + 1,
         risk.date,
-        riskLocationLabel[risk.location] || risk.location,
         risk.description,
+        riskLocationLabel[risk.location] || risk.location,
         riskProbabilityLabel[risk.probability] || risk.probability,
         riskImpactLabel[risk.impact] || risk.impact,
+        risk.risk,
         riskStateLabel[risk.state] || risk.state,
-        risk.gravity
     ]);
 
     useEffect(() => {
@@ -49,7 +49,7 @@ const RiskListUserView = () => {
     return (
         <div>
             <NavbarComponent />
-            <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-60">
+            <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-40">
                 <h1 className="text-3xl font-semibold text-center mb-6 pt-16 text-blue-900 w-full">
                     LISTA DE RIESGOS
                 </h1>
@@ -57,13 +57,14 @@ const RiskListUserView = () => {
                 <div className="flex ">
                     <SidebarComponent
                         options={[
-                            { path: `/list-risks/${userId}`, label: "📋 Lista de riesgos" },
+                            ...(userRole === "ADMIN" ? [{ path: "/list-risks", label: "📋 Todos los riesgos" }] : []),
+                            { path: `/list-risks/${userId}`, label: "📋 Mis riesgos" },
                             { path: "/create-risks", label: "➕ Añadir riesgos" }
                         ]}
                     />
                     <div>
                         <TableComponent
-                            headers={["#", "Fecha", "Lugar", "Riesgo", "Probabilidad", "Impacto", "Estado", "Gravedad"]}
+                            headers={["#", "Fecha", "Lugar", "Riesgo", "Probabilidad", "Impacto", "Tipo", "Estado"]}
                             rows={rows}
                             userRole={userRole}
                         />

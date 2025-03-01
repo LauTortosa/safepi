@@ -22,25 +22,14 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-center space-x-6">
-        { userRole === "ADMIN" && (
-          <Link to="/list-risks" className="hover:text-cyan-400">
+        <Link to={`/list-risks/${userId}`} className="hover:text-cyan-400">
           Gestión de riesgos
         </Link>
-        )}
-
-        { userRole === "USER" && (
-          <Link to={`/list-risks/${userId}`} className="hover:text-cyan-400">
-            Gestión de riesgos
+        {userRole === "ADMIN" && (
+          <Link to="/list-users" className="hover:text-cyan-400">
+            Gestión de usuarios
           </Link>
         )}
-        
-        
-        { userRole === "ADMIN" && (
-          <Link to="/list-users" className="hover:text-cyan-400">
-          Gestión de usuarios
-        </Link>
-        )}
-        
         <Link to="/reports" className="hover:text-cyan-400">
           Incidentes/Accidentes
         </Link>
