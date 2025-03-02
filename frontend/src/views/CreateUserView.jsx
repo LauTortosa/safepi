@@ -11,11 +11,13 @@ import api from "../api/axiosConfig";
 import { useUserOptions } from "../hooks/useUserOptions";
 import { useUserFormReducer } from "../hooks/useUserFormReducer";
 import { useUserFormValidate } from "../hooks/useUserFormValidate";
+import { useAuthUser } from "../hooks/useAuthUser";
 
 const CreateUserView = () => {
   const [formData, dispatch] = useUserFormReducer();
   const {positions, roles } = useUserOptions();
   const [isUserCreated, setIsUserCreated] = useState(false);
+  const { token } = useAuthUser();
 
   const formFields = [
     { label: "Nombre", type: "text", name: "name", placeholder: "Nombre", minLength: 3, maxLength: 25 },
@@ -41,19 +43,10 @@ const CreateUserView = () => {
 
     if (!validateForm(formData)) return;
   
-    const token = localStorage.getItem("authToken");
-  
     api
-      .post("/users", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      .post("/users", formData, { headers: { Authorization: `Bearer ${token}` }
       })
-      .then((response) => {
-        const token = response.data.token;
-        if (token) {
-          localStorage.setItem("authToken", token);
-        }
+      .then(() => {
         setIsUserCreated(true);
         dispatch({ type: "RESET_FORM" });
       })
@@ -63,7 +56,6 @@ const CreateUserView = () => {
   };
 
   return (
-    
     <div >
       { /* TODO Input para repetir contraseña*/ }
       <NavbarComponent />

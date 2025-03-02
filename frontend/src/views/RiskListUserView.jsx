@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { riskImpactLabel, riskLocationLabel, riskProbabilityLabel, riskStateLabel } from "../utils/displayLabels";
+import { useAuthUser } from "../hooks/useAuthUser";
 
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
@@ -9,8 +10,7 @@ import api from "../api/axiosConfig";
 
 const RiskListUserView = () => {
     const [risks, setRisks] = useState([]);
-    const userRole = localStorage.getItem("userRole");
-    const userId = localStorage.getItem("userId");
+    const { userRole, userId, token } = useAuthUser();
 
     const rows = risks.map((risk, index) => [
         index + 1,
@@ -24,17 +24,10 @@ const RiskListUserView = () => {
     ]);
 
     useEffect(() => {
-        const token = localStorage.getItem("authToken");
-
         if (token) {
             api
-                .get(`/risks/users/${userId}/risks`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-
+                .get(`/risks/users/${userId}/risks`, { headers: { Authorization: `Bearer ${token}` }
                 })
-
                 .then((response) => {
                     setRisks(response.data);
                 })
@@ -44,12 +37,12 @@ const RiskListUserView = () => {
         } else {
             console.error("Token no encontrado");
         };
-    }, []);
+    }, [token]);
 
     return (
         <div>
             <NavbarComponent />
-            <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-40">
+            <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-60">
                 <h1 className="text-3xl font-semibold text-center mb-6 pt-16 text-blue-900 w-full">
                     LISTA DE RIESGOS
                 </h1>

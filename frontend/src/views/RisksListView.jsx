@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { riskImpactLabel, riskLocationLabel, riskProbabilityLabel, riskStateLabel } from "../utils/displayLabels";
+import { useAuthUser } from "../hooks/useAuthUser";
+
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import TableComponent from "../components/TableComponent";
@@ -7,34 +9,25 @@ import api from "../api/axiosConfig";
 
 const RiskListView = () => {
     const [risks, setRisks] = useState([]);
-    const userRole = localStorage.getItem("userRole");
-    const userId = localStorage.getItem("userId");
+    const { token, userRole } = useAuthUser();
 
     const rows = risks.map((risk, index) => [
         index + 1,
-        risk.date,
         risk.id,
-        risk.description,
+        risk.date,
         riskLocationLabel[risk.location] || risk.location,
+        risk.description,
         riskProbabilityLabel[risk.probability] || risk.probability,
         riskImpactLabel[risk.impact] || risk.impact,
         risk.risk,
         riskStateLabel[risk.state] || risk.state,
-        risk.name + " " + risk.last_name
+        [risk.name] + " " + risk.last_name
     ]);
 
     useEffect(() => {
-        const token = localStorage.getItem("authToken");
-
         if (token) {
-            api
-                .get("/risks", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-
+            api.get("/risks", { headers: { Authorization: `Bearer ${token}` },
                 })
-
                 .then((response) => {
                     setRisks(response.data);
                 })
@@ -57,14 +50,13 @@ const RiskListView = () => {
                 <div className="flex ">
                     <SidebarComponent
                         options={[
-                            ...(userRole === "ADMIN" ? [{ path: "/list-risks", label: "📋 Todos los riesgos" }] : []),
-                            { path: `/list-risks/${userId}`, label: "📋 Mis riesgos" },
+                            { path: "/list-risks", label: "📋 Lista de riesgos" },
                             { path: "/create-risks", label: "➕ Añadir riesgos" }
                         ]}
                     />
                     <div>
                         <TableComponent
-                            headers={["#", "Fecha", "Id", "Riesgo", "Lugar", "Probabilidad", "Impacto", "Tipo", "Estado", "Nombre"]}
+                            headers={["#", "Id", "Fecha", "Riesgo", "Lugar", "Probabilidad", "Impacto", "Tipo", "Estado", "Nombre"]}
                             rows={rows}
                             userRole={userRole}
                         />

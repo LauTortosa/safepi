@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useRiskFormReducer } from "../hooks/useRiskFormReducer";
 import { useRiskOptions } from "../hooks/useRiskOptions";
+import { useAuthUser } from "../hooks/useAuthUser";
+
 import api from "../api/axiosConfig";
 
 import NavbarComponet from "../components/NavbarComponent";
@@ -15,8 +17,7 @@ const RiskCreateView = () => {
     const [formData, dispatch] = useRiskFormReducer();
     const { probability, impacts, locations } = useRiskOptions();
     const [isRiskCreated, setIsRiskCreated] = useState(false);
-    const userRole = localStorage.getItem("userRole");
-    const userId = localStorage.getItem("userId");
+    const { token, userRole, userId } = useAuthUser();
     const navigate = useNavigate();
 
     const formFields = [
@@ -34,9 +35,6 @@ const RiskCreateView = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-
-        const token = localStorage.getItem("authToken");
-        const userId = localStorage.getItem("userId");
 
         if (token && userId) {
             const riskDTO = {
@@ -64,7 +62,7 @@ const RiskCreateView = () => {
     return (
         <div>
             <NavbarComponet />
-            <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-60">
+            <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-40">
                 <h1 className="text-3xl font-semibold text-center mb-6 pt-16 text-blue-900 w-full">
                     AÑADIR RIESGO
                 </h1>

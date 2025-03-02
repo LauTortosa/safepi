@@ -4,7 +4,7 @@ import { userPositionLabel } from "../utils/displayLabels.js";
 import NavbarComponent from "../components/NavbarComponent.jsx";
 
 const ProfileView = () => {
-  const user = useAuthUser();
+  const { user } = useAuthUser(); 
 
   return (
     <div>
@@ -38,7 +38,7 @@ const ProfileView = () => {
               </div>
             </div>
           ) : (
-            <p className="text-gray-500 text-center">Cargando información...</p>
+            <p className="text-gray-500 text-center">No se pudo cargar la información del usuario.</p>
           )}
         </div>
       </div>
@@ -47,3 +47,4 @@ const ProfileView = () => {
 };
 
 export default ProfileView;
+

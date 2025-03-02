@@ -11,6 +11,7 @@ import api from "../api/axiosConfig";
 import { useUserOptions } from "../hooks/useUserOptions";
 import { useUserFormReducer } from "../hooks/useUserFormReducer";
 import { useUserFormValidate } from "../hooks/useUserFormValidate";
+import { useAuthUser } from "../hooks/useAuthUser";
 import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateUserView = () => {
@@ -18,6 +19,7 @@ const UpdateUserView = () => {
   const [isUserUpdated, setIsUserUpdated] = useState(false);
   const [formData, dispatch] = useUserFormReducer();
   const { positions, roles } = useUserOptions();
+  const { token } = useAuthUser();
 
   const formFields = [
     { label: "Nombre", type: "text", name: "name", placeholder: "Nombre", minLength: 3, maxLength: 25 },
@@ -34,8 +36,6 @@ const UpdateUserView = () => {
   const { errors, setErrors, validateForm } = useUserFormValidate(formFields);
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-
     if (token) {
       api.get(`/users/${userId}`, { headers: { Authorization: `Bearer ${token}` } 
         })
@@ -59,8 +59,6 @@ const UpdateUserView = () => {
     e.preventDefault();
 
     if (!validateForm(formData)) return;
-  
-    const token = localStorage.getItem("authToken");
   
     api.put(`/users/${userId}`, formData, { headers: { Authorization: `Bearer ${token}` }
       })

@@ -5,10 +5,9 @@ import { useNavigate } from "react-router-dom";
 export const useAuthUser = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const token = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-
     if (!token) {
       navigate("/login");
       return;
@@ -26,8 +25,15 @@ export const useAuthUser = () => {
       })
       .catch((error) => {
         console.error("Error al obtener el usuario", error);
-      });
-  }, []);
+      })
+     
+  }, [token, navigate]);
 
-  return user;
+  return { 
+    user,
+    userRole: user?.role || localStorage.getItem("userRole"),
+    userId: user?.id || localStorage.getItem("userId"),
+    token,
+  };
 };
+
