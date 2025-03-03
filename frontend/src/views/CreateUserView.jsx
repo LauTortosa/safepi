@@ -86,6 +86,7 @@ const CreateUserView = () => {
                       value={formData[field.name]}
                       onChange={onInputChange}
                       options={field.options || []}
+                      errorMessage={errors[field.name]}
                     />
                   ) : (
                     <InputComponent

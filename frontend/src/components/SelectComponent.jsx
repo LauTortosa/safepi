@@ -1,4 +1,6 @@
-const SelectComponent = ({ span, name, value, onChange, options }) => {
+import ValidationFormComponent from "./ValidationFormComponent";
+
+const SelectComponent = ({ span, name, value, onChange, options, errorMessage }) => {
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
@@ -8,7 +10,7 @@ const SelectComponent = ({ span, name, value, onChange, options }) => {
         name={name}
         value={value}
         onChange={onChange}
-        className="select select-bordered"
+        className={`select select-bordered ${errorMessage ? "border-red-500" : ""}`}
       >
         <option value="" disabled>
           Selecciona una opción
@@ -19,6 +21,11 @@ const SelectComponent = ({ span, name, value, onChange, options }) => {
           </option>
         ))}
       </select>
+      {errorMessage && (
+        <ValidationFormComponent
+        errorMessage={errorMessage}
+        />
+      )}
     </div>
   );
 };
