@@ -5,11 +5,13 @@ import { useAuthUser } from "../hooks/useAuthUser";
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import TableComponent from "../components/TableComponent";
+import ModalComponent from "../components/ModalComponent";
 import api from "../api/axiosConfig";
 
 const RiskListView = () => {
     const [risks, setRisks] = useState([]);
     const { token, userRole, userId } = useAuthUser();
+    const [isRiskDeleted, setIsRiskDeleted] = useState(false);
 
     const rows = risks.map((risk, index) => [
         index + 1,
@@ -26,8 +28,9 @@ const RiskListView = () => {
 
     useEffect(() => {
         if (token) {
-            api.get("/risks", { headers: { Authorization: `Bearer ${token}` },
-                })
+            api.get("/risks", {
+                headers: { Authorization: `Bearer ${token}` },
+            })
                 .then((response) => {
                     setRisks(response.data);
                 })
@@ -38,6 +41,23 @@ const RiskListView = () => {
             console.error("Token no encontrado");
         };
     }, []);
+
+    const onDelete = (riskId) => {
+        if (token) {
+            api
+                .delete(`/risks/${riskId}`, { headers: { Authorization: `Bearer ${token}` }
+                })
+                .then(() => {
+                    setRisks((prevRisks) => prevRisks.filter((risk) => risk.id !== riskId));
+                    setIsRiskDeleted(true);
+                })
+                .catch((error) => {
+                    console.error("Error al eliminar el riesgo", error);
+                })
+        } else {
+            console.error("Token no encontrado");
+        };
+    }
 
     return (
         <div >
@@ -60,9 +80,16 @@ const RiskListView = () => {
                             headers={["#", "Id", "Fecha", "Riesgo", "Lugar", "Probabilidad", "Impacto", "Tipo", "Estado", "Nombre"]}
                             rows={rows}
                             userRole={userRole}
+                            onDelete={onDelete}
                         />
                     </div>
                 </div>
+                <ModalComponent
+                    isOpen={isRiskDeleted}
+                    title={"Riesgo eliminado!"}
+                    content={"El riesgo ha sido eliminado correctamente."}
+                    onClose={() => setIsRiskDeleted(false)}
+                />
             </div>
         </div>
     );

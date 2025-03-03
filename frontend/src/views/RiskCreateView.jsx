@@ -47,9 +47,10 @@ const RiskCreateView = () => {
                 userId: Number(userId),
             };
 
-            api.post("/risks", riskDTO, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
+            api
+                .post("/risks", riskDTO, {
+                    headers: { Authorization: `Bearer ${token}` }
+                })
                 .then((response) => {
                     const token = response.data.token;
                     if (token) {
