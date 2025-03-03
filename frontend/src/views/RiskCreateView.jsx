@@ -78,7 +78,7 @@ const RiskCreateView = () => {
 
                     <form
                         onSubmit={onSubmit}
-                        className="flex-1 flex justify-center px-6"
+                        className="flex-1 flex justify-center px-6 ml-40"
                     >
                         <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 mb-10">
                             <div>
