@@ -1,27 +1,35 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUserFormValidate } from "../hooks/useUserFormValidate";
 
 import api from "../api/axiosConfig";
+import ValidationFormComponent from "./ValidationFormComponent";
+import InputComponent from "./InputComponent";
 
-const LoginFormComponent = ({ onSubmit }) => {
+const LoginFormComponent = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
 
-  const navigate = useNavigate();
+  const formFields = [
+    { label: "Usuario", type: "text", name: "username", placeholder: "Introduzca nombre de usuario", minLength: 3, maxLength: 20 },
+    { label: "Contraseña", type: "password", name: "password", placeholder: "Introduzca la contraseña", minLength: 3, maxLength: 30 },
+  ];
 
-  const handleChange = (e) => {
+  const { errors, setErrors, validateForm } = useUserFormValidate(formFields);
+
+  const onInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value.trim()});
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData.username, formData.password);
+
+    if (!validateForm(formData)) return;
 
     api.post("/users/auth/login", formData)
       .then((response) => {
@@ -31,51 +39,38 @@ const LoginFormComponent = ({ onSubmit }) => {
       })
       .catch((error) => {
         console.error("Error en el login", error);
+        setErrors({ general: "Usuario o contraseña incorrectos" });
       });
-};
+  };
 
   return (
-    // TODO que no detecte el espacio en blanco al escribir el username
-    // TODO validaciones
     <form onSubmit={handleSubmit} className="flex flex-col items-center">
-  <div className="form-control w-full max-w-xs">
-    <label className="label">
-      <span className="label-text font-semibold text-gray-800 text-lg">Usuario</span>
-    </label>
-    <input
-      type="text"
-      id="username"
-      name="username"
-      value={formData.username}
-      onChange={handleChange}
-      placeholder="Introduzca nombre de usuario"
-      className="input input-bordered w-full max-w-xs bg-gray-100 border-gray-300 focus:ring-blue-500 focus:border-blue-500 rounded-lg"
-    />
-  </div>
-
-  <div className="form-control w-full max-w-xs mt-6">
-    <label className="label">
-      <span className="label-text font-semibold text-gray-800 text-lg">Contraseña</span>
-    </label>
-    <input
-      type="password"
-      id="password"
-      name="password"
-      value={formData.password}
-      onChange={handleChange}
-      placeholder="Introduzca la contraseña"
-      className="input input-bordered w-full max-w-xs bg-gray-100 border-gray-300 focus:ring-blue-500 focus:border-blue-500 rounded-lg"
-    />
-  </div>
-
-  <button
-    type="submit"
-    className="mt-8 btn bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all"
-  >
-    Iniciar sesión
-  </button>
-</form>
-
+      {formFields.map((field) => (
+        <InputComponent
+          key={field.name}
+          label={field.label}
+          type={field.type}
+          id={field.name}
+          name={field.name}
+          value={formData[field.name]}
+          onChange={onInputChange}
+          placeholder={field.placeholder}
+          errorMessage={errors[field.name]}
+        />
+      ))}
+      {errors.general && (
+        <ValidationFormComponent
+          errorMessage={errors.general}
+        />
+      )}
+      
+      <button
+        type="submit"
+        className="mt-8 btn bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all"
+      >
+        Iniciar sesión
+      </button>
+    </form>
   );
 };
 
