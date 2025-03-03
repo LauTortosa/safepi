@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useRiskFormReducer } from "../hooks/useRiskFormReducer";
 import { useRiskOptions } from "../hooks/useRiskOptions";
 import { useAuthUser } from "../hooks/useAuthUser";
+import { useUserFormValidate } from "../hooks/useUserFormValidate";
 
 import api from "../api/axiosConfig";
 
@@ -28,6 +29,8 @@ const RiskCreateView = () => {
         { label: "Impacto del riesgo", type: "select", name: "impact", options: impacts },
     ];
 
+    const { errors, validateForm } = useUserFormValidate(formFields);
+
     const onInputChange = (e) => {
         const { name, value } = e.target;
         dispatch({ type: "SET_FIELD", field: name, value });
@@ -35,6 +38,8 @@ const RiskCreateView = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+
+        if (!validateForm(formData)) return;
 
         if (token && userId) {
             const riskDTO = {
@@ -91,6 +96,7 @@ const RiskCreateView = () => {
                                             value={formData[field.name]}
                                             onChange={onInputChange}
                                             options={field.options || []}
+                                            errorMessage={errors[field.name]}
                                         />
                                     ) : (
                                         <InputComponent
@@ -101,7 +107,7 @@ const RiskCreateView = () => {
                                             value={formData[field.name]}
                                             onChange={onInputChange}
                                             placeholder={field.placeholder || ""}
-                                        //errorMessage={errors[field.name]}
+                                            errorMessage={errors[field.name]}
                                         />
                                     )
                                 )}
