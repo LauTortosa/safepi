@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const TableComponent = ({ headers, rows, userRole, onDelete, onUpdate }) => {
+const TableComponent = ({ headers, rows, userRole, onDelete, onUpdate, showOptions = true }) => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
 
     const sortedItems = [...rows].sort((a, b) => {
@@ -37,7 +37,7 @@ const TableComponent = ({ headers, rows, userRole, onDelete, onUpdate }) => {
                                             {header} {sortConfig.key === index ? (sortConfig.direction === 'asc' ? '🔼' : '🔽') : ''}
                                         </th>
                                     ))}
-                                    {userRole === "ADMIN" && (
+                                    {userRole === "ADMIN" && showOptions && (
                                         <th className="p-2 border">Opciones</th>
                                     )}
                                 </tr>
@@ -50,7 +50,7 @@ const TableComponent = ({ headers, rows, userRole, onDelete, onUpdate }) => {
                                                 <td key={i} className="p-2 border">{cell}</td>
                                             ))}
 
-                                            {userRole === "ADMIN" && (
+                                            {userRole === "ADMIN" && showOptions && (
                                                 <td className="p-2 border">
                                                     <span 
                                                         className="cursor-pointer mr-4"

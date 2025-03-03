@@ -11,6 +11,7 @@ import api from "../api/axiosConfig";
 const RiskListUserView = () => {
     const [risks, setRisks] = useState([]);
     const { userRole, userId, token } = useAuthUser();
+    const showOptions = userRole === "ADMIN" && false;
 
     const rows = risks.map((risk, index) => [
         index + 1,
@@ -60,6 +61,7 @@ const RiskListUserView = () => {
                             headers={["#", "Fecha", "Lugar", "Riesgo", "Probabilidad", "Impacto", "Tipo", "Estado"]}
                             rows={rows}
                             userRole={userRole}
+                            showOptions={showOptions}
                         />
                     </div>
                 </div>
