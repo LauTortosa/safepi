@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { riskImpactLabel, riskLocationLabel, riskProbabilityLabel, riskStateLabel } from "../utils/displayLabels";
+import { useNavigate } from "react-router-dom";
 import { useAuthUser } from "../hooks/useAuthUser";
+import { riskImpactLabel, riskLocationLabel, riskProbabilityLabel, riskStateLabel } from "../utils/displayLabels";
 
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
@@ -12,6 +13,7 @@ const RiskListView = () => {
     const [risks, setRisks] = useState([]);
     const { token, userRole, userId } = useAuthUser();
     const [isRiskDeleted, setIsRiskDeleted] = useState(false);
+    const navigate = useNavigate();
 
     const rows = risks.map((risk, index) => [
         index + 1,
@@ -57,7 +59,11 @@ const RiskListView = () => {
         } else {
             console.error("Token no encontrado");
         };
-    }
+    };
+
+    const onUpdate = (riskId) => {
+        navigate(`/update-risk/${riskId}`);
+    };
 
     return (
         <div >
@@ -81,6 +87,7 @@ const RiskListView = () => {
                             rows={rows}
                             userRole={userRole}
                             onDelete={onDelete}
+                            onUpdate={onUpdate}
                         />
                     </div>
                 </div>

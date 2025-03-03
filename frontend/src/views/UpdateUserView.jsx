@@ -15,7 +15,8 @@ import { useAuthUser } from "../hooks/useAuthUser";
 import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateUserView = () => {
-  const { userId } = useParams();  const navigate = useNavigate();
+  const { userId } = useParams();  
+  const navigate = useNavigate();
   const [isUserUpdated, setIsUserUpdated] = useState(false);
   const [formData, dispatch] = useUserFormReducer();
   const { positions, roles } = useUserOptions();
