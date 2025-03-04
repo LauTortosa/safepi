@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { riskImpactLabel, riskLocationLabel, riskProbabilityLabel, riskStateLabel } from "../utils/displayLabels";
 import { useAuthUser } from "../hooks/useAuthUser";
 
-import NavbarComponent from "../components/NavbarComponent";
-import SidebarComponent from "../components/SidebarComponent";
 import TableComponent from "../components/TableComponent";
+import ContentBoxComponent from "../components/ContentBoxComponent";
 
 import api from "../api/axiosConfig";
 
@@ -27,7 +26,8 @@ const RiskListUserView = () => {
     useEffect(() => {
         if (token) {
             api
-                .get(`/risks/users/${userId}/risks`, { headers: { Authorization: `Bearer ${token}` }
+                .get(`/risks/users/${userId}/risks`, {
+                    headers: { Authorization: `Bearer ${token}` }
                 })
                 .then((response) => {
                     setRisks(response.data);
@@ -41,32 +41,23 @@ const RiskListUserView = () => {
     }, [token]);
 
     return (
-        <div>
-            <NavbarComponent />
-            <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-20">
-                <h1 className="text-3xl font-semibold text-center mb-6 pt-16 text-blue-900 w-full">
-                    LISTA DE RIESGOS
-                </h1>
-
-                <div className="flex ">
-                    <SidebarComponent
-                        options={[
-                            ...(userRole === "ADMIN" ? [{ path: "/list-risks", label: "📋 Todos los riesgos" }] : []),
-                            { path: `/list-risks/${userId}`, label: "📋 Mis riesgos" },
-                            { path: "/create-risks", label: "➕ Añadir riesgos" }
-                        ]}
-                    />
-                    <div>
-                        <TableComponent
-                            headers={["#", "Fecha", "Lugar", "Riesgo", "Probabilidad", "Impacto", "Tipo", "Estado"]}
-                            rows={rows}
-                            userRole={userRole}
-                            showOptions={showOptions}
-                        />
-                    </div>
-                </div>
-            </div>
-        </div>
+        <ContentBoxComponent
+            title={"MIS RIESGOS"}
+            userRole={userRole}
+            userId={userId}
+            sidebarOptions={[
+                ...(userRole === "ADMIN" ? [{ path: "/list-risks", label: "📋 Todos los riesgos" }] : []),
+                { path: `/list-risks/${userId}`, label: "📋 Mis riesgos" },
+                { path: "/create-risks", label: "➕ Añadir riesgos" }
+            ]}
+        >
+            <TableComponent
+                headers={["#", "Fecha", "Lugar", "Riesgo", "Probabilidad", "Impacto", "Tipo", "Estado"]}
+                rows={rows}
+                userRole={userRole}
+                showOptions={showOptions}
+            />
+        </ContentBoxComponent>
     );
 };
 

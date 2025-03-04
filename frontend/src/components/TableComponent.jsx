@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ContentBoxComponent from './ContentBoxComponent';
 
 const TableComponent = ({ headers, rows, userRole, onDelete, onUpdate, showOptions = true }) => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
@@ -23,7 +24,6 @@ const TableComponent = ({ headers, rows, userRole, onDelete, onUpdate, showOptio
     return (
         <div>
             <main className="flex-1 flex justify-center px-6">
-                <div className="bg-white shadow-lg rounded-lg p-8 mb-10 ml-80">
                     <div className="overflow-x-auto">
                         <table className="table-auto w-full border-collapse border border-gray-300">
                             <thead>
@@ -76,7 +76,6 @@ const TableComponent = ({ headers, rows, userRole, onDelete, onUpdate, showOptio
                             </tbody>
                         </table>
                     </div>
-                </div>
             </main>
 
         </div>

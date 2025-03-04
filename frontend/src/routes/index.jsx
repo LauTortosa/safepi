@@ -3,8 +3,8 @@ import LoginView from "../views/LoginView";
 import HomeView from "../views/HomeView";
 import ProfileView from "../views/ProfileView";
 import UsersListView from "../views/UsersListView";
-import CreateUserView from "../views/CreateUserView";
-import UpdateUserView from "../views/UpdateUserView";
+import UserCreateView from "../views/UserCreateView";
+import UserUpdateView from "../views/UserUpdateView";
 import RisksListView from "../views/RisksListView";
 import RiskCreateView from "../views/RiskCreateView";
 import RiskListUserView from "../views/RiskListUserView";
@@ -18,11 +18,11 @@ const AppRouter = () => {
               <Route path="/home" element={<HomeView/>}/>
               <Route path="/profile" element={<ProfileView/>}/>
               <Route path="/list-users" element={<UsersListView/>}/>
-              <Route path="/create-user" element={<CreateUserView/>}/>
+              <Route path="/create-user" element={<UserCreateView/>}/>
               <Route path="/list-risks/:userId" element={<RiskListUserView/>}/>
               <Route path="/list-risks" element={<RisksListView/>}/>
               <Route path="/create-risks" element={<RiskCreateView/>}/>
-              <Route path="/update-user/:userId" element={<UpdateUserView/>}/>
+              <Route path="/update-user/:userId" element={<UserUpdateView/>}/>
               <Route path="/update-risk/:riskId" element={<RiskUpdateView/>}/>
             </Routes>
         </Router>

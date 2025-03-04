@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuthUser } from "../hooks/useAuthUser";
 import { riskImpactLabel, riskLocationLabel, riskProbabilityLabel, riskStateLabel } from "../utils/displayLabels";
 
-import NavbarComponent from "../components/NavbarComponent";
-import SidebarComponent from "../components/SidebarComponent";
 import TableComponent from "../components/TableComponent";
 import ModalComponent from "../components/ModalComponent";
+import ContentBoxComponent from "../components/ContentBoxComponent";
+
 import api from "../api/axiosConfig";
 
 const RiskListView = () => {
@@ -47,7 +47,8 @@ const RiskListView = () => {
     const onDelete = (riskId) => {
         if (token) {
             api
-                .delete(`/risks/${riskId}`, { headers: { Authorization: `Bearer ${token}` }
+                .delete(`/risks/${riskId}`, {
+                    headers: { Authorization: `Bearer ${token}` }
                 })
                 .then(() => {
                     setRisks((prevRisks) => prevRisks.filter((risk) => risk.id !== riskId));
@@ -66,39 +67,30 @@ const RiskListView = () => {
     };
 
     return (
-        <div >
-            <NavbarComponent />
-            <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-20">
-                <h1 className="text-3xl font-semibold text-center mb-6 pt-16 text-blue-900 w-full">
-                    LISTA DE RIESGOS
-                </h1>
-
-                <div className="flex ">
-                    <SidebarComponent
-                        options={[
-                            ...(userRole === "ADMIN" ? [{ path: "/list-risks", label: "📋 Todos los riesgos" }] : []),
-                            { path: `/list-risks/${userId}`, label: "📋 Mis riesgos" },
-                            { path: "/create-risks", label: "➕ Añadir riesgos" }
-                        ]}
-                    />
-                    <div>
-                        <TableComponent
-                            headers={["#", "Id", "Fecha", "Riesgo", "Lugar", "Probabilidad", "Impacto", "Tipo", "Estado", "Nombre"]}
-                            rows={rows}
-                            userRole={userRole}
-                            onDelete={onDelete}
-                            onUpdate={onUpdate}
-                        />
-                    </div>
-                </div>
-                <ModalComponent
-                    isOpen={isRiskDeleted}
-                    title={"Riesgo eliminado!"}
-                    content={"El riesgo ha sido eliminado correctamente."}
-                    onClose={() => setIsRiskDeleted(false)}
-                />
-            </div>
-        </div>
+        <ContentBoxComponent
+            title={"LISTA DE RIESGOS"}
+            userRole={userRole}
+            userId={userId}
+            sidebarOptions={[
+                ...(userRole === "ADMIN" ? [{ path: "/list-risks", label: "📋 Todos los riesgos" }] : []),
+                { path: `/list-risks/${userId}`, label: "📋 Mis riesgos" },
+                { path: "/create-risks", label: "➕ Añadir riesgos" }
+            ]}
+        >
+            <TableComponent
+                headers={["#", "Id", "Fecha", "Riesgo", "Lugar", "Probabilidad", "Impacto", "Tipo", "Estado", "Nombre"]}
+                rows={rows}
+                userRole={userRole}
+                onDelete={onDelete}
+                onUpdate={onUpdate}
+            />
+            <ModalComponent
+                isOpen={isRiskDeleted}
+                title={"Riesgo eliminado!"}
+                content={"El riesgo ha sido eliminado correctamente."}
+                onClose={() => setIsRiskDeleted(false)}
+            />
+        </ContentBoxComponent>
     );
 };
 
