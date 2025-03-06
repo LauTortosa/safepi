@@ -30,7 +30,7 @@ public class Risk {
     private User user;
 
     @NotNull(message = "La fecha no puede estar vacía")
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
     @Enumerated(EnumType.STRING)
