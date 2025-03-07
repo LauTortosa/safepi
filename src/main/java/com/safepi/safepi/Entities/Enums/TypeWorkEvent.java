@@ -1,6 +1,6 @@
 package com.safepi.safepi.Entities.Enums;
 
-public enum Type_workEvent {
+public enum TypeWorkEvent {
     FALL,
     ELECTRICAL_SHOCK,
     MACHINE_INJURY,

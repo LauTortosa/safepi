@@ -3,7 +3,7 @@ package com.safepi.safepi.Entities;
 import com.safepi.safepi.Entities.Enums.Category;
 import com.safepi.safepi.Entities.Enums.Impact;
 import com.safepi.safepi.Entities.Enums.Location;
-import com.safepi.safepi.Entities.Enums.Type_workEvent;
+import com.safepi.safepi.Entities.Enums.TypeWorkEvent;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -23,7 +23,7 @@ public class WorkEvent {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private Type_workEvent typeWorkEvent;
+    private TypeWorkEvent typeWorkEvent;
 
     @Enumerated(EnumType.STRING)
     private Location location;
