@@ -74,7 +74,6 @@ public class User {
             LocalDate birthDate = this.birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             return Period.between(birthDate, LocalDate.now()).getYears();
         }
-
         return null;
     }
 }

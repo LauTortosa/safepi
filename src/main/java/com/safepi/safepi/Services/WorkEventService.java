@@ -26,36 +26,34 @@ public class WorkEventService {
         return workEventRepository.findByUserId(userId);
     }
 
-    public WorkEvent getWorkEventById(Long id) {
-        return workEventRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("WorkEvent no encontrado"));
+    public Optional<WorkEvent> getWorkEventById(Long id) {
+        return workEventRepository.findById(id);
     }
 
     public WorkEvent createWorkEvent(WorkEvent workEvent) {
         return workEventRepository.save(workEvent);
     }
 
-    public WorkEvent updateWorkEvent(Long id, WorkEvent workEvent) {
-        WorkEvent existingWorkEvent = workEventRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("WorkEvent no encontrado"));
+    public Optional<WorkEvent> updateWorkEvent(Long id, WorkEvent workEvent) {
+        return workEventRepository.findById(id).map(existingWorkEvent -> {
+            existingWorkEvent.setUser(workEvent.getUser());
+            existingWorkEvent.setCategory(workEvent.getCategory());
+            existingWorkEvent.setDate(workEvent.getDate());
+            existingWorkEvent.setDescription(workEvent.getDescription());
+            existingWorkEvent.setTypeWorkEvent(workEvent.getTypeWorkEvent());
+            existingWorkEvent.setLocation(workEvent.getLocation());
+            existingWorkEvent.setAffectedPerson(workEvent.getAffectedPerson());
+            existingWorkEvent.setWitnesses(workEvent.getWitnesses());
+            existingWorkEvent.setFirstAid(workEvent.getFirstAid());
+            existingWorkEvent.setImpact(workEvent.getImpact());
 
-        existingWorkEvent.setUser(workEvent.getUser());
-        existingWorkEvent.setCategory(workEvent.getCategory());
-        existingWorkEvent.setDate(workEvent.getDate());
-        existingWorkEvent.setDescription(workEvent.getDescription());
-        existingWorkEvent.setTypeWorkEvent(workEvent.getTypeWorkEvent());
-        existingWorkEvent.setLocation(workEvent.getLocation());
-        existingWorkEvent.setAffectedPerson(workEvent.getAffectedPerson());
-        existingWorkEvent.setWitnesses(workEvent.getWitnesses());
-        existingWorkEvent.setFirstAid(workEvent.getFirstAid());
-        existingWorkEvent.setImpact(workEvent.getImpact());
-
-        return workEventRepository.save(existingWorkEvent);
+            return workEventRepository.save(existingWorkEvent);
+        });
     }
 
     public void deleteWorkEvent(Long id) {
         if (!workEventRepository.existsById(id)) {
-            throw  new RuntimeException("WorkEvent no encontrado");
+            throw new RuntimeException("WorkEvent no encontrado");
         }
         workEventRepository.deleteById(id);
     }
