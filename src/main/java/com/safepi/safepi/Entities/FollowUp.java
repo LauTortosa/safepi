@@ -1,6 +1,7 @@
 package com.safepi.safepi.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.safepi.safepi.Entities.Enums.WorkStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -22,6 +23,7 @@ public class FollowUp {
     private WorkEvent workEvent;
 
     @NotNull
+    @JsonFormat(pattern = "dd-MM-yyy")
     private LocalDate date;
 
     @NotNull
@@ -32,6 +34,7 @@ public class FollowUp {
 
     private String doctorNotes;
 
+    @JsonFormat(pattern = "dd-MM-yyy")
     private LocalDate nextCheckupDate;
 
     private String prenventiveMesures;
