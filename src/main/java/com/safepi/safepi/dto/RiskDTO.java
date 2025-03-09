@@ -1,6 +1,5 @@
 package com.safepi.safepi.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.safepi.safepi.Entities.Enums.Impact;
 import com.safepi.safepi.Entities.Enums.Location;
 import com.safepi.safepi.Entities.Enums.Probability;
@@ -8,8 +7,6 @@ import com.safepi.safepi.Entities.Enums.State;
 import com.safepi.safepi.Entities.Risk;
 
 import java.time.LocalDate;
-import java.util.Date;
-
 public class RiskDTO {
     private Long id;
 

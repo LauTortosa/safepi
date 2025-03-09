@@ -4,8 +4,10 @@ import com.safepi.safepi.Entities.Enums.Category;
 import com.safepi.safepi.Entities.Enums.Impact;
 import com.safepi.safepi.Entities.Enums.Location;
 import com.safepi.safepi.Entities.Enums.TypeWorkEvent;
+import com.safepi.safepi.Entities.User;
 import com.safepi.safepi.Entities.WorkEvent;
 import com.safepi.safepi.Repositories.WorkEventRepository;
+import com.safepi.safepi.dto.WorkEventDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -13,9 +15,11 @@ import java.util.*;
 @Service
 public class WorkEventService {
     private final WorkEventRepository workEventRepository;
+    private final UserService userService;
 
-    public WorkEventService(WorkEventRepository workEventRepository) {
+    public WorkEventService(WorkEventRepository workEventRepository, UserService userService) {
         this.workEventRepository = workEventRepository;
+        this.userService = userService;
     }
 
     public List<WorkEvent> getAllWorkEvents() {
@@ -30,22 +34,38 @@ public class WorkEventService {
         return workEventRepository.findById(id);
     }
 
-    public WorkEvent createWorkEvent(WorkEvent workEvent) {
+    public WorkEvent createWorkEvent(WorkEventDTO workEventDTO) {
+        User user = userService.getUserById(workEventDTO.getUserId());
+
+        WorkEvent workEvent = new WorkEvent();
+        workEvent.setUser(user);
+        workEvent.setCategory(workEventDTO.getCategory());
+        workEvent.setDate(workEventDTO.getDate());
+        workEvent.setTypeWorkEvent(workEventDTO.getTypeWorkEvent());
+        workEvent.setDescription(workEventDTO.getDescription());
+        workEvent.setLocation(workEventDTO.getLocation());
+        workEvent.setAffectedPerson(workEventDTO.getAffectedPerson());
+        workEvent.setWitnesses(workEventDTO.getWitnesses());
+        workEvent.setFirstAid(workEventDTO.getFirstAid());
+        workEvent.setImpact(workEventDTO.getImpact());
+
         return workEventRepository.save(workEvent);
     }
 
-    public Optional<WorkEvent> updateWorkEvent(Long id, WorkEvent workEvent) {
+    public Optional<WorkEvent> updateWorkEvent(Long id, WorkEventDTO workEventDTO) {
         return workEventRepository.findById(id).map(existingWorkEvent -> {
-            existingWorkEvent.setUser(workEvent.getUser());
-            existingWorkEvent.setCategory(workEvent.getCategory());
-            existingWorkEvent.setDate(workEvent.getDate());
-            existingWorkEvent.setDescription(workEvent.getDescription());
-            existingWorkEvent.setTypeWorkEvent(workEvent.getTypeWorkEvent());
-            existingWorkEvent.setLocation(workEvent.getLocation());
-            existingWorkEvent.setAffectedPerson(workEvent.getAffectedPerson());
-            existingWorkEvent.setWitnesses(workEvent.getWitnesses());
-            existingWorkEvent.setFirstAid(workEvent.getFirstAid());
-            existingWorkEvent.setImpact(workEvent.getImpact());
+            User user = userService.getUserById(workEventDTO.getUserId());
+
+            existingWorkEvent.setUser(user);
+            existingWorkEvent.setCategory(workEventDTO.getCategory());
+            existingWorkEvent.setDate(workEventDTO.getDate());
+            existingWorkEvent.setDescription(workEventDTO.getDescription());
+            existingWorkEvent.setTypeWorkEvent(workEventDTO.getTypeWorkEvent());
+            existingWorkEvent.setLocation(workEventDTO.getLocation());
+            existingWorkEvent.setAffectedPerson(workEventDTO.getAffectedPerson());
+            existingWorkEvent.setWitnesses(workEventDTO.getWitnesses());
+            existingWorkEvent.setFirstAid(workEventDTO.getFirstAid());
+            existingWorkEvent.setImpact(workEventDTO.getImpact());
 
             return workEventRepository.save(existingWorkEvent);
         });
