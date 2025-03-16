@@ -2,13 +2,14 @@ package com.safepi.safepi.dto;
 
 import com.safepi.safepi.Entities.Enums.WorkStatus;
 import com.safepi.safepi.Entities.FollowUp;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
 public class FollowUpDTO {
     private Long id;
     private Long workEventId;
+
+    private Long userId;
     private LocalDate date;
     private WorkStatus workStatus;
     private String medicalEvolution;
@@ -20,7 +21,8 @@ public class FollowUpDTO {
 
     public FollowUpDTO(FollowUp followUp) {
         this.id = followUp.getId();
-        this.workEventId = followUp.getId();
+        this.workEventId = followUp.getWorkEvent().getId();
+        this.userId = followUp.getWorkEvent().getUser().getId();
         this.date = followUp.getDate();
         this.workStatus = followUp.getWorkStatus();
         this.medicalEvolution = followUp.getMedicalEvolution();
@@ -45,6 +47,14 @@ public class FollowUpDTO {
 
     public void setWorkEventId(Long workEventId) {
         this.workEventId = workEventId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public LocalDate getDate() {
