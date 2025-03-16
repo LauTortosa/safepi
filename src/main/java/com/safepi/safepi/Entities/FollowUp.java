@@ -11,14 +11,14 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-@Table(name = "followups")
+@Table(name = "follow_ups")
 public class FollowUp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "workEventId", nullable = false)
+    @JoinColumn(name = "work_event_id", nullable = false)
     @JsonBackReference
     private WorkEvent workEvent;
 

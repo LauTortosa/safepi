@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface FollowUpRepository extends JpaRepository<FollowUp, Long> {
     Optional<FollowUp> findByWorkEventId(Long workEventId);
 
-    Optional<FollowUp> findByUserId(Long userId);
+    Optional<FollowUp> findByWorkEvent_User_Id(Long userId);
 }

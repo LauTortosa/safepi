@@ -34,7 +34,7 @@ public class FollowUpService {
     }
 
     public Optional<FollowUp> getFollowUpsByUserId(Long id) {
-        return followUpRepository.findByUserId(id);
+        return followUpRepository.findByWorkEvent_User_Id(id);
     }
 
     public FollowUp createFollowUp(FollowUpDTO followUpDTO) {
