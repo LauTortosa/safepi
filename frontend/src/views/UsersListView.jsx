@@ -24,7 +24,9 @@ const UsersListView = () => {
           headers: { Authorization: `Bearer ${token}` }
         })
         .then((response) => {
-          setUsers(response.data);
+          
+
+            setUsers(response.data);
         })
         .catch((error) => {
           console.error("Error al obtener la lista de usuarios", error);
@@ -77,6 +79,7 @@ const UsersListView = () => {
         { path: "/create-user", label: "➕ Crear nuevo usuario" },
       ]}
     >
+      
       <TableComponent
         headers={["#", "Id", "Nombre", "Apellidos", "Fecha de nacimiento", "Puesto laboral", "Fecha de antigüedad", "Usuario", "Email", "Rol de usuario"]}
         rows={rows}

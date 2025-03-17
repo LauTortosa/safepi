@@ -5,6 +5,7 @@ import com.safepi.safepi.Entities.Enums.Role;
 import com.safepi.safepi.Entities.User;
 import com.safepi.safepi.Services.JwtService;
 import com.safepi.safepi.Services.UserService;
+import com.safepi.safepi.dto.UserDTO;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,9 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")

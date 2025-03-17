@@ -45,7 +45,7 @@ public class User {
 
     @Past(message = "La fecha de nacimiento deber ser en el pasado")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date birthday;
+    private LocalDate birthday;
 
     @Past(message = "La fecha de nacimiento deber ser en el pasado")
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -62,6 +62,7 @@ public class User {
     private List<Risk> risks = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<WorkEvent> workEvents = new ArrayList<>();
 
     @Transient
@@ -71,8 +72,7 @@ public class User {
 
     public Integer getAge() {
         if (this.birthday != null) {
-            LocalDate birthDate = this.birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            return Period.between(birthDate, LocalDate.now()).getYears();
+            return Period.between(this.birthday, LocalDate.now()).getYears();
         }
         return null;
     }

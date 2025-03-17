@@ -4,6 +4,7 @@ import com.safepi.safepi.Entities.Enums.Position;
 import com.safepi.safepi.Entities.Enums.Role;
 import com.safepi.safepi.Entities.User;
 import com.safepi.safepi.Repositories.UserRepository;
+import com.safepi.safepi.dto.UserDTO;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(UserDTO::new)
+                .toList();
     }
 
     public User getUserById(Long id) {
