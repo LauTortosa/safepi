@@ -33,6 +33,8 @@ public class FollowUpDTO {
         this.comments = followUp.getComments();
     }
 
+    public FollowUpDTO() {}
+
     public Long getId() {
         return id;
     }

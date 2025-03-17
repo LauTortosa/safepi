@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/followUp")
+@RequestMapping("/api/followUps")
 public class FollowUpController {
     private final FollowUpService followUpService;
 
@@ -40,21 +40,23 @@ public class FollowUpController {
     }
 
     @GetMapping("/workEvent/{id}")
-    public ResponseEntity<FollowUpDTO> getFollowUpsByWorkEventById(@PathVariable Long id) {
-        Optional<FollowUp> followUpOptional = followUpService.getFollowUpsByWorkEventId(id);
+    public ResponseEntity<List<FollowUpDTO>> getFollowUpsByWorkEventById(@PathVariable Long id) {
+        List<FollowUp> followUps = followUpService.getFollowUpsByWorkEventId(id);
+        List<FollowUpDTO> followUpDTOS = followUps.stream()
+                .map(FollowUpDTO::new)
+                .toList();
 
-        return followUpOptional
-                .map(followUp -> ResponseEntity.ok(new FollowUpDTO(followUp)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(followUpDTOS);
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<FollowUpDTO> getFollowUpsByUserId(@PathVariable Long id) {
-        Optional<FollowUp> followUpOptional = followUpService.getFollowUpsByUserId(id);
+    public ResponseEntity<List<FollowUpDTO>> getFollowUpsByUserId(@PathVariable Long id) {
+        List<FollowUp> followUps = followUpService.getFollowUpsByUserId(id);
+        List<FollowUpDTO> followUpDTOS = followUps.stream()
+                .map(FollowUpDTO::new)
+                .toList();
 
-        return followUpOptional
-                .map(followUp -> ResponseEntity.ok(new FollowUpDTO(followUp)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(followUpDTOS);
     }
 
     @PostMapping

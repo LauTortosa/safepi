@@ -29,12 +29,12 @@ public class FollowUpService {
         return followUpRepository.findById(id);
     }
 
-    public Optional<FollowUp> getFollowUpsByWorkEventId(Long id) {
+    public List<FollowUp> getFollowUpsByWorkEventId(Long id) {
         return followUpRepository.findByWorkEventId(id);
     }
 
-    public Optional<FollowUp> getFollowUpsByUserId(Long id) {
-        return followUpRepository.findByWorkEvent_User_Id(id);
+    public List<FollowUp> getFollowUpsByUserId(Long id) {
+        return followUpRepository.findByWorkEventUserId(id);
     }
 
     public FollowUp createFollowUp(FollowUpDTO followUpDTO) {

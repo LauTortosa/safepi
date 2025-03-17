@@ -41,6 +41,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/risks/{id}").hasAuthority("ROLE_ADMIN")
 
                         .requestMatchers("/api/workEvents/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/api/followUps/**").hasAuthority("ROLE_ADMIN")
 
                         .anyRequest().authenticated()
                 )
