@@ -24,8 +24,6 @@ const UsersListView = () => {
           headers: { Authorization: `Bearer ${token}` }
         })
         .then((response) => {
-          
-
             setUsers(response.data);
         })
         .catch((error) => {
