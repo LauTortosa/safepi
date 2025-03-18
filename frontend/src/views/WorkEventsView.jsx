@@ -3,9 +3,10 @@ import { useAuthUser } from "../hooks/useAuthUser";
 import api from "../api/axiosConfig";
 
 import ContentBoxComponent from "../components/ContentBoxComponent";
+import TableComponent from "../components/TableComponent";
 
 const WorkEventsView = () => {
-    const [workEvents, setWorkEvents] = useState();
+    const [workEvents, setWorkEvents] = useState([]);
     const { token, userRole } = useAuthUser();
 
     useEffect(() => {
@@ -24,6 +25,15 @@ const WorkEventsView = () => {
         }
     }, []);
 
+    const rows = workEvents.map((workEvent, index) => [
+        index + 1,
+        workEvent.id,
+        workEvent.date,
+        workEvent.category,
+        workEvent.typeWorkEvent,
+        workEvent.impact,
+    ]);
+
 
     return (
         <ContentBoxComponent
@@ -34,6 +44,11 @@ const WorkEventsView = () => {
                 { path: "", label: "Añadir Incidente/Accidente"},
             ]}
         >
+            <TableComponent
+                headers={["#", "Id", "Fecha", "Categoria", "Tipo", "Impacto", "Nombre", "Apellidos"]}
+                rows={rows}
+                userRole={userRole}
+            />
 
         </ContentBoxComponent>
     );
