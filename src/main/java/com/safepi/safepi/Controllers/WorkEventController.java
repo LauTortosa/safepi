@@ -47,8 +47,8 @@ public class WorkEventController {
     @GetMapping("/{id}")
     public ResponseEntity<WorkEventDTO> getWorkEventById(@PathVariable Long id) {
         return workEventService.getWorkEventById(id)
-                .map(workEnvet -> {
-                    WorkEventDTO workEventDTO = new WorkEventDTO(workEnvet);
+                .map(workEvent -> {
+                    WorkEventDTO workEventDTO = new WorkEventDTO(workEvent);
                     return ResponseEntity.ok(workEventDTO);
                 })
                 .orElse(ResponseEntity.notFound().build());

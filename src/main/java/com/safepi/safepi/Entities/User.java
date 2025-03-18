@@ -61,7 +61,7 @@ public class User {
     @JsonManagedReference
     private List<Risk> risks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<WorkEvent> workEvents = new ArrayList<>();
 

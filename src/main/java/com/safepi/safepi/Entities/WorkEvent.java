@@ -1,5 +1,6 @@
 package com.safepi.safepi.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.safepi.safepi.Entities.Enums.Category;
@@ -25,6 +26,7 @@ public class WorkEvent {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy = "workEvent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
