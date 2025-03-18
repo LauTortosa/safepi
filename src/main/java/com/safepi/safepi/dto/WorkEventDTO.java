@@ -11,6 +11,10 @@ import java.time.LocalDate;
 public class WorkEventDTO {
     private Long id;
     private Long userId;
+
+    private String name;
+
+    private String last_name;
     private Category category;
     private LocalDate date;
     private String description;
@@ -26,6 +30,8 @@ public class WorkEventDTO {
     public WorkEventDTO(WorkEvent workEvent) {
         this.id = workEvent.getId();
         this.userId = workEvent.getUser().getId();
+        this.name = workEvent.getUser().getName();
+        this.last_name = workEvent.getUser().getLast_name();
         this.category = workEvent.getCategory();
         this.date = workEvent.getDate();
         this.description = workEvent.getDescription();
@@ -119,6 +125,22 @@ public class WorkEventDTO {
 
     public Impact getImpact() {
         return impact;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public void setImpact(Impact impact) {

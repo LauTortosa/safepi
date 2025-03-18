@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuthUser } from "../hooks/useAuthUser";
+import useUser from "../hooks/useUser";
 import api from "../api/axiosConfig";
 
 import ContentBoxComponent from "../components/ContentBoxComponent";
@@ -32,6 +33,7 @@ const WorkEventsView = () => {
         workEvent.category,
         workEvent.typeWorkEvent,
         workEvent.impact,
+        workEvent.name + " " + workEvent.last_name
     ]);
 
 
@@ -45,7 +47,7 @@ const WorkEventsView = () => {
             ]}
         >
             <TableComponent
-                headers={["#", "Id", "Fecha", "Categoria", "Tipo", "Impacto", "Nombre", "Apellidos"]}
+                headers={["#", "Id", "Fecha", "Categoria", "Tipo", "Impacto", "Nombre", "Opciones"]}
                 rows={rows}
                 userRole={userRole}
             />
