@@ -1,5 +1,7 @@
+import { useState } from "react";
 import api from "../api/axiosConfig";
 
+import { useNavigate } from "react-router-dom";
 import { useAuthUser } from "../hooks/useAuthUser";
 import { useRiskOptions } from "../hooks/useRiskOptions";
 import { useWorkEventOptions } from "../hooks/useWorkEventOptions";
@@ -7,14 +9,17 @@ import { useUserFormValidate } from "../hooks/useUserFormValidate";
 import { useWorkEventFormReducer } from "../hooks/useWorkEventFormReducer";
 
 import ContentBoxComponent from "../components/ContentBoxComponent";
+import ModalComponent from "../components/ModalComponent";
 import SelectComponent from "../components/SelectComponent";
 import InputComponent from "../components/InputComponent";
 
 const WorkEventCreateView = () => {
     const [formData, dispatch] = useWorkEventFormReducer();
+    const [isWorkEventCreated, setIsWorkEventCreated] = useState(false);
     const { categories, typeWorkEvents } = useWorkEventOptions();
     const { locations, impacts } = useRiskOptions();
     const { token, userRole, userId } = useAuthUser();
+    const navigate = useNavigate();
 
     const formFields = [
         { label: "Categoria", type: "select", name: "category", options: categories },
@@ -50,7 +55,7 @@ const WorkEventCreateView = () => {
                     if (token) {
                         localStorage.setItem("authToken", token);
                     }
-                    console.log("response", response);
+                    setIsWorkEventCreated(true);
                     dispatch({ type: "RESET_FORM " });
                 })
                 .catch((error) => {
@@ -101,10 +106,19 @@ const WorkEventCreateView = () => {
                             type="submit"
                             className="mt-8 btn bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all"
                         >
-                            Añadir riesgo
+                            Añadir Incidente/Accidente
                         </button>
                     </div>
                 </div>
+                <ModalComponent
+                    isOpen={isWorkEventCreated}
+                    title={"Incidente/Accidente añadido!"}
+                    content={"El incidente/accidente se ha añadido correctamente"}
+                    onClose={() => {
+                        setIsWorkEventCreated(false);
+                        navigate("/list-workEvents");
+                    }}
+                />
             </form>
         </ContentBoxComponent>
     );
