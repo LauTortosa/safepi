@@ -75,7 +75,7 @@ const RiskUpdateView = () => {
             sidebarOptions={[
                 ...(userRole === "ADMIN" ? [{ path: "/list-risks", label: "📋 Todos los riesgos" }] : []),
                 { path: `/list-risks/${userId}`, label: "📋 Mis riesgos" },
-                { path: "/create-risks", label: "➕ Añadir riesgos" }
+                { path: "/create-risk", label: "➕ Añadir riesgos" }
             ]}
         >
             <form

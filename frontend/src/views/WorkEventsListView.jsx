@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useAuthUser } from "../hooks/useAuthUser";
-import useUser from "../hooks/useUser";
 import api from "../api/axiosConfig";
 
 import ContentBoxComponent from "../components/ContentBoxComponent";
@@ -16,7 +15,6 @@ const WorkEventsView = () => {
             })
             .then((response) => {
                 setWorkEvents(response.data); 
-                console.log("response get", response.data);
             })
             .catch((error) => {
                 console.log("Error al obtener la lista de incidentes/accidentes", error);
@@ -42,12 +40,12 @@ const WorkEventsView = () => {
             title={"INCIDENTES Y ACCIDENTES LABORALES"}
             userRole={userRole}
             sidebarOptions={[
-                { path: "", label: "Lista de Incidentes/Accidentes"},
-                { path: "", label: "Añadir Incidente/Accidente"},
+                { path: "/list-workevents", label: "Lista de Incidentes/Accidentes"},
+                { path: "/create-workevent", label: "Añadir Incidente/Accidente"},
             ]}
         >
             <TableComponent
-                headers={["#", "Id", "Fecha", "Categoria", "Tipo", "Impacto", "Nombre", "Opciones"]}
+                headers={["#", "Id", "Fecha", "Categoria", "Tipo", "Impacto", "Nombre"]}
                 rows={rows}
                 userRole={userRole}
             />
