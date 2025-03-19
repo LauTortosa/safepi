@@ -20,9 +20,9 @@ const WorkEventCreateView = () => {
         { label: "Categoria", type: "select", name: "category", options: categories },
         { label: "Fecha", type: "date", name: "date" },
         { label: "Descripción", type: "text", name: "description", placeholder: "Descripción" },
-        { label: "Tipo de evento", type: "select", name: "typeWorkEvents", options: typeWorkEvents },
+        { label: "Tipo de evento", type: "select", name: "typeWorkEvent", options: typeWorkEvents },
         { label: "Ubicación", type: "select", name: "location", options: locations },
-        { label: "Persona afectada", type: "text", name: "affectedPerson", placeholder: "Persona afectada" },
+        { label: "Id usuario afectado", type: "number", name: "userId" },
         { label: "Testigos", type: "text", name: "witnesses", placeholder: "Testigos" },
         { label: "Primeros auxilos", type: "text", name: "firstAid", placeholder: "Primeros auxilios" },
         { label: "Impacto", type: "select", name: "impact", options: impacts },
@@ -41,12 +41,8 @@ const WorkEventCreateView = () => {
         if (!validateForm(formData)) return;
 
         if (token && userId) {
-            const workEventDTO = {
-                ...formData,
-                userId: Number(userId),
-            };
 
-            api.post("/workEvents", workEventDTO, {
+            api.post("/workEvents", formData, {
                 headers: { Authorization: `Bearer ${token}` }
             })
                 .then((response) => {

@@ -6,10 +6,10 @@ const initialState = {
     description: "",
     typeWorkEvent: "",
     location: "",
-    affectedPerson: "",
     witnesses: "",
     firstAid: "",
     impact: "",
+    userId: 0
 };
 
 const formReducer = (state, action) => {
