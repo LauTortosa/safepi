@@ -5,15 +5,18 @@ import api from "../api/axiosConfig";
 import ContentBoxComponent from "../components/ContentBoxComponent";
 import TableComponent from "../components/TableComponent";
 import ModalComponent from "../components/ModalComponent";
+import { useNavigate } from "react-router-dom";
 
 const WorkEventsView = () => {
     const [workEvents, setWorkEvents] = useState([]);
     const { token, userRole } = useAuthUser();
     const [isWorkEventDeleted, setIsWorkEventDeleted] = useState(false);
+    const navigate = useNavigate();
 
     const rows = workEvents.map((workEvent, index) => [
         index + 1,
-        "(" + workEvent.id + ") " + workEvent.name + " " + workEvent.last_name,
+        workEvent.id,
+        `(${workEvent.id}) ${workEvent.name} ${workEvent.last_name}`,
         workEvent.date,
         workEvent.category,
         workEvent.typeWorkEvent,
@@ -52,6 +55,10 @@ const WorkEventsView = () => {
         };
     };
 
+    const onUpdate = (workEventId) => {
+        navigate(`/update-workEvent/${workEventId}`);
+    };
+
     return (
         <ContentBoxComponent
             title={"INCIDENTES Y ACCIDENTES LABORALES"}
@@ -62,10 +69,11 @@ const WorkEventsView = () => {
             ]}
         >
             <TableComponent
-                headers={["#", "Nombre", "Fecha", "Categoria", "Tipo", "Impacto", ]}
+                headers={["#","Id", "Nombre", "Fecha", "Categoria", "Tipo", "Impacto", ]}
                 rows={rows}
                 userRole={userRole}
                 onDelete={onDelete}
+                onUpdate={onUpdate}
             />
             <ModalComponent 
                 isOpen={isWorkEventDeleted}

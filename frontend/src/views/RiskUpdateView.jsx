@@ -119,7 +119,7 @@ const RiskUpdateView = () => {
                 <ModalComponent
                     isOpen={isRiskUpdated}
                     title={"Riesgo actualizado!"}
-                    content={"El riesgo se ha acrualizado correctamente"}
+                    content={"El riesgo se ha actualizado correctamente"}
                     onClose={() => {
                         setIsRiskUpdated(false);
                         navigate("/list-risks");
