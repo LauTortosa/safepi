@@ -53,7 +53,7 @@ const WorkEventsView = () => {
                 setIsWorkEventDeleted(true);
             })
             .catch((error) => {
-                console.error("Erro al eliminar el indicente/accidente", error);
+                console.error("Error al eliminar el indicente/accidente", error);
             })
         } else {
             console.error("Token no encontrado");
