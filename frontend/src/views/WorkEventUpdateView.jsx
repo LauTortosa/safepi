@@ -46,7 +46,7 @@ const WorkEventUpdateView = () => {
                 console.error("Error al obtener los datos del accidente/incidente", error);
             });
         } else {
-            console.error("Error al obtener el token", error);
+            console.error("Error al obtener el token");
         };
     }, [workEventId]);
 

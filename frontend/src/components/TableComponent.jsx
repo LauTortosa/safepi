@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ContentBoxComponent from './ContentBoxComponent';
 
 const TableComponent = ({ headers, rows, userRole, onDelete, onUpdate, showOptions = true }) => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });

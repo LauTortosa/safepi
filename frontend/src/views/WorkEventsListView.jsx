@@ -16,11 +16,16 @@ const WorkEventsView = () => {
     const rows = workEvents.map((workEvent, index) => [
         index + 1,
         workEvent.id,
-        `(${workEvent.id}) ${workEvent.name} ${workEvent.last_name}`,
+        `${workEvent.name} ${workEvent.last_name}`,
         workEvent.date,
         workEvent.category,
         workEvent.typeWorkEvent,
         workEvent.impact,
+        <span 
+            className="cursor-pointer ml-4"
+            onClick={() => navigate(`/followUps/${workEvent.id}`)}
+        >👁️
+        </span>
     ]);
 
     useEffect(() => {
@@ -69,7 +74,7 @@ const WorkEventsView = () => {
             ]}
         >
             <TableComponent
-                headers={["#","Id", "Nombre", "Fecha", "Categoria", "Tipo", "Impacto", ]}
+                headers={["#","Id", "Nombre", "Fecha", "Categoria", "Tipo", "Impacto", "Detalle" ]}
                 rows={rows}
                 userRole={userRole}
                 onDelete={onDelete}
