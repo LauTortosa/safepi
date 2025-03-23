@@ -18,65 +18,62 @@ const TableComponent = ({ headers, rows, userRole, onDelete, onUpdate, showOptio
         }
 
         setSortConfig({ key, direction });
-    }; 
+    };
 
     return (
         <div>
-            <main className="flex-1 flex justify-center px-6">
-                    <div className="overflow-x-auto">
-                        <table className="table-auto w-full border-collapse border border-gray-300">
-                            <thead>
-                                <tr className="bg-blue-900 text-white">
-                                    {headers.map((header, index) => (
-                                        <th 
-                                            key={index} 
-                                            className="cursor-pointer p-2 border"
-                                            onClick={() => onSort(index)}
-                                            >
-                                            {header} {sortConfig.key === index ? (sortConfig.direction === 'asc' ? '🔼' : '🔽') : ''}
-                                        </th>
+            <div className="overflow-x-auto">
+                <table className="table-auto w-full border-collapse border border-gray-300">
+                    <thead>
+                        <tr className="bg-blue-900 text-white">
+                            {headers.map((header, index) => (
+                                <th
+                                    key={index}
+                                    className="cursor-pointer p-2 border"
+                                    onClick={() => onSort(index)}
+                                >
+                                    {header} {sortConfig.key === index ? (sortConfig.direction === 'asc' ? '🔼' : '🔽') : ''}
+                                </th>
+                            ))}
+                            {userRole === "ADMIN" && showOptions && (
+                                <th className="p-2 border">Opciones</th>
+                            )}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {sortedItems.length > 0 ? (
+                            sortedItems.map((row, index) => (
+                                <tr key={index} className="hover:bg-gray-200">
+                                    {row.map((cell, i) => (
+                                        <td key={i} className="p-2 border">{cell}</td>
                                     ))}
+
                                     {userRole === "ADMIN" && showOptions && (
-                                        <th className="p-2 border">Opciones</th>
+                                        <td className="p-2 border">
+                                            <span
+                                                className="cursor-pointer mr-4"
+                                                onClick={() => onDelete(row[1])}
+                                            >
+                                                🗑️
+                                            </span>
+                                            <span
+                                                className="cursor-pointer"
+                                                onClick={() => onUpdate(row[1])}
+                                            >✏️</span>
+                                        </td>
                                     )}
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {sortedItems.length > 0 ? (
-                                    sortedItems.map((row, index) => (
-                                        <tr key={index} className="hover:bg-gray-200">
-                                            {row.map((cell, i) => (
-                                                <td key={i} className="p-2 border">{cell}</td>
-                                            ))}
-
-                                            {userRole === "ADMIN" && showOptions && (
-                                                <td className="p-2 border">
-                                                    <span 
-                                                        className="cursor-pointer mr-4"
-                                                        onClick={() => onDelete(row[1])}    
-                                                    >
-                                                        🗑️
-                                                    </span>
-                                                    <span 
-                                                        className="cursor-pointer"
-                                                        onClick={() => onUpdate(row[1])}
-                                                    >✏️</span>
-                                                </td>
-                                            )}
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan={8} className="text-center p-4">
-                                            No hay riesgos disponibles.
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
-            </main>
-
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan={8} className="text-center p-4">
+                                    No hay riesgos disponibles.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

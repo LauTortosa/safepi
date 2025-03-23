@@ -59,3 +59,9 @@ export const workEventTypeWorkEventLabel = {
     "SLIP": "Resbalón",
     "COLLISION": "Colisión"
 };
+
+export const followUpWorkStatusLabel = {
+    "ON_REST": "Reposo",
+    "ON_SICK_LEAVE": "De Alta",
+    "CLEARED_TO_WORK": "De Baja"
+};

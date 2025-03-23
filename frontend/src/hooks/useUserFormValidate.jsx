@@ -9,9 +9,9 @@ export const useUserFormValidate = (formFields) => {
         for (const field of formFields) {
             const value = formData[field.name];
         
-            if (!value) {
+            if (field.required && !value) {
                 newErrors[field.name] = `El campo ${field.label} es requerido.`;
-                break; 
+                continue; 
             }
         
             if (field.minLength && value.length < field.minLength) {
