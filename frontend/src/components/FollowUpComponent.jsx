@@ -18,6 +18,7 @@ const FollowUpView = ({ workEvent, workEventId }) => {
     const { token, userRole } = useAuthUser();
     const [followUps, setFollowUps] = useState([]);
     const [isFollowUpCreated, setIsFollowUpCreated] = useState(false);
+    const [isFollowUpDeleted, setIsFollowUpDeleted] = useState(false);
 
     const formFields = [
         { label: "Fecha", type: "date", name: "date", required: true },
@@ -29,6 +30,7 @@ const FollowUpView = ({ workEvent, workEventId }) => {
 
     const rows = followUps.map((followUp, index) => [
         index + 1,
+        followUp.id,
         followUp.date,
         followUpWorkStatusLabel[followUp.workStatus],
         followUp.doctorNotes,
@@ -80,6 +82,22 @@ const FollowUpView = ({ workEvent, workEventId }) => {
                 });
         }
     }, [workEventId, token]);
+
+    const onDelete = (followUpId) => {
+        if (token) {
+            api.delete(`/followUps/${followUpId}`, { headers: { Authorization: `Bearer ${token}` }
+            })
+            .then(() => {
+                setFollowUps((prevFollowUps) => prevFollowUps.filter((followUps) => followUps.id !== followUpId));
+                setIsFollowUpDeleted(true);
+            })
+            .catch((error) => {
+                console.log("Error al eliminar el seguimiento", error);
+            })
+        } else {
+            console.error("Token no encontrado");
+        };
+    };
 
     if (!workStatus.length) {
         return <p>Cargando opciones...</p>;
@@ -133,12 +151,19 @@ const FollowUpView = ({ workEvent, workEventId }) => {
                 content="El seguimiento ha sido creado correctamente"
                 onClose={() => setIsFollowUpCreated(false)}
             />
+            <ModalComponent
+                isOpen={isFollowUpDeleted}
+                title="Seguimiento eliminado!"
+                content="El seguimiento ha sido eliminado correctamente"
+                onClose={() => setIsFollowUpDeleted(false)}
+            />
             {/* Tabla FollowUps */}
             <div className="bg-white shadow-md rounded-lg p-6 border-l-4 border-blue-500 ">
                 <TableComponent
-                    headers={["#", "Fecha", "Estado", "Diagnóstico", "Próximo Seguimiento", "Comentarios"]}
+                    headers={["#", "Id", "Fecha", "Estado", "Diagnóstico", "Próximo Seguimiento", "Comentarios"]}
                     rows={rows}
                     userRole={userRole}
+                    onDelete={onDelete}
                 />
             </div>
         </div>

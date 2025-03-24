@@ -45,7 +45,6 @@ const WorkEventsView = () => {
     }, []);
 
     const onDelete = (workEventId) => {
-        console.log("workeventid", workEventId);
         if (token) {
             api.delete(`/workEvents/${workEventId}`, { headers: { Authorization: `Bearer ${token}` }
             })

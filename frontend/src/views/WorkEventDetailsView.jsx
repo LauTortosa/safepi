@@ -6,8 +6,6 @@ import api from "../api/axiosConfig";
 import ContentBoxComponent from "../components/ContentBoxComponent";
 import WorkEventInfoComponent from "../components/WorkEventInfoComponent";
 import FollowUpComponent from "../components/FollowUpComponent";
-import { workEventCategoryLabel } from "../utils/displayLabels";
-
 
 const WorkEventDetailsView = () => {
     const { workEventId } = useParams();
