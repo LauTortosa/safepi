@@ -12,7 +12,7 @@ import RiskUpdateView from "../views/RiskUpdateView";
 import WorkEventsListView from "../views/WorkEventsListView";
 import WorkEventCreateView from "../views/WorkEventCreateView";
 import WorkEventUpdateView from "../views/WorkEventUpdateView";
-import FollowUpView from "../views/FollowUpView";
+import WorkEventDetailsView from "../views/WorkEventDetailsView";
 
 const AppRouter = () => {
     return (
@@ -35,7 +35,7 @@ const AppRouter = () => {
               <Route path="/create-workevent" element={<WorkEventCreateView/>}/>
               <Route path="/update-workevent/:workEventId" element={<WorkEventUpdateView/>}/>
               
-              <Route path="/followUps/:workEventId" element={<FollowUpView/>}/>
+              <Route path="/followUps/:workEventId" element={<WorkEventDetailsView/>}/>
             </Routes>
         </Router>
     );
