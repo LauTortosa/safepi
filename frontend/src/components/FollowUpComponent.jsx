@@ -1,12 +1,15 @@
 import { useAuthUser } from "../hooks/useAuthUser";
 import { useEffect, useState } from "react";
 import api from "../api/axiosConfig";
-import TableComponent from "./TableComponent";
-import SelectComponent from "./SelectComponent";
-import InputComponent from "./InputComponent";
+
 import { useFollowUpOptions } from "../hooks/useFollowUpOptions";
 import { useFollowUpFormReducer } from "../hooks/useFollowUpFormReducer";
 import { useUserFormValidate } from "../hooks/useUserFormValidate";
+import { followUpWorkStatusLabel } from "../utils/displayLabels";
+
+import TableComponent from "./TableComponent";
+import SelectComponent from "./SelectComponent";
+import InputComponent from "./InputComponent";
 import ModalComponent from "./ModalComponent";
 
 const FollowUpView = ({ workEvent, workEventId }) => {
@@ -27,7 +30,7 @@ const FollowUpView = ({ workEvent, workEventId }) => {
     const rows = followUps.map((followUp, index) => [
         index + 1,
         followUp.date,
-        followUp.workStatus,
+        followUpWorkStatusLabel[followUp.workStatus],
         followUp.doctorNotes,
         followUp.nextCheckupDate,
         followUp.comments

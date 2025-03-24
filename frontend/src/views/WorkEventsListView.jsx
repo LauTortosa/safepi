@@ -5,6 +5,7 @@ import api from "../api/axiosConfig";
 import ContentBoxComponent from "../components/ContentBoxComponent";
 import TableComponent from "../components/TableComponent";
 import ModalComponent from "../components/ModalComponent";
+import { workEventCategoryLabel, workEventTypeWorkEventLabel, riskImpactLabel } from "../utils/displayLabels";
 import { useNavigate } from "react-router-dom";
 
 const WorkEventsView = () => {
@@ -18,9 +19,9 @@ const WorkEventsView = () => {
         workEvent.id,
         `${workEvent.name} ${workEvent.last_name}`,
         workEvent.date,
-        workEvent.category,
-        workEvent.typeWorkEvent,
-        workEvent.impact,
+        workEventCategoryLabel[workEvent.category] || workEvent.category,
+        workEventTypeWorkEventLabel[workEvent.typeWorkEvent] || workEvent.typeWorkEvent,
+        riskImpactLabel[workEvent.impact] || workEvent.impact,
         <span 
             className="cursor-pointer ml-4"
             onClick={() => navigate(`/followUps/${workEvent.id}`)}
