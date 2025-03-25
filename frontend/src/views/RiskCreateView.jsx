@@ -25,7 +25,7 @@ const RiskCreateView = () => {
         { label: "Probabilidad del riesgo", type: "select", name: "probability", options: probability },
         { label: "Ubicación", type: "select", name: "location", options: locations },
         { label: "Impacto del riesgo", type: "select", name: "impact", options: impacts },
-        { label: "Descripción del riesgo", type: "text", name: "description", placeholder: "Descripción del riesgo", minLength: 3, maxLength: 25 },
+        { label: "Descripción del riesgo", type: "text", name: "description", placeholder: "Descripción del riesgo", minLength: 3, maxLength: 50 },
     ];
 
     const { errors, validateForm } = useUserFormValidate(formFields);

@@ -99,6 +99,8 @@ const FollowUpView = ({ workEvent, workEventId }) => {
         };
     };
 
+    const onUpdate = () => {}
+
     if (!workStatus.length) {
         return <p>Cargando opciones...</p>;
     }
@@ -164,6 +166,7 @@ const FollowUpView = ({ workEvent, workEventId }) => {
                     rows={rows}
                     userRole={userRole}
                     onDelete={onDelete}
+                    onUpdate={onUpdate}
                 />
             </div>
         </div>

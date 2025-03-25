@@ -15,8 +15,8 @@ const RiskListUserView = () => {
     const rows = risks.map((risk, index) => [
         index + 1,
         risk.date,
-        risk.description,
         riskLocationLabel[risk.location] || risk.location,
+        risk.description,
         riskProbabilityLabel[risk.probability] || risk.probability,
         riskImpactLabel[risk.impact] || risk.impact,
         risk.risk,
