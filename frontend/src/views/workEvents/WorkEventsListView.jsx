@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-import { useAuthUser } from "../hooks/useAuthUser";
-import api from "../api/axiosConfig";
-
-import ContentBoxComponent from "../components/ContentBoxComponent";
-import TableComponent from "../components/TableComponent";
-import ModalComponent from "../components/ModalComponent";
-import { workEventCategoryLabel, workEventTypeWorkEventLabel, riskImpactLabel } from "../utils/displayLabels";
 import { useNavigate } from "react-router-dom";
+import { useAuthUser } from "../../hooks";
+import { ContentBoxComponent, TableComponent, ModalComponent } from "../../components";
+import { workEventCategoryLabel, workEventTypeWorkEventLabel, riskImpactLabel } from "../../utils/displayLabels";
+import api from "../../api/axiosConfig";
 
 const WorkEventsView = () => {
     const [workEvents, setWorkEvents] = useState([]);

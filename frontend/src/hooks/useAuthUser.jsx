@@ -37,3 +37,4 @@ export const useAuthUser = () => {
   };
 };
 
+export default useAuthUser;

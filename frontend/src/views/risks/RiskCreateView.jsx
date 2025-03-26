@@ -1,17 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../../api/axiosConfig";
 
-import { useRiskFormReducer } from "../hooks/useRiskFormReducer";
-import { useRiskOptions } from "../hooks/useRiskOptions";
-import { useAuthUser } from "../hooks/useAuthUser";
-import { useUserFormValidate } from "../hooks/useUserFormValidate";
-
-import api from "../api/axiosConfig";
-
-import SelectComponent from "../components/SelectComponent";
-import InputComponent from "../components/InputComponent";
-import ModalComponent from "../components/ModalComponent";
-import ContentBoxComponent from "../components/ContentBoxComponent";
+import { useRiskFormReducer, useRiskOptions, useAuthUser, useUserFormValidate } from "../../hooks";
+import { SelectComponent, InputComponent, ModalComponent, ContentBoxComponent } from "../../components";
 
 const RiskCreateView = () => {
     const [formData, dispatch] = useRiskFormReducer();

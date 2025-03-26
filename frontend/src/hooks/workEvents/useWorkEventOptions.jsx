@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { workEventCategoryLabel, workEventTypeWorkEventLabel } from "../utils/displayLabels";
-import api from "../api/axiosConfig";
+import { workEventCategoryLabel, workEventTypeWorkEventLabel } from "../../utils/displayLabels";
+import api from "../../api/axiosConfig";
 
 export const useWorkEventOptions = () => {
     const [categories, setCategories] = useState([]);
@@ -25,3 +25,5 @@ export const useWorkEventOptions = () => {
 
     return { categories, typeWorkEvents };
 };
+
+export default useWorkEventOptions;

@@ -1,15 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRiskFormReducer } from "../hooks/useRiskFormReducer";
-import { useRiskOptions } from "../hooks/useRiskOptions";
-import { useAuthUser } from "../hooks/useAuthUser";
-import { useUserFormValidate } from "../hooks/useUserFormValidate";
-import api from "../api/axiosConfig";
-
-import InputComponent from "../components/InputComponent";
-import SelectComponent from "../components/SelectComponent";
-import ModalComponent from "../components/ModalComponent";
-import ContentBoxComponent from "../components/ContentBoxComponent";
+import { useRiskFormReducer, useRiskOptions, useAuthUser, useUserFormValidate } from "../../hooks";
+import { InputComponent, SelectComponent, ModalComponent, ContentBoxComponent } from "../../components";
+import api from "../../api/axiosConfig";
 
 const RiskUpdateView = () => {
     const [isRiskUpdated, setIsRiskUpdated] = useState(false);

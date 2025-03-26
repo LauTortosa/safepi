@@ -1,4 +1,4 @@
-import ValidationFormComponent from "./ValidationFormComponent";
+import { ValidationFormComponent } from "./";
 
 const SelectComponent = ({ span, name, value, onChange, options, errorMessage }) => {
   return (

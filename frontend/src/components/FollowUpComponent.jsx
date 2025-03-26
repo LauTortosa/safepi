@@ -1,16 +1,8 @@
-import { useAuthUser } from "../hooks/useAuthUser";
 import { useEffect, useState } from "react";
-import api from "../api/axiosConfig";
-
-import { useFollowUpOptions } from "../hooks/useFollowUpOptions";
-import { useFollowUpFormReducer } from "../hooks/useFollowUpFormReducer";
-import { useUserFormValidate } from "../hooks/useUserFormValidate";
 import { followUpWorkStatusLabel } from "../utils/displayLabels";
-
-import TableComponent from "./TableComponent";
-import SelectComponent from "./SelectComponent";
-import InputComponent from "./InputComponent";
-import ModalComponent from "./ModalComponent";
+import { useFollowUpFormReducer, useFollowUpOptions, useUserFormValidate, useAuthUser } from "../hooks";
+import { TableComponent, SelectComponent, InputComponent, ModalComponent} from "../components";
+import api from "../api/axiosConfig";
 
 const FollowUpView = ({ workEvent, workEventId }) => {
     const [formData, dispatch] = useFollowUpFormReducer();

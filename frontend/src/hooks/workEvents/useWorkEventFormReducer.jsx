@@ -1,15 +1,15 @@
-import { useReducer } from "react";
+import { act, useReducer } from "react";
 
 const initialState = {
-    name: "",
-    last_name: "",
-    birthday: "",
-    start_date: "",
-    position: "",
-    username: "", 
-    email: "", 
-    password: "", 
-    role: "",
+    category: "",
+    date: "",
+    description: "",
+    typeWorkEvent: "",
+    location: "",
+    witnesses: "",
+    firstAid: "",
+    impact: "",
+    userId: 0
 };
 
 const formReducer = (state, action) => {
@@ -25,6 +25,8 @@ const formReducer = (state, action) => {
     }
 };
 
-export const useUserFormReducer = () => {
+export const useWorkEventFormReducer = () => {
     return useReducer(formReducer, initialState);
 };
+
+export default useWorkEventFormReducer;

@@ -1,5 +1,5 @@
 import React from "react";
-import LoginFormComponent from "../components/LoginFormComponent";
+import { LoginFormComponent } from "../components";
 
 const LoginView = () => {
   const handleLoginSubmit = (username, password) => {

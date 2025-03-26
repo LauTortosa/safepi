@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { riskImpactLabel, riskLocationLabel, riskProbabilityLabel, riskStateLabel } from "../utils/displayLabels";
-import { useAuthUser } from "../hooks/useAuthUser";
+import { riskImpactLabel, riskLocationLabel, riskProbabilityLabel, riskStateLabel } from "../../utils/displayLabels";
+import { useAuthUser } from "../../hooks";
+import { TableComponent, ContentBoxComponent } from "../../components";
 
-import TableComponent from "../components/TableComponent";
-import ContentBoxComponent from "../components/ContentBoxComponent";
-
-import api from "../api/axiosConfig";
+import api from "../../api/axiosConfig";
 
 const RiskListUserView = () => {
     const [risks, setRisks] = useState([]);

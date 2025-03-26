@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { riskImpactLabel, riskLocationLabel, riskProbabilityLabel, riskStateLabel } from "../utils/displayLabels";
-import api from "../api/axiosConfig";
+import { riskImpactLabel, riskLocationLabel, riskProbabilityLabel, riskStateLabel } from "../../utils/displayLabels";
+import api from "../../api/axiosConfig";
 
 export const useRiskOptions = () => {
     const [probability, setProbability] = useState([]);
@@ -31,3 +31,5 @@ export const useRiskOptions = () => {
 
     return { probability, impacts, states, locations };
 };
+
+export default useRiskOptions;

@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserFormValidate } from "../hooks/useUserFormValidate";
-
 import api from "../api/axiosConfig";
-import ValidationFormComponent from "./ValidationFormComponent";
-import InputComponent from "./InputComponent";
+
+import { ValidationFormComponent, InputComponent } from "./";
+import { useUserFormValidate } from "../hooks";
 
 const LoginFormComponent = () => {
   const navigate = useNavigate();

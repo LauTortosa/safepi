@@ -36,3 +36,5 @@ export const useUserFormValidate = (formFields) => {
 
     return { errors, setErrors, validateForm };
 };
+
+export default useUserFormValidate;

@@ -1,17 +1,8 @@
 import { useEffect, useState } from "react";
-
-import InputComponent from "../components/InputComponent";
-import SelectComponent from "../components/SelectComponent";
-import ModalComponent from "../components/ModalComponent";
-import ContentBoxComponent from "../components/ContentBoxComponent";
-
-import api from "../api/axiosConfig";
-
-import { useUserOptions } from "../hooks/useUserOptions";
-import { useUserFormReducer } from "../hooks/useUserFormReducer";
-import { useUserFormValidate } from "../hooks/useUserFormValidate";
-import { useAuthUser } from "../hooks/useAuthUser";
 import { useNavigate, useParams } from "react-router-dom";
+import { InputComponent, SelectComponent, ModalComponent, ContentBoxComponent } from "../../components";
+import { useUserOptions, useUserFormReducer, useUserFormValidate, useAuthUser } from "../../hooks";
+import api from "../../api/axiosConfig";
 
 const UpdateUserView = () => {
   const { userId } = useParams();

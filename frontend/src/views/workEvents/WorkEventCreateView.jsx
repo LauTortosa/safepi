@@ -1,17 +1,8 @@
 import { useState } from "react";
-import api from "../api/axiosConfig";
-
+import api from "../../api/axiosConfig";
 import { useNavigate } from "react-router-dom";
-import { useAuthUser } from "../hooks/useAuthUser";
-import { useRiskOptions } from "../hooks/useRiskOptions";
-import { useWorkEventOptions } from "../hooks/useWorkEventOptions";
-import { useUserFormValidate } from "../hooks/useUserFormValidate";
-import { useWorkEventFormReducer } from "../hooks/useWorkEventFormReducer";
-
-import ContentBoxComponent from "../components/ContentBoxComponent";
-import ModalComponent from "../components/ModalComponent";
-import SelectComponent from "../components/SelectComponent";
-import InputComponent from "../components/InputComponent";
+import { useAuthUser, useRiskOptions, useWorkEventOptions, useUserFormValidate, useWorkEventFormReducer } from "../../hooks";
+import { ContentBoxComponent, ModalComponent, SelectComponent, InputComponent } from "../../components";
 
 const WorkEventCreateView = () => {
     const [formData, dispatch] = useWorkEventFormReducer();

@@ -1,11 +1,8 @@
 import { useParams } from "react-router-dom";
-import { useAuthUser } from "../hooks/useAuthUser";
 import { useEffect, useState } from "react";
-import api from "../api/axiosConfig";
-
-import ContentBoxComponent from "../components/ContentBoxComponent";
-import WorkEventInfoComponent from "../components/WorkEventInfoComponent";
-import FollowUpComponent from "../components/FollowUpComponent";
+import { useAuthUser } from "../../hooks/useAuthUser";
+import { ContentBoxComponent, WorkEventInfoComponent, FollowUpComponent } from "../../components";
+import api from "../../api/axiosConfig";
 
 const WorkEventDetailsView = () => {
     const { workEventId } = useParams();

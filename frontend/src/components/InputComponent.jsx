@@ -1,4 +1,4 @@
-import ValidationFormComponent from "./ValidationFormComponent";
+import { ValidationFormComponent } from "./";
 
 const InputComponent = ({
   label,

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import api from "../api/axiosConfig";
-import { followUpWorkStatusLabel } from "../utils/displayLabels";
+import api from "../../api/axiosConfig";
+
+import { followUpWorkStatusLabel } from "../../utils/displayLabels";
 
 export const useFollowUpOptions = () => {
     const [workStatus, setWorkStatus] = useState([]);
@@ -23,3 +24,5 @@ export const useFollowUpOptions = () => {
     
     return { workStatus };
 };
+
+export default useFollowUpOptions;

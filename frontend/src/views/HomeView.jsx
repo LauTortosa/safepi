@@ -1,5 +1,5 @@
-import { useAuthUser } from "../hooks/useAuthUser.jsx";
-import NavbarComponent from "../components/NavbarComponent.jsx";
+import { useAuthUser } from "../hooks";
+import { NavbarComponent } from "../components";
 
 const HomeView = () => {
     const user = useAuthUser(); 

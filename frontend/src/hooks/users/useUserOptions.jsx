@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { userPositionLabel, userRoleLabel } from "../utils/displayLabels";
-import api from "../api/axiosConfig";
+import { userPositionLabel, userRoleLabel } from "../../utils/displayLabels";
+import api from "../../api/axiosConfig";
 
 export const useUserOptions = () => {
   const [positions, setPositions] = useState([]);
@@ -25,3 +25,4 @@ export const useUserOptions = () => {
   return {positions, roles}
 };
 
+export default useUserOptions;

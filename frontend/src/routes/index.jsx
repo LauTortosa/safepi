@@ -2,17 +2,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginView from "../views/LoginView";
 import HomeView from "../views/HomeView";
 import ProfileView from "../views/ProfileView";
-import UsersListView from "../views/UsersListView";
-import UserCreateView from "../views/UserCreateView";
-import UserUpdateView from "../views/UserUpdateView";
-import RisksListView from "../views/RisksListView";
-import RiskCreateView from "../views/RiskCreateView";
-import RiskListUserView from "../views/RiskListUserView";
-import RiskUpdateView from "../views/RiskUpdateView";
-import WorkEventsListView from "../views/WorkEventsListView";
-import WorkEventCreateView from "../views/WorkEventCreateView";
-import WorkEventUpdateView from "../views/WorkEventUpdateView";
-import WorkEventDetailsView from "../views/WorkEventDetailsView";
+
+import { UsersListView, UserCreateView, UserUpdateView } from "../views/users";
+import { RisksListView, RiskListUserView, RiskCreateView, RiskUpdateView } from "../views/risks";
+import { WorkEventsListView, WorkEventCreateView, WorkEventUpdateView, WorkEventDetailsView } from "../views/workEvents";
 
 const AppRouter = () => {
     return (

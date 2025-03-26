@@ -1,11 +1,11 @@
 import { useReducer } from "react";
 
-const initalState = {
-    date: "", 
-    workStatus: "",
-    doctorNotes: "", 
-    nextCheckupDate: "",
-    comments: ""
+const initialState = {
+    date: "",
+    location: "",
+    description: "",
+    probability: "",
+    impact: "",
 };
 
 const formReducer = (state, action) => {
@@ -15,12 +15,14 @@ const formReducer = (state, action) => {
         case "SET_FORM":
             return { ...state, ...action.payload };
         case "RESET_FORM":
-            return initalState;
+            return initialState;
         default:
             return state;
     }
 };
 
-export const useFollowUpFormReducer = () => {
-    return useReducer(formReducer, initalState);
+export const useRiskFormReducer = () => {
+    return useReducer(formReducer, initialState);
 };
+
+export default useRiskFormReducer;

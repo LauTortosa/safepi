@@ -1,7 +1,6 @@
-import { useAuthUser } from "../hooks/useAuthUser.jsx";
-import { userPositionLabel } from "../utils/displayLabels.js";
-
-import ContentBoxComponent from "../components/ContentBoxComponent";
+import { useAuthUser } from "../hooks";
+import { userPositionLabel } from "../utils/displayLabels";
+import { ContentBoxComponent } from "../components";
 
 const ProfileView = () => {
   const { user } = useAuthUser(); 

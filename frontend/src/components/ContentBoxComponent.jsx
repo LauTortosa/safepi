@@ -1,5 +1,4 @@
-import NavbarComponent from "../components/NavbarComponent";
-import SidebarComponent from "../components/SidebarComponent";
+import { NavbarComponent, SidebarComponent } from "../components";
 
 const ContentBoxComponent = ({ children, title, userId, userRole, sidebarOptions }) => {
   return (

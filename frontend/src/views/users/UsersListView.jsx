@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userRoleLabel, userPositionLabel } from "../utils/displayLabels";
-import { useAuthUser } from "../hooks/useAuthUser";
-
-import api from "../api/axiosConfig";
-
-import TableComponent from "../components/TableComponent";
-import ModalComponent from "../components/ModalComponent";
-import ContentBoxComponent from "../components/ContentBoxComponent";
+import { userRoleLabel, userPositionLabel } from "../../utils/displayLabels";
+import { useAuthUser } from "../../hooks";
+import api from "../../api/axiosConfig";
+import { TableComponent, ModalComponent, ContentBoxComponent } from "../../components"
 
 const UsersListView = () => {
   const [users, setUsers] = useState([]);
