@@ -7,7 +7,7 @@ import api from "../../api/axiosConfig";
 
 const WorkEventsView = () => {
     const [workEvents, setWorkEvents] = useState([]);
-    const { token, userRole } = useAuthUser();
+    const { token, userRole, userId } = useAuthUser();
     const [isWorkEventDeleted, setIsWorkEventDeleted] = useState(false);
     const navigate = useNavigate();
 
@@ -27,8 +27,10 @@ const WorkEventsView = () => {
     ]);
 
     useEffect(() => {
+        const url = userRole === "ADMIN" ? "/workEvents" : `/workEvents/users/${userId}/workEvents`;
+
         if (token) {
-            api.get("/workEvents", {headers: { Authorization: `Bearer ${token}` } 
+            api.get(url, {headers: { Authorization: `Bearer ${token}` } 
             })
             .then((response) => {
                 setWorkEvents(response.data); 
@@ -37,9 +39,9 @@ const WorkEventsView = () => {
                 console.log("Error al obtener la lista de incidentes/accidentes", error);
             })
         } else { 
-            console.error("Token no encontrado");
+           console.error("Error al obtener el token");
         }
-    }, []);
+    }, [token, userRole, userId]);
 
     const onDelete = (workEventId) => {
         if (token) {
@@ -66,8 +68,9 @@ const WorkEventsView = () => {
             title={"INCIDENTES Y ACCIDENTES LABORALES"}
             userRole={userRole}
             sidebarOptions={[
-                { path: "/list-workevents", label: "Lista de Incidentes/Accidentes"},
-                { path: "/create-workevent", label: "Añadir Incidente/Accidente"},
+                { path: "/list-workevents", label: "📋 Mis Incidentes/Accidentes"},
+                ...(userRole === "ADMIN" ? [{ path: "/list-workevents", label: "📋 Lista de Incidentes/Accidentes"}] : []),
+                ...(userRole === "ADMIN" ? [{ path: "/create-workevent", label: "Añadir Incidente/Accidente"}] : []),
             ]}
         >
             <TableComponent

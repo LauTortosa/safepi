@@ -5,7 +5,7 @@ const ContentBoxComponent = ({ children, title, userId, userRole, sidebarOptions
     <div>
       <NavbarComponent />
       <div className="min-h-screen max-w-auto bg-gray-100 flex flex-col pt-16 ml-20">
-        <h1 className="text-3xl font-semibold text-center mb-6 pt-16 text-blue-900 w-full">
+        <h1 className="text-3xl font-semibold uppercase text-center mb-6 pt-16 text-blue-900 w-full">
           {title}
         </h1>
 

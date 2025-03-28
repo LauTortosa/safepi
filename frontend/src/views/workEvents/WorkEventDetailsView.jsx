@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuthUser } from "../../hooks/useAuthUser";
+import { workEventCategoryLabel } from "../../utils/displayLabels";
 import { ContentBoxComponent, WorkEventInfoComponent, FollowUpComponent } from "../../components";
 import api from "../../api/axiosConfig";
 
@@ -24,17 +25,18 @@ const WorkEventDetailsView = () => {
     }, [workEventId, token]);
 
     if (!workEvent) {
-        return <p className="text-center">Cargando información del incidente/accidente...</p>;
+        return <p className="text-center">Cargando información...</p>;
     }
     
     return(
         <ContentBoxComponent
-            title={`SEGUIMIENTO DEL "${workEvent.category}"`}
+            title={`SEGUIMIENTO DEL ${workEventCategoryLabel[workEvent.category]}`}
             userRole={userRole}
             userId={userId}
             sidebarOptions={[
                 ...(userRole === "ADMIN" ? [{ path: "/list-workEvents", label: "📋 Todos los incidentes/accidentes" }] : []),
-                { path: "/create-workEvent", label: "➕ Añadir Incidente/Accidente" }
+                { path: "/list-workevents", label: "📋 Mis Incidentes/Accidentes"},
+                ...(userRole === "ADMIN" ? [{ path: "/create-workEvent", label: "➕ Añadir Incidente/Accidente" }] : []),
             ]}
         >
             <WorkEventInfoComponent workEvent={workEvent} />

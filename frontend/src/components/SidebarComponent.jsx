@@ -9,7 +9,7 @@ const SidebarComponent = ({ options = [] }) => {
           options.map((option, index) => (
             <li key={index}>
               <Link to={option.path}>
-                <button className="w-full text-left p-3 rounded transition-all bg-blue-800 hover:bg-blue-700">
+                <button className="w-full text-left text-sm p-3 rounded transition-all bg-blue-800 hover:bg-blue-700">
                   {option.label}
                 </button>
               </Link>
