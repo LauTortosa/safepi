@@ -40,8 +40,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/risks/{id}").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/risks/{id}").hasAuthority("ROLE_ADMIN")
 
-                        .requestMatchers("/api/workEvents/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers("/api/followUps/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/workEvents/users/{userId}/workEvents").authenticated()
+                        .requestMatchers("/api/workEvents/**").authenticated()
+                        .requestMatchers("/api/followUps/**").authenticated()
 
                         .anyRequest().authenticated()
                 )
