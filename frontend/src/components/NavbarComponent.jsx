@@ -30,7 +30,7 @@ const Navbar = () => {
             Gestión de usuarios
           </Link>
         )}
-        <Link to="/list-workevents" className="hover:text-cyan-400">
+        <Link to={`/workEvents/users/${userId}/workEvents`} className="hover:text-cyan-400">
           Incidentes/Accidentes
         </Link>
         <Link to="/settings" className="hover:text-cyan-400">

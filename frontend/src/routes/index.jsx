@@ -5,7 +5,7 @@ import ProfileView from "../views/ProfileView";
 
 import { UsersListView, UserCreateView, UserUpdateView } from "../views/users";
 import { RisksListView, RiskListUserView, RiskCreateView, RiskUpdateView } from "../views/risks";
-import { WorkEventsListView, WorkEventCreateView, WorkEventUpdateView, WorkEventDetailsView } from "../views/workEvents";
+import { WorkEventListView, WorkEventCreateView, WorkEventUpdateView, WorkEventDetailsView, WorkEventListUserView } from "../views/workEvents";
 
 const AppRouter = () => {
     return (
@@ -24,7 +24,8 @@ const AppRouter = () => {
               <Route path="/create-risk" element={<RiskCreateView/>}/>
               <Route path="/update-risk/:riskId" element={<RiskUpdateView/>}/>
 
-              <Route path="/list-workevents" element={<WorkEventsListView/>}/>
+              <Route path="/workEvents/users/:userId/workEvents" element={<WorkEventListUserView/>}/>
+              <Route path="/list-workevents" element={<WorkEventListView/>}/>
               <Route path="/create-workevent" element={<WorkEventCreateView/>}/>
               <Route path="/update-workevent/:workEventId" element={<WorkEventUpdateView/>}/>
               

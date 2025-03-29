@@ -69,7 +69,7 @@ const WorkEventUpdateView = () => {
             userId={userId}
             sidebarOptions={[
                 ...(userRole === "ADMIN" ? [{ path: "/list-workEvents", label: "📋 Todos los incidentes/accidentes" }] : []),
-                { path: `/list-workEvents/${userId}`, label: "📋 Mis incidentes/accidentes" },
+                { path:  `/workEvents/users/${userId}/workEvents`, label: "📋 Mis incidentes/accidentes" },
                 { path: "/create-workEvent", label: "➕ Añadir Incidente/Accidente" }
             ]}
         >

@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuthUser } from "../../hooks";
-import { ContentBoxComponent, TableComponent, ModalComponent } from "../../components";
+import { ContentBoxComponent, TableComponent } from "../../components";
 import { workEventCategoryLabel, workEventTypeWorkEventLabel, riskImpactLabel } from "../../utils/displayLabels";
 import api from "../../api/axiosConfig";
 
-const WorkEventsView = () => {
+const WorkEventListUserView = () => {
     const [workEvents, setWorkEvents] = useState([]);
     const { token, userRole, userId } = useAuthUser();
-    const [isWorkEventDeleted, setIsWorkEventDeleted] = useState(false);
-    const navigate = useNavigate();
 
     const rows = workEvents.map((workEvent, index) => [
         index + 1,
@@ -27,10 +24,8 @@ const WorkEventsView = () => {
     ]);
 
     useEffect(() => {
-        const url = userRole === "ADMIN" ? "/workEvents" : `/workEvents/users/${userId}/workEvents`;
-
         if (token) {
-            api.get(url, {headers: { Authorization: `Bearer ${token}` } 
+            api.get(`/workEvents/users/${userId}/workEvents`, {headers: { Authorization: `Bearer ${token}` } 
             })
             .then((response) => {
                 setWorkEvents(response.data); 
@@ -43,32 +38,13 @@ const WorkEventsView = () => {
         }
     }, [token, userRole, userId]);
 
-    const onDelete = (workEventId) => {
-        if (token) {
-            api.delete(`/workEvents/${workEventId}`, { headers: { Authorization: `Bearer ${token}` }
-            })
-            .then(() => {
-                setWorkEvents((prevWorkEvents) => prevWorkEvents.filter((workEvents) => workEvents.id !== workEventId));
-                setIsWorkEventDeleted(true);
-            })
-            .catch((error) => {
-                console.error("Error al eliminar el indicente/accidente", error);
-            })
-        } else {
-            console.error("Token no encontrado");
-        };
-    };
-
-    const onUpdate = (workEventId) => {
-        navigate(`/update-workEvent/${workEventId}`);
-    };
-
     return (
         <ContentBoxComponent
             title={"INCIDENTES Y ACCIDENTES LABORALES"}
             userRole={userRole}
+            userId={userId}
             sidebarOptions={[
-                { path: "/list-workevents", label: "📋 Mis Incidentes/Accidentes"},
+                { path: `/workEvents/users/${userId}/workEvents`, label: "📋 Mis Incidentes/Accidentes"},
                 ...(userRole === "ADMIN" ? [{ path: "/list-workevents", label: "📋 Lista de Incidentes/Accidentes"}] : []),
                 ...(userRole === "ADMIN" ? [{ path: "/create-workevent", label: "Añadir Incidente/Accidente"}] : []),
             ]}
@@ -77,17 +53,9 @@ const WorkEventsView = () => {
                 headers={["#","Id", "Nombre", "Fecha", "Categoria", "Tipo", "Impacto", "Detalle" ]}
                 rows={rows}
                 userRole={userRole}
-                onDelete={onDelete}
-                onUpdate={onUpdate}
-            />
-            <ModalComponent 
-                isOpen={isWorkEventDeleted}
-                title={"Incidente/Accidente eliminado!"}
-                content={"El incidente/accidente ha sido eliminado correctamente."}
-                onClose={() => setIsWorkEventDeleted(false)}
             />
         </ContentBoxComponent>
     );
 };
 
-export default WorkEventsView;
+export default WorkEventListUserView;
