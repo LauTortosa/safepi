@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthUser } from "../../hooks";
+import { useAuthUser, useGeneratePdf } from "../../hooks";
 import { riskImpactLabel, riskLocationLabel, riskProbabilityLabel, riskStateLabel } from "../../utils/displayLabels";
 import {TableComponent, ModalComponent, ContentBoxComponent }  from "../../components";
 
@@ -11,6 +11,7 @@ const RiskListView = () => {
     const { token, userRole, userId } = useAuthUser();
     const [isRiskDeleted, setIsRiskDeleted] = useState(false);
     const navigate = useNavigate();
+    const { generatePDF } = useGeneratePdf();
 
     const rows = risks.map((risk, index) => [
         index + 1,
@@ -24,6 +25,8 @@ const RiskListView = () => {
         riskStateLabel[risk.state] || risk.state,
         [risk.name] + " " + risk.last_name
     ]);
+
+    const headers = ["#", "Id", "Fecha", "Riesgo", "Lugar", "Probabilidad", "Impacto", "Tipo", "Estado", "Nombre"];
 
     useEffect(() => {
         if (token) {
@@ -63,6 +66,18 @@ const RiskListView = () => {
         navigate(`/update-risk/${riskId}`);
     };
 
+    const onGeneratePDF = () => {
+        const fileName = "riskList.pdf";
+
+        generatePDF(fileName, [
+            {
+                title: "Lista de Riesgos Laborales",
+                headers: headers,
+                rows: rows
+            }
+        ]);
+    }; 
+
     return (
         <ContentBoxComponent
             title={"LISTA DE RIESGOS"}
@@ -75,7 +90,7 @@ const RiskListView = () => {
             ]}
         >
             <TableComponent
-                headers={["#", "Id", "Fecha", "Riesgo", "Lugar", "Probabilidad", "Impacto", "Tipo", "Estado", "Nombre"]}
+                headers={headers}
                 rows={rows}
                 userRole={userRole}
                 onDelete={onDelete}
@@ -87,6 +102,12 @@ const RiskListView = () => {
                 content={"El riesgo ha sido eliminado correctamente."}
                 onClose={() => setIsRiskDeleted(false)}
             />
+            <button
+                onClick={onGeneratePDF}
+                className="bg-blue-500 text-white mt-4 px-4 py-2 rounded-lg hover:bg-blue-600"
+            >
+                📄 Generar PDF
+            </button>
         </ContentBoxComponent>
     );
 };
