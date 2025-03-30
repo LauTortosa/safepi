@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthUser } from "../../hooks";
+
+import { useAuthUser, useGeneratePdf } from "../../hooks";
 import { ContentBoxComponent, TableComponent, ModalComponent } from "../../components";
 import { workEventCategoryLabel, workEventTypeWorkEventLabel, riskImpactLabel } from "../../utils/displayLabels";
 import api from "../../api/axiosConfig";
@@ -10,6 +11,7 @@ const WorkEventListView = () => {
     const { token, userRole, userId } = useAuthUser();
     const [isWorkEventDeleted, setIsWorkEventDeleted] = useState(false);
     const navigate = useNavigate();
+    const { generatePDF } = useGeneratePdf();
 
     const rows = workEvents.map((workEvent, index) => [
         index + 1,
@@ -25,6 +27,8 @@ const WorkEventListView = () => {
         >👁️
         </span>
     ]);
+
+    const headers= ["#","Id", "Nombre", "Fecha", "Categoria", "Tipo", "Impacto", "Detalle" ];
 
     useEffect(() => {
         if (token) {
@@ -72,7 +76,7 @@ const WorkEventListView = () => {
             ]}
         >
             <TableComponent
-                headers={["#","Id", "Nombre", "Fecha", "Categoria", "Tipo", "Impacto", "Detalle" ]}
+                headers={headers}
                 rows={rows}
                 userRole={userRole}
                 onDelete={onDelete}
@@ -84,6 +88,18 @@ const WorkEventListView = () => {
                 content={"El incidente/accidente ha sido eliminado correctamente."}
                 onClose={() => setIsWorkEventDeleted(false)}
             />
+            <button
+                onClick={() => generatePDF(
+                    "Lista de Incidentes/Accidentes", 
+                    headers, 
+                    rows, 
+                    "workEvents.pdf",
+                    [headers.indexOf("Detalle")]
+                )}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+            >
+                📄 Descargar PDF
+            </button>
         </ContentBoxComponent>
     );
 };

@@ -12,3 +12,4 @@ export { default as useWorkEventFormReducer } from "./workEvents/useWorkEventFor
 export { default as useWorkEventOptions } from "./workEvents/useWorkEventOptions";
 
 export { default as useAuthUser } from "./useAuthUser";
+export { default as useGeneratePdf } from "./useGeneratePdf";
