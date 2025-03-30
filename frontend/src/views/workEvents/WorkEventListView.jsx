@@ -65,6 +65,21 @@ const WorkEventListView = () => {
         navigate(`/update-workEvent/${workEventId}`);
     };
 
+    const onGeneratePDF = () => {
+        const fileName = "workEventsList.pdf";
+
+        const excludeColumns = [headers.indexOf("Detalle")];
+
+        generatePDF(fileName, [
+            {
+                title: "Lista de Incidentes/Accidentes",
+                headers: headers,
+                rows: rows, 
+                excludeColumns: excludeColumns,
+            }
+        ]);
+    };
+
     return (
         <ContentBoxComponent
             title={"INCIDENTES Y ACCIDENTES LABORALES"}
@@ -89,16 +104,10 @@ const WorkEventListView = () => {
                 onClose={() => setIsWorkEventDeleted(false)}
             />
             <button
-                onClick={() => generatePDF(
-                    "Lista de Incidentes/Accidentes", 
-                    headers, 
-                    rows, 
-                    "workEvents.pdf",
-                    [headers.indexOf("Detalle")]
-                )}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                onClick={onGeneratePDF}
+                className="bg-blue-500 text-white mt-4 px-4 py-2 rounded-lg hover:bg-blue-600"
             >
-                📄 Descargar PDF
+                📄 Generar PDF
             </button>
         </ContentBoxComponent>
     );
