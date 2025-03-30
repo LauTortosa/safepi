@@ -3,7 +3,7 @@ import autoTable from "jspdf-autotable";
 
 export const useGeneratePdf = () => {
     const generatePDF = (fileName, sections) => {
-        const doc = new jsPDF();
+        const doc = new jsPDF("l");
         let startY = 15;
 
         sections.forEach(({ title, headers, rows, excludeColumns = [] }, index) => {

@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userRoleLabel, userPositionLabel } from "../../utils/displayLabels";
-import { useAuthUser } from "../../hooks";
+import { useAuthUser, useGeneratePdf } from "../../hooks";
 import api from "../../api/axiosConfig";
 import { TableComponent, ModalComponent, ContentBoxComponent } from "../../components"
+import { headers } from "next/headers";
 
 const UsersListView = () => {
   const [users, setUsers] = useState([]);
   const [isUserDeleted, setIsUserDeleted] = useState(false);
   const { token, userRole } = useAuthUser();
   const navigate = useNavigate();
+  const { generatePDF } = useGeneratePdf();
 
   // TODO filtrado users
   // TODO busqueda
@@ -20,7 +22,7 @@ const UsersListView = () => {
           headers: { Authorization: `Bearer ${token}` }
         })
         .then((response) => {
-            setUsers(response.data);
+          setUsers(response.data);
         })
         .catch((error) => {
           console.error("Error al obtener la lista de usuarios", error);
@@ -64,6 +66,20 @@ const UsersListView = () => {
     userRoleLabel[user.role] || user.role,
   ]);
 
+  const headers = ["#", "Id", "Nombre", "Apellidos", "Fecha de nacimiento", "Puesto laboral", "Fecha de antigüedad", "Usuario", "Email", "Rol de usuario"];
+
+  const onGeneratePDF = () => {
+    const fileName = "userList.pdf";
+
+    generatePDF(fileName, [
+      {
+        title: "Lista de usuarios",
+        headers: headers,
+        rows: rows
+      }
+    ]);
+  };
+
   return (
     <ContentBoxComponent
       title={"LISTA DE USUARIOS"}
@@ -73,9 +89,8 @@ const UsersListView = () => {
         { path: "/create-user", label: "➕ Crear nuevo usuario" },
       ]}
     >
-      
       <TableComponent
-        headers={["#", "Id", "Nombre", "Apellidos", "Fecha de nacimiento", "Puesto laboral", "Fecha de antigüedad", "Usuario", "Email", "Rol de usuario"]}
+        headers={headers}
         rows={rows}
         userRole={userRole}
         onDelete={onDelete}
@@ -87,6 +102,12 @@ const UsersListView = () => {
         content={"El usuario ha sido eliminado correctamente."}
         onClose={() => setIsUserDeleted(false)}
       />
+      <button
+        onClick={onGeneratePDF}
+        className="bg-blue-500 text-white mt-4 px-4 py-2 rounded-lg hover:bg-blue-600"
+      >
+        📄 Generar PDF
+      </button>
     </ContentBoxComponent>
   );
 };
